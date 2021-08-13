@@ -1,0 +1,32 @@
+{
+  "name": "inflearn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect app.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chanyang721/Inflearn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chanyang721/Inflearn/issues"
+  },
+  "homepage": "https://github.com/chanyang721/Inflearn#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dayjs": "^1.10.6",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jest": "^27.0.6",
+    "joi": "^17.4.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.12",
+    "typedi": "^0.10.0"
+  }
+}
