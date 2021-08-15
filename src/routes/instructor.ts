@@ -3,7 +3,7 @@ import { getListByinstructorName } from "../controllers/instructor";
 const router = Router();
 
 
-router.get("/instructor/:name", getListByinstructorName)
+router.get("/:name", getListByinstructorName)
 
 
 export default router;

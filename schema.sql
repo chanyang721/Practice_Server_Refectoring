@@ -1,4 +1,4 @@
--- CREATE database Inflearn;
+CREATE database IF NOT EXISTS Inflearn;
 
 CREATE TABLE instructors (
   id INT AUTO_INCREMENT,

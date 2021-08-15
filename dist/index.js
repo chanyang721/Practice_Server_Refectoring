@@ -16,9 +16,9 @@ app.use(cors_1.default({
     origin: true,
     credentials: true
 }));
-app.use("/api", routes_1.instructorRouter);
-app.use("/api", routes_1.lectureRouter);
-app.use("/api", routes_1.studentRouter);
+app.use("/instructor", routes_1.instructorRouter);
+app.use("/lecture", routes_1.lectureRouter);
+app.use("/student", routes_1.studentRouter);
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`App is running on ${port}`);
