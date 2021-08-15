@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect index.js",
+    "start": "tsc-watch --onSuccess \" node dist/index.js \" ",
     "test": "jest"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "joi": "^17.4.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.12",
+    "tsc-watch": "^4.4.0",
     "typedi": "^0.10.0"
   },
   "devDependencies": {
