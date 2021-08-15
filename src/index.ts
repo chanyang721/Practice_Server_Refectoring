@@ -1,12 +1,8 @@
-import express, { Response, Request, NextFunction } from "express";
+import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import mysql from "mysql";
 import dotenv from "dotenv";
-import instructorRouter from "./routes/instructor"
-import lectureRouter from "./routes/lecture";
-import studentRouter from "./routes/student";
-
+import { instructorRouter, lectureRouter, studentRouter } from "./routes";
 dotenv.config();
 
 const app = express();
@@ -17,18 +13,12 @@ app.use(cors({
     credentials: true
 }))
 
+app.use("/instructor", instructorRouter);
+app.use("/lecture", lectureRouter);
+app.use("/student", studentRouter);
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-    res.send("Hello World!");
-})
-
-app.use("/api", instructorRouter);
-app.use("/api", lectureRouter);
-app.use("/api", studentRouter);
-
-const port = process.env.PORT || 3000;
-
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
-    console.log(`서버가 ${port}번 포트에서 작동중입니다.`)
+    console.log(`App is running on ${port}`)
 })
 

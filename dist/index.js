@@ -7,9 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const instructor_1 = __importDefault(require("./routes/instructor"));
-const lecture_1 = __importDefault(require("./routes/lecture"));
-const student_1 = __importDefault(require("./routes/student"));
+const routes_1 = require("./routes");
 dotenv_1.default.config();
 const app = express_1.default();
 app.use(express_1.default.json());
@@ -18,13 +16,10 @@ app.use(cors_1.default({
     origin: true,
     credentials: true
 }));
-app.get("/", (req, res, next) => {
-    res.send("Hello World!");
-});
-app.use("/api", instructor_1.default);
-app.use("/api", lecture_1.default);
-app.use("/api", student_1.default);
-const port = process.env.PORT || 3000;
+app.use("/instructor", routes_1.instructorRouter);
+app.use("/lecture", routes_1.lectureRouter);
+app.use("/student", routes_1.studentRouter);
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
-    console.log(`서버가 ${port}번 포트에서 작동중입니다.`);
+    console.log(`App is running on ${port}`);
 });
