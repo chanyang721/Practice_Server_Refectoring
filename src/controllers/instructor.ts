@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import db from "../db";
+import db from "../database";
 
 export const getListByinstructorName = async (req: Request, res: Response): Promise<any> => {
 
