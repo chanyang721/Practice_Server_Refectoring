@@ -1,3 +1,3 @@
-export default interface Istudent {
+export interface Istudent {
 
 };

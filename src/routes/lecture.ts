@@ -13,23 +13,23 @@ import {
 } from "../controllers/lecture";
 
 
-router.get("/:name", getListBylectureName)
+router.get("/lecture/:name", getListBylectureName)
 
-router.get("/category/:name", getListByCategoryName)
+router.get("/lecture/category/:name", getListByCategoryName)
 
-router.get("/category", getListByAllCategory)
+router.get("/lecture/category", getListByAllCategory)
 
-router.get("/:id/details", getLectureById)
+router.get("/lecture/:id/details", getLectureById)
 
-router.post("/", createLecture)
+router.post("/lecture", createLecture) 
 
-router.patch("/:id", updateLectureInfo)
+router.patch("/lecture/:id", updateLectureInfo)
 
-router.patch("/:id/open", openLecture)
+router.patch("/lecture/:id/open", openLecture)
 
-router.delete("/:id", deleteLecture)
+router.delete("/lecture/:id", deleteLecture)
 
-router.post("/register", registerLecture)
+router.post("/lecture/register", registerLecture)
 
 
 export default router;
