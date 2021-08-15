@@ -1,6 +1,12 @@
 import { Router } from "express";
+import { createStudent, getListByStudentId } from "../controllers/student";
+
 const router = Router();
 
-router.get("/student", )
-router.get("/student/:id", )
+
+router.post("/student", createStudent)
+
+router.get("/student/:id", getListByStudentId)
+
+
 export default router;
