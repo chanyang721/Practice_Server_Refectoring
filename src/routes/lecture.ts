@@ -9,7 +9,7 @@ router.post("/lecture", )
 router.patch("/lecture/:id", )
 router.patch("/lecture/:id/open", )
 router.delete("/lecture/:id", )
-router.delete("/lecture/register", )
+router.post("/lecture/register", )
 
 
 export default router;
