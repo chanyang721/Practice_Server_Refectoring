@@ -2,4 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const router = express_1.Router();
+router.get("/lecture/:name");
+router.get("/lecture/category/:name");
+router.get("/lecture/category");
+router.get("lecture/:id/details");
+router.post("/lecture");
+router.patch("/lecture/:id");
+router.patch("/lecture/:id/open");
+router.delete("/lecture/:id");
+router.delete("/lecture/register");
 exports.default = router;

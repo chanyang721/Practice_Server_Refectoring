@@ -13,9 +13,9 @@ app.use(cors({
     credentials: true
 }))
 
-app.use("/instructor", instructorRouter);
-app.use("/lecture", lectureRouter);
-app.use("/student", studentRouter);
+app.use("/api", instructorRouter);
+app.use("/api", lectureRouter);
+app.use("/api", studentRouter);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
