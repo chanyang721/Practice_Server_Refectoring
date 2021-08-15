@@ -1,10 +1,23 @@
+-- CREATE database Inflearn;
 
 CREATE TABLE instructors (
   id INT AUTO_INCREMENT,
   instructors_name varchar(255) NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  INDEX (id, instructors_name)
+);
+
+CREATE TABLE students (
+  id INT AUTO_INCREMENT,
+  email varchar(255) NOT NULL,
+  lectures varchar(255) NOT NULL,
+  created_at datetime DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY (email),
+  INDEX (id, email)
 );
 
 CREATE TABLE lectures (
@@ -19,17 +32,10 @@ CREATE TABLE lectures (
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (student_id) REFERENCES students (id)
+  FOREIGN KEY (student_id) REFERENCES students (id),
+  INDEX (id, category)
 );
 
-CREATE TABLE students (
-  id INT AUTO_INCREMENT,
-  email varchar(255) NOT NULL,
-  lectures varchar(255) NOT NULL,
-  created_at datetime DEFAULT CURRENT_TIMESTAMP,
-  updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (id)
-);
 
 CREATE TABLE lectures_students (
   lecture_id INT NOT NULL,
@@ -37,13 +43,9 @@ CREATE TABLE lectures_students (
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (lecture_id) REFERENCES lectures (id),
-  FOREIGN KEY (student_id) REFERENCES students (id)
+  FOREIGN KEY (student_id) REFERENCES students (id),
+  INDEX (lecture_id, student_id)
 );
 
 
-
-ALTER TABLE orders ADD FOREIGN KEY (user_id) REFERENCES users (id);
-
-/*  Execute this file from the command line by typing:
- *    mysql -u root < server/schema.sql -p -Dcmarket
- *  to create the database and the tables.*/
+/* mysql -u root -p --database=Inflearn < [schema.sql 파일 경로] */
