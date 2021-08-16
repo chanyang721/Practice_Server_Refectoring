@@ -11,6 +11,13 @@ import {
     deleteLecture,
     registerLecture
 } from "../controllers/lecture";
+import { 
+    createLectureVaildation,
+    updateLectureInfoVaildation,
+    openLectureVaildation,
+    deleteLectureVaildation,
+    registerLectureVaildation,
+} from "../middlewares/vaildations"
 
 
 router.get("/lecture/:name", getListBylectureName)
@@ -21,15 +28,15 @@ router.get("/lecture/category", getListByAllCategory)
 
 router.get("/lecture/:id/details", getLectureById)
 
-router.post("/lecture", createLecture) 
+router.post("/lecture", createLectureVaildation, createLecture) 
 
-router.patch("/lecture/:id", updateLectureInfo)
+router.patch("/lecture/:id", updateLectureInfoVaildation, updateLectureInfo)
 
-router.patch("/lecture/:id/open", openLecture)
+router.patch("/lecture/:id/open", openLectureVaildation, openLecture)
 
-router.delete("/lecture/:id", deleteLecture)
+router.delete("/lecture/:id", deleteLectureVaildation, deleteLecture)
 
-router.post("/lecture/register", registerLecture)
+router.post("/lecture/register", registerLectureVaildation, registerLecture)
 
 
 export default router;
