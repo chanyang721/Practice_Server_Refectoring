@@ -6,6 +6,7 @@ async function startServer() {
     const app = express();
 
     await expressMiddlewares(app)
+
     await expressRoutes(app)
 
     const port = process.env.PORT || 4000;

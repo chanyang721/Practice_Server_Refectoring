@@ -14,5 +14,6 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createStudent = createStudent;
 const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("getListByStudentId");
 });
 exports.getListByStudentId = getListByStudentId;

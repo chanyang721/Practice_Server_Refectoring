@@ -20,6 +20,9 @@ function startServer() {
         const app = express_1.default();
         yield default_1.default(app);
         yield routes_1.default(app);
+        app.get("/", (req, res) => {
+            res.send("hello world");
+        });
         const port = process.env.PORT || 4000;
         app.listen(port, () => {
             console.log(`App is running on ${port}`);

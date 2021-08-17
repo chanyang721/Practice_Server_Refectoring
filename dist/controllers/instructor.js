@@ -11,5 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getListByinstructorName = void 0;
 const getListByinstructorName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("getListByinstructorName");
 });
 exports.getListByinstructorName = getListByinstructorName;
