@@ -52,6 +52,7 @@ export const deleteLectureVaildation = async (req: Request, res: Response, next:
     return next();
 }
 
+
 export const registerLectureVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const {  } = req.body;
 

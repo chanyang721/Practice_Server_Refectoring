@@ -17,7 +17,7 @@ import {
     openLectureVaildation,
     deleteLectureVaildation,
     registerLectureVaildation,
-} from "../middlewares/vaildations"
+} from "../middlewares/vaildations/lecture"
 
 
 router.get("/lecture/:name", getListBylectureName)
