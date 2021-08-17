@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import db from "../database";
-import {  } from "../models/query";
+import { utils } from "../models/studentquery";
+import messageFormat from "../utils/errorformat"
 
 export const getListBylectureName = async (req: Request, res: Response): Promise<any> => {
 

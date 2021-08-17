@@ -1,6 +1,8 @@
 import express from "express";
 import expressMiddlewares from "./middlewares/express/default";
 import expressRoutes from "./middlewares/express/routes";
+import dotenv from "dotenv";
+dotenv.config();
 
 async function startServer() {
     const app = express();

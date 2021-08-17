@@ -15,14 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const default_1 = __importDefault(require("./middlewares/express/default"));
 const routes_1 = __importDefault(require("./middlewares/express/routes"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = express_1.default();
         yield default_1.default(app);
         yield routes_1.default(app);
-        app.get("/", (req, res) => {
-            res.send("hello world");
-        });
         const port = process.env.PORT || 4000;
         app.listen(port, () => {
             console.log(`App is running on ${port}`);

@@ -8,12 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getListByStudentId = exports.createStudent = void 0;
+const studentquery_1 = require("../models/studentquery");
+const errorformat_1 = __importDefault(require("../utils/errorformat"));
 const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { DuplicUser, email } = req.body;
+    if (!DuplicUser) {
+        studentquery_1.utils.students.create(email, (error, result) => {
+            if (error)
+                res.status(400).json(errorformat_1.default(400, "생성 오류 발생", error));
+            else
+                res.status(201).json(errorformat_1.default(201, "생성 완료"));
+        });
+    }
+    else {
+        res.status(400).json(errorformat_1.default(400, "중복된 이메일이 존재합니다."));
+    }
 });
 exports.createStudent = createStudent;
 const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("getListByStudentId");
+    res.send("getListByStudentId");
 });
 exports.getListByStudentId = getListByStudentId;

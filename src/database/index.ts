@@ -6,4 +6,8 @@ const con = mysql.createConnection(
     config["development"]
 )
 
+con.connect((err) => {
+    if (err) throw err;
+});
+
 export default con

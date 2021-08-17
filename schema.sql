@@ -1,3 +1,4 @@
+DELETE database IF EXISTS Inflearn;
 CREATE database IF NOT EXISTS Inflearn;
 
 CREATE TABLE instructors (
@@ -11,13 +12,14 @@ CREATE TABLE instructors (
 
 CREATE TABLE students (
   id INT AUTO_INCREMENT,
+  nickname varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   lectures varchar(255) NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY (email),
-  INDEX (id, email)
+  INDEX (id, nickname, email)
 );
 
 CREATE TABLE lectures (

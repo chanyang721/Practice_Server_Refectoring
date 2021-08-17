@@ -6,6 +6,7 @@
   "scripts": {
     "start": "tsc-watch --onSuccess \" node dist/index.js \" ",
     "restart": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
+    "debug": "ts-node-dev --inspect -- src/index.ts",
     "test": "jest"
   },
   "repository": {
@@ -38,6 +39,7 @@
     "@types/express": "^4.17.13",
     "@types/joi": "^17.2.3",
     "@types/mysql": "^2.15.19",
-    "ts-node": "^10.2.0"
+    "ts-node": "^10.2.0",
+    "ts-node-dev": "^1.1.8"
   }
 }
