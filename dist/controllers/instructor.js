@@ -8,8 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getListByinstructorName = void 0;
+const typedi_1 = require("typedi");
+const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
+const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const getListByinstructorName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("getListByinstructorName");
 });
