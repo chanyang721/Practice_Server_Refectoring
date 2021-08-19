@@ -1,7 +1,7 @@
-import { Application } from "express";
+import { Router } from "express";
 import { instructorRouter, lectureRouter, studentRouter } from "../../routes";
 
-export default (app: Application) => {
+export default (app: Router) => {
 
     app.use("/api", instructorRouter);
     

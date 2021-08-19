@@ -13,19 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createStudentVaildation = void 0;
-const errorformat_1 = __importDefault(require("../../utils/errorformat"));
+const typedi_1 = require("typedi");
 const joi_1 = __importDefault(require("joi"));
+const requestFormat_1 = __importDefault(require("../../utils/requestFormat"));
 const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
     const schema = joi_1.default.object({
         email: joi_1.default.string().email().trim().max(30).required()
     });
     try {
         yield schema.validateAsync(req.body);
-        console.log("유효성 통과");
         return next();
     }
     catch (err) {
-        res.send(errorformat_1.default(400, "유효한 형식이 아닙니다", err.details[0].message));
+        res.send(responseFormat(400, "유효한 형식이 아닙니다", err));
     }
 });
 exports.createStudentVaildation = createStudentVaildation;

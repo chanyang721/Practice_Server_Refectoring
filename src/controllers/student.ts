@@ -1,21 +1,23 @@
 import { Request, Response } from "express";
-import { utils } from "../models/studentquery";
-import messageFormat from "../utils/errorformat"
+import { Container } from "typedi";
+import StudentModel from "../models/studentquery"
 
-export const createStudent = async (req: Request, res: Response): Promise<any> => {
-    const { DuplicUser, email } = req.body
+export const createStudent = async (req: Request, res: Response) => {
+    try{
+        const { email } = req.body
+        const studentModelInstance = Container.get(StudentModel);
 
-    if (!DuplicUser) {
-        utils.students.create(email, (error: Error, result: any) => {
-            if (error) res.status(400).json(messageFormat(400, "생성 오류 발생", error));
-            else res.status(201).json(messageFormat(201, "생성 완료"));
-        })
+        const { userRecord } = await studentModelInstance.createUser(email)
+
+        res.status(200).json({ userRecord })
     }
-    else {
-        res.status(400).json(messageFormat(400, "중복된 이메일이 존재합니다."))
+    catch(err) {
+        console.log(err)
+        throw new Error("1")
     }
 };
 
 export const getListByStudentId = async (req: Request, res: Response): Promise<any> => {
+
     res.send("getListByStudentId")
 };

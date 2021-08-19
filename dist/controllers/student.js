@@ -13,20 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getListByStudentId = exports.createStudent = void 0;
-const studentquery_1 = require("../models/studentquery");
-const errorformat_1 = __importDefault(require("../utils/errorformat"));
+const typedi_1 = require("typedi");
+const studentquery_1 = __importDefault(require("../models/studentquery"));
 const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { DuplicUser, email } = req.body;
-    if (!DuplicUser) {
-        studentquery_1.utils.students.create(email, (error, result) => {
-            if (error)
-                res.status(400).json(errorformat_1.default(400, "생성 오류 발생", error));
-            else
-                res.status(201).json(errorformat_1.default(201, "생성 완료"));
-        });
+    try {
+        const { email } = req.body;
+        const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
+        const { userRecord } = yield studentModelInstance.createUser(email);
+        res.status(200).json({ userRecord });
     }
-    else {
-        res.status(400).json(errorformat_1.default(400, "중복된 이메일이 존재합니다."));
+    catch (err) {
+        console.log(err);
+        throw new Error("1");
     }
 });
 exports.createStudent = createStudent;
