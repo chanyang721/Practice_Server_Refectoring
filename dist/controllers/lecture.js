@@ -8,8 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerLecture = exports.deleteLecture = exports.openLecture = exports.updateLectureInfo = exports.createLecture = exports.getLectureById = exports.getListByAllCategory = exports.getListByCategoryName = exports.getListBylectureName = void 0;
+exports.registerLecture = exports.deleteLecture = exports.openLecture = exports.updateLectureInfo = exports.createLecture = exports.sortLecturesByAttendance = exports.sortLecturesByTime = exports.getLectureById = exports.getListByAllCategory = exports.getListByCategoryName = exports.getListBylectureName = void 0;
+const typedi_1 = require("typedi");
+const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
+const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const getListBylectureName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getListBylectureName = getListBylectureName;
@@ -22,6 +28,12 @@ exports.getListByAllCategory = getListByAllCategory;
 const getLectureById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getLectureById = getLectureById;
+const sortLecturesByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+exports.sortLecturesByTime = sortLecturesByTime;
+const sortLecturesByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+exports.sortLecturesByAttendance = sortLecturesByAttendance;
 const createLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.createLecture = createLecture;

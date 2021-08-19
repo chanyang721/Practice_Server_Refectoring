@@ -15,15 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getListByStudentId = exports.createStudent = void 0;
 const typedi_1 = require("typedi");
 const studentquery_1 = __importDefault(require("../models/studentquery"));
+const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
+const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email } = req.body;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
         const { userRecord } = yield studentModelInstance.createUser(email);
         if (userRecord)
-            res.status(200).json({ userRecord });
+            res.status(200).json(responseFormat(200, userRecord));
         else
-            res.status(400).json({ message: "중복된 이메일이 존재합니다." });
+            res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다."));
     }
     catch (err) {
         console.log(err);

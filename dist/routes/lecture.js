@@ -8,6 +8,8 @@ router.get("/lecture/:name", lecture_1.getListBylectureName);
 router.get("/lecture/category/:name", lecture_1.getListByCategoryName);
 router.get("/lecture/category", lecture_1.getListByAllCategory);
 router.get("/lecture/:id/details", lecture_1.getLectureById);
+router.get("/lecture/sort/desc", lecture_1.sortLecturesByTime);
+router.get("/lecture/sort/attendance", lecture_1.sortLecturesByAttendance);
 router.post("/lecture", lecture_2.createLectureVaildation, lecture_1.createLecture);
 router.patch("/lecture/:id", lecture_2.updateLectureInfoVaildation, lecture_1.updateLectureInfo);
 router.patch("/lecture/:id/open", lecture_2.openLectureVaildation, lecture_1.openLecture);

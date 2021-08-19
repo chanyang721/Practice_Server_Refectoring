@@ -5,6 +5,8 @@ import {
     getListByCategoryName,
     getListByAllCategory,
     getLectureById,
+    sortLecturesByTime,
+    sortLecturesByAttendance,
     createLecture,
     updateLectureInfo,
     openLecture,
@@ -27,6 +29,10 @@ router.get("/lecture/category/:name", getListByCategoryName)
 router.get("/lecture/category", getListByAllCategory)
 
 router.get("/lecture/:id/details", getLectureById)
+
+router.get("/lecture/sort/desc", sortLecturesByTime)
+
+router.get("/lecture/sort/attendance", sortLecturesByAttendance)
 
 router.post("/lecture", createLectureVaildation, createLecture) 
 

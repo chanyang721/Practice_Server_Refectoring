@@ -16,8 +16,8 @@ exports.createStudentVaildation = void 0;
 const typedi_1 = require("typedi");
 const joi_1 = __importDefault(require("joi"));
 const requestFormat_1 = __importDefault(require("../../utils/requestFormat"));
+const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
     const schema = joi_1.default.object({
         email: joi_1.default.string().email().trim().max(30).required()
     });

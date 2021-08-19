@@ -2,11 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { Container } from "typedi"
 import Joi from "joi";
 import MessageFormat from "../../utils/requestFormat";
-
+const { responseFormat } = Container.get(MessageFormat)
 
 export const createStudentVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-
-    const { responseFormat } = Container.get(MessageFormat)
 
     const schema = Joi.object({
         email: Joi.string().email().trim().max(30).required()

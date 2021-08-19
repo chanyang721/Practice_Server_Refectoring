@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { Container } from "typedi"
 import MessageFormat from "../utils/requestFormat";
+const { responseFormat } = Container.get(MessageFormat)
 
 export const getListBylectureName = async (req: Request, res: Response): Promise<any> => {
 
@@ -16,6 +18,15 @@ export const getListByAllCategory = async (req: Request, res: Response): Promise
 export const getLectureById = async (req: Request, res: Response): Promise<any> => {
 
 };
+
+export const sortLecturesByTime = async (req: Request, res: Response): Promise<any> => {
+
+};
+
+export const sortLecturesByAttendance = async (req: Request, res: Response): Promise<any> => {
+
+};
+
 
 export const createLecture = async (req: Request, res: Response): Promise<any> => {
 
