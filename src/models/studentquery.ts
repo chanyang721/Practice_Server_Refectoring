@@ -28,6 +28,11 @@ export default class StudentModel {
     }
 
 
+    public async getLectureLists(): Promise<any> {
+        
+    }
+
+
     public Query(sql, params?) {
         return new Promise((resolve, reject) =>{
             db.query(sql, params, (err, result) => {
@@ -37,25 +42,5 @@ export default class StudentModel {
             });
         });
     }
+
 }
-
-
-
-// export const utils = {
-//     students: {
-//         create: (email: string, callback: Function): void => {
-//             const nickName = email.split("@")[0];
-            
-//             const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-//             const params = [nickName, email, "{}"]
-//             db.query(sql, params, (error, result) => {
-//                 if (error) console.log(error);
-//                 callback(error, result);
-//             })
-//         },
-
-//         getList: () => {
-
-//         }
-//     },
-// }

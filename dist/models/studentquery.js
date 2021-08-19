@@ -42,6 +42,10 @@ let StudentModel = class StudentModel {
             }
         });
     }
+    getLectureLists() {
+        return __awaiter(this, void 0, void 0, function* () {
+        });
+    }
     Query(sql, params) {
         return new Promise((resolve, reject) => {
             database_1.default.query(sql, params, (err, result) => {
@@ -56,18 +60,3 @@ StudentModel = __decorate([
     typedi_1.Service()
 ], StudentModel);
 exports.default = StudentModel;
-// export const utils = {
-//     students: {
-//         create: (email: string, callback: Function): void => {
-//             const nickName = email.split("@")[0];
-//             const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-//             const params = [nickName, email, "{}"]
-//             db.query(sql, params, (error, result) => {
-//                 if (error) console.log(error);
-//                 callback(error, result);
-//             })
-//         },
-//         getList: () => {
-//         }
-//     },
-// }
