@@ -5,28 +5,25 @@ import db from "../database";
 @Service()
 export default class StudentModel {
 
-    constructor(
-
-    ) {}
-
     public async createUser(email: string): Promise<any> {
         try{
             let sql = `SELECT * FROM students WHERE email = ?`;
             const duplicUser = await this.Query(sql, [email])
-            console.log(duplicUser)
     
             if (!duplicUser[0]) {
-                let sql = "INSERT INTO students (nickname, email, lectures) VALUSE (?, ?, ?)";
-                const userRecord = await this.Query(sql, [email])
+                const nickName = email.split("@")[0];
+                const params = [nickName, email, "{}"]
+                
+                let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+                const userRecord = await this.Query(sql, params)
                 return { userRecord }
             }
             else {
-                throw new Error("중복된 이메일이 존재합니다.");
+                return { userRecord: null }
             }
         }
         catch(err) {
             console.log(err)
-            throw new Error("유저 생성을 실패했습니다.");
         }
     }
 

@@ -20,11 +20,13 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const { email } = req.body;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
         const { userRecord } = yield studentModelInstance.createUser(email);
-        res.status(200).json({ userRecord });
+        if (userRecord)
+            res.status(200).json({ userRecord });
+        else
+            res.status(400).json({ message: "중복된 이메일이 존재합니다." });
     }
     catch (err) {
         console.log(err);
-        throw new Error("1");
     }
 });
 exports.createStudent = createStudent;

@@ -5,9 +5,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -24,25 +21,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = require("typedi");
 const database_1 = __importDefault(require("../database"));
 let StudentModel = class StudentModel {
-    constructor() { }
     createUser(email) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let sql = `SELECT * FROM students WHERE email = ?`;
                 const duplicUser = yield this.Query(sql, [email]);
-                console.log(duplicUser);
                 if (!duplicUser[0]) {
-                    let sql = "INSERT INTO students (nickname, email, lectures) VALUSE (?, ?, ?)";
-                    const userRecord = yield this.Query(sql, [email]);
+                    const nickName = email.split("@")[0];
+                    const params = [nickName, email, "{}"];
+                    let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+                    const userRecord = yield this.Query(sql, params);
                     return { userRecord };
                 }
                 else {
-                    throw new Error("중복된 이메일이 존재합니다.");
+                    return { userRecord: null };
                 }
             }
             catch (err) {
                 console.log(err);
-                throw new Error("유저 생성을 실패했습니다.");
             }
         });
     }
@@ -57,8 +53,7 @@ let StudentModel = class StudentModel {
     }
 };
 StudentModel = __decorate([
-    typedi_1.Service(),
-    __metadata("design:paramtypes", [])
+    typedi_1.Service()
 ], StudentModel);
 exports.default = StudentModel;
 // export const utils = {
