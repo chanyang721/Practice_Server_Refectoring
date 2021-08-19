@@ -28,7 +28,6 @@
     "jest": "^27.0.6",
     "joi": "^17.4.2",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.0",
     "nodemon": "^2.0.12",
     "reflect-metadata": "^0.1.13",
     "tsc-watch": "^4.4.0",
