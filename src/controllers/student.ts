@@ -22,6 +22,11 @@ export const createStudent = async (req: Request, res: Response) => {
 };
 
 export const getListByStudentId = async (req: Request, res: Response): Promise<any> => {
-
-    res.send("getListByStudentId")
+    try {
+        res.send("getListByStudentId")
+    }
+    catch (err) {
+        console.log(err)
+    }
+    
 };

@@ -33,6 +33,11 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createStudent = createStudent;
 const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send("getListByStudentId");
+    try {
+        res.send("getListByStudentId");
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 exports.getListByStudentId = getListByStudentId;

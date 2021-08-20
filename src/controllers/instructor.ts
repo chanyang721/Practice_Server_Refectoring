@@ -5,7 +5,10 @@ import MessageFormat from "../utils/requestFormat";
 const { responseFormat } = Container.get(MessageFormat)
 
 export const getListByinstructorName = async (req: Request, res: Response): Promise<any> => {
-
-
-    console.log("getListByinstructorName")
+    try {
+        res.send("getListByinstructorName")
+    }
+    catch (err) {
+        console.log(err)
+    }
 };

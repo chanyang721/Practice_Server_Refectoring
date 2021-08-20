@@ -17,6 +17,11 @@ const typedi_1 = require("typedi");
 const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
 const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const getListByinstructorName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("getListByinstructorName");
+    try {
+        res.send("getListByinstructorName");
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 exports.getListByinstructorName = getListByinstructorName;
