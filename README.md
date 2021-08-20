@@ -49,6 +49,8 @@ Reference : https://www.javatpoint.com/mysql-tutorial
 
 * 21.08.20 ![TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
 
+* 21.08.21 ![]()
+
 # Entity Relationship Diagram (ERD)
 - ERD에는 아래 항목들이 포함되어 있어야 합니다.
 - 컬럼명 / 타입 / 컬럼설명
