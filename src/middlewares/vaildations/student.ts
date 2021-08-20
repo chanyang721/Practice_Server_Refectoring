@@ -15,7 +15,7 @@ export const createStudentVaildation = async (req: Request, res: Response, next:
         return next();
     }
     catch (err) {
-        res.send(responseFormat(400, "유효한 형식이 아닙니다", err))
+        res.send(responseFormat(400, "유효한 형식이 아닙니다", null, err))
     }
 
 }

@@ -7,11 +7,11 @@ export default class StudentModel {
     public async createUser(email: string): Promise<any> {
         try{
             let sql = `SELECT * FROM students WHERE email = ?`;
-            const duplicUser = await this.Query(sql, [email])
+            const duplicUser = await this.Query(sql, [ email ])
     
             if (!duplicUser[0]) {
                 const nickName = email.split("@")[0];
-                const params = [nickName, email, "{}"]
+                const params = [ nickName, email, "{}" ]
                 
                 let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
                 const userRecord = await this.Query(sql, params)
@@ -27,8 +27,17 @@ export default class StudentModel {
     }
 
 
-    public async getLectureLists(): Promise<any> {
-        
+    public async getLectureLists(id: string): Promise<any> {
+        try {
+            let sql = `SELETE * FROM students WHERE id = ?`;
+            const lecturesList = await this.Query(sql, [ id ])
+            
+            return { lecturesList }
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 
 

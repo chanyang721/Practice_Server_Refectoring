@@ -23,9 +23,9 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
         const { userRecord } = yield studentModelInstance.createUser(email);
         if (userRecord)
-            res.status(200).json(responseFormat(200, userRecord));
+            res.status(200).json(responseFormat(200, "유저 생성 완료", userRecord));
         else
-            res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다."));
+            res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다"));
     }
     catch (err) {
         console.log(err);
@@ -34,7 +34,10 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createStudent = createStudent;
 const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send("getListByStudentId");
+        const { id } = req.params;
+        const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
+        const { lecturesList } = yield studentModelInstance.getLectureLists(id);
+        res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 정보입니다", lecturesList));
     }
     catch (err) {
         console.log(err);
