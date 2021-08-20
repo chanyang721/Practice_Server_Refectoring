@@ -8,6 +8,7 @@ const { responseFormat } = Container.get(MessageFormat)
 export const createStudent = async (req: Request, res: Response) => {
     try{
         const { email } = req.body
+
         const studentModelInstance = Container.get(StudentModel);
 
         const { userRecord } = await studentModelInstance.createUser(email)

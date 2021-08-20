@@ -1,7 +1,6 @@
 import { Service } from 'typedi';
 import db from "../database";
 
-
 @Service()
 export default class StudentModel {
 
