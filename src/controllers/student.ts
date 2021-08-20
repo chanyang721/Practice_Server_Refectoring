@@ -14,7 +14,7 @@ export const createStudent = async (req: Request, res: Response) => {
         const { userRecord } = await studentModelInstance.createUser(email)
 
         if (userRecord) res.status(200).json(responseFormat(200, "유저 생성 완료", userRecord));
-        else res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다"))
+        else res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다", null))
     }
     catch(err) {
         console.log(err)

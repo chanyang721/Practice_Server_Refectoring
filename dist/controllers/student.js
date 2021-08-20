@@ -25,7 +25,7 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (userRecord)
             res.status(200).json(responseFormat(200, "유저 생성 완료", userRecord));
         else
-            res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다"));
+            res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다", null));
     }
     catch (err) {
         console.log(err);
