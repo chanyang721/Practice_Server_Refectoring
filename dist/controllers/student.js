@@ -37,7 +37,7 @@ const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const { id } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
         const { lecturesList } = yield studentModelInstance.getLectureLists(id);
-        res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 정보입니다", lecturesList));
+        res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 목록입니다", lecturesList));
     }
     catch (err) {
         console.log(err);

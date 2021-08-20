@@ -45,7 +45,7 @@ let StudentModel = class StudentModel {
     getLectureLists(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELETE * FROM students WHERE id = ?`;
+                let sql = `SELECT * FROM students WHERE id = ?`;
                 const lecturesList = yield this.Query(sql, [id]);
                 return { lecturesList };
             }

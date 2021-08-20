@@ -29,7 +29,7 @@ export default class StudentModel {
 
     public async getLectureLists(id: string): Promise<any> {
         try {
-            let sql = `SELETE * FROM students WHERE id = ?`;
+            let sql = `SELECT * FROM students WHERE id = ?`;
             const lecturesList = await this.Query(sql, [ id ])
             
             return { lecturesList }

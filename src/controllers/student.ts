@@ -29,10 +29,10 @@ export const getListByStudentId = async (req: Request, res: Response): Promise<a
 
         const { lecturesList } = await studentModelInstance.getLectureLists(id)
 
-        res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 정보입니다", lecturesList))
+        res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 목록입니다", lecturesList))
     }
     catch (err) {
         console.log(err)
     }
-    
+
 };
