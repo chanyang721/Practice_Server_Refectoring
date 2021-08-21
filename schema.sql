@@ -1,13 +1,19 @@
-DELETE database IF EXISTS Inflearn;
+-- 테이블 생성 방법
+/* 
+    mysql -u root -p --database=Inflearn < [schema.sql 파일 경로] 
+*/
+
+DROP database IF EXISTS Inflearn;
 CREATE database IF NOT EXISTS Inflearn;
+USE Inflearn 
 
 CREATE TABLE instructors (
   id INT AUTO_INCREMENT,
-  instructors_name varchar(255) NOT NULL,
+  instructor_name varchar(255) NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  INDEX (id, instructors_name)
+  INDEX (id, instructor_name)
 );
 
 CREATE TABLE students (
@@ -30,11 +36,11 @@ CREATE TABLE lectures (
   price INT NOT NULL,
   students_info varchar(255) NOT NULL,
   public tinyint(1) DEFAULT 0 NOT NULL,
-  student_id INT NOT NULL, 
+  instructor_id INT NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (student_id) REFERENCES students (id),
+  FOREIGN KEY (instructor_id) REFERENCES instructors (id),
   INDEX (id, category)
 );
 
@@ -42,12 +48,9 @@ CREATE TABLE lectures (
 CREATE TABLE lectures_students (
   lecture_id INT NOT NULL,
   student_id INT NOT NULL,
-  created_at datetime DEFAULT CURRENT_TIMESTAMP,
-  updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (lecture_id) REFERENCES lectures (id),
   FOREIGN KEY (student_id) REFERENCES students (id),
   INDEX (lecture_id, student_id)
 );
 
 
-/* mysql -u root -p --database=Inflearn < [schema.sql 파일 경로] */

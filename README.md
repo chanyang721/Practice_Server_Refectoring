@@ -47,9 +47,9 @@ Reference : https://www.javatpoint.com/mysql-tutorial
 
 * 21.08.19, 다른 사람들의 서버 설계를 보면 service라는 파일이 자주 보인다. Service에서는 ORM을 이용한 데이터 처리 로직들이 들어가있는것을 확인했는데 그럼 models는 ORM을 사용하기 떄문에 사용하지 않고 Service라는 파일을 만든 것일까?
 
-* 21.08.20 [TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
+* 21.08.20, [TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
 
-* 21.08.21 []()
+* 21.08.21, 데이터 스키마의 정보
 
 # Entity Relationship Diagram (ERD)
 - ERD에는 아래 항목들이 포함되어 있어야 합니다.

@@ -6,7 +6,10 @@ export default class InstructorModel {
 
     public async getListByName (name: string) {
         try {
-            let sql = `SELECT * FROM instructors WHERE instructors_name = ?`;
+            // 강사 이름이 같은 강의들만 가져온다.
+            let sql = `SELECT * FROM instructors 
+            JOIN lectures ON 
+            WHERE instructors_name = ?`;
             const lecturesList = await this.Query(sql, [ name ]);
 
             return { lecturesList }

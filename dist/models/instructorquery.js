@@ -24,7 +24,10 @@ let InstructorModel = class InstructorModel {
     getListByName(name) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT * FROM instructors WHERE instructors_name = ?`;
+                // 강사 이름이 같은 강의들만 가져온다.
+                let sql = `SELECT * FROM instructors 
+            JOIN lectures ON 
+            WHERE instructors_name = ?`;
                 const lecturesList = yield this.Query(sql, [name]);
                 return { lecturesList };
             }
