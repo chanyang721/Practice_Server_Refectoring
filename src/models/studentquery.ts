@@ -10,8 +10,8 @@ export default class StudentModel {
             const duplicUser = await this.Query(sql, [ email ])
     
             if (!duplicUser[0]) {
-                const nickName = email.split("@")[0];
-                const params = [ nickName, email, "{}" ]
+                const nickName: string = email.split("@")[0];
+                const params: string[] = [ nickName, email, "{}" ]
                 
                 let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
                 const userRecord = await this.Query(sql, params)
@@ -37,7 +37,6 @@ export default class StudentModel {
         catch (err) {
             console.log(err)
         }
-
     }
 
 
