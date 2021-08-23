@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerLecture = exports.deleteLecture = exports.openLecture = exports.updateLectureInfo = exports.createLecture = exports.sortLecturesByAttendance = exports.sortLecturesByTime = exports.getLectureById = exports.getListByAllCategory = exports.getListByCategoryName = exports.getListBylectureName = void 0;
 const typedi_1 = require("typedi");
+const lecturequery_1 = __importDefault(require("../models/lecturequery"));
 const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
 const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const getListBylectureName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -72,7 +73,13 @@ const sortLecturesByAttendance = (req, res) => __awaiter(void 0, void 0, void 0,
 exports.sortLecturesByAttendance = sortLecturesByAttendance;
 const createLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send("createLecture");
+        const { instructor, category, title, description, price } = req.body;
+        const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
+        const lectureRecord = yield LectureModelInstance.createLectureService({ instructor, category, title, description, price });
+        if (lectureRecord)
+            res.status(200).json(responseFormat(200, "강의 생성 완료"));
+        else
+            res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"));
     }
     catch (err) {
         console.log(err);

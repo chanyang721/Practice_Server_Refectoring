@@ -31,18 +31,19 @@ CREATE TABLE students (
 CREATE TABLE lectures (
   id INT AUTO_INCREMENT,
   instructor varchar(255) NOT NULL,
-  category varchar(255) NOT NULL,
-  name varchar(255) NOT NULL,
+  category varchar(255),
+  title varchar(255) NOT NULL,
   description varchar(3000) NOT NULL,
   price INT NOT NULL,
-  students varchar(255) NOT NULL, 
-  public tinyint(1) DEFAULT 0 NOT NULL,
+  students varchar(255) DEFAULT "{}" NOT NULL, 
+  open tinyint(1) DEFAULT 0 NOT NULL,
   instructor_id INT NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (instructor_id) REFERENCES instructors (id),
-  INDEX (name, category, public, students)
+  UNIQUE KEY (title),
+  INDEX (title, category, open, students)
 );
 
 

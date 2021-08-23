@@ -13,12 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerLectureVaildation = exports.deleteLectureVaildation = exports.openLectureVaildation = exports.updateLectureInfoVaildation = exports.createLectureVaildation = void 0;
+const typedi_1 = require("typedi");
 const joi_1 = __importDefault(require("joi"));
+const requestFormat_1 = __importDefault(require("../../utils/requestFormat"));
+const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const {} = req.body;
-    const schema = joi_1.default.object({});
-    const { value, error } = yield schema.validateAsync(req.body);
-    return next();
+    const schema = joi_1.default.object({
+        instructor: joi_1.default.string().max(30).trim().required(),
+        category: joi_1.default.array().items(joi_1.default.string()).max(1).required(),
+        title: joi_1.default.string().trim().required(),
+        description: joi_1.default.string().trim().required(),
+        price: joi_1.default.number().integer().positive().required(),
+    });
+    try {
+        yield schema.validateAsync(req.body);
+        return next();
+    }
+    catch (err) {
+        res.send(responseFormat(400, "유효한 형식이 아닙니다", null, err.details[0].message));
+    }
 });
 exports.createLectureVaildation = createLectureVaildation;
 const updateLectureInfoVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

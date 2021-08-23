@@ -26,7 +26,7 @@ const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
         return next();
     }
     catch (err) {
-        res.send(responseFormat(400, "유효한 형식이 아닙니다", null, err));
+        res.send(responseFormat(400, "유효한 형식이 아닙니다", null, err.details[0].message));
     }
 });
 exports.createStudentVaildation = createStudentVaildation;

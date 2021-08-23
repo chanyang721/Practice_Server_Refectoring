@@ -24,18 +24,11 @@ let StudentModel = class StudentModel {
     createUser(email) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT * FROM students WHERE email = ?`;
-                const duplicUser = yield this.Query(sql, [email]);
-                if (!duplicUser[0]) {
-                    const nickName = email.split("@")[0];
-                    const params = [nickName, email, "{}"];
-                    let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-                    const userRecord = yield this.Query(sql, params);
-                    return { userRecord };
-                }
-                else {
-                    return { userRecord: null };
-                }
+                const nickName = email.split("@")[0];
+                const params = [nickName, email, "{}"];
+                let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+                const userRecord = yield this.Query(sql, params);
+                return { userRecord };
             }
             catch (err) {
                 console.log(err);
@@ -45,7 +38,10 @@ let StudentModel = class StudentModel {
     getLectureLists(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT * FROM students WHERE id = ?`;
+                let sql = `SELECT * FROM students
+            JOIN lectures_students ON students.id === lectures_students.student_id
+            JOIN lectures ON lectures_students.lecture_id === lectures.id
+            WHERE students.id = ?`;
                 const lecturesList = yield this.Query(sql, [id]);
                 return { lecturesList };
             }
@@ -58,7 +54,7 @@ let StudentModel = class StudentModel {
         return new Promise((resolve, reject) => {
             database_1.default.query(sql, params, (err, result) => {
                 if (err)
-                    return reject(err);
+                    reject(err);
                 resolve(result);
             });
         });
