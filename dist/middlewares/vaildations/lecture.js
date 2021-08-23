@@ -64,17 +64,16 @@ const deleteLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
 exports.deleteLectureVaildation = deleteLectureVaildation;
 const registerLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { lectureId, studentId } = req.body;
         const schema = joi_1.default.object({
             lectureId: joi_1.default.number().integer().positive().min(1).required(),
             studentId: joi_1.default.number().integer().positive().min(1).required(),
         });
-        try {
-            yield schema.validateAsync(req.body);
+        const { value, error } = yield schema.validate(req.body);
+        if (error) {
+            return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error.details[0].message));
         }
-        catch (err) {
-            return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, err.details[0].message));
-        }
+        req.body = value;
+        const { lectureId, studentId } = req.body;
         let sql = `SELECT * FROM students WHERE id = ?`;
         let params = [studentId];
         const checkStudentExist = yield Query(sql, params);

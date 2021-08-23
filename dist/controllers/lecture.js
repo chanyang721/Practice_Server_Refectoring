@@ -81,7 +81,7 @@ const createLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         console.log(err);
     }
-});
+}); // 완료
 exports.createLecture = createLecture;
 const updateLectureInfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -120,5 +120,5 @@ const registerLecture = (req, res) => __awaiter(void 0, void 0, void 0, function
     catch (err) {
         console.log(err);
     }
-});
+}); // 완료
 exports.registerLecture = registerLecture;

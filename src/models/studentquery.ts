@@ -14,9 +14,9 @@ export default class StudentModel {
     public async createUser(email: string): Promise<any> {
         try{
             const nickName = email.split("@")[0];
-            const params = [ nickName, email, "{}" ]
             
             let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+            let params = [ nickName, email, "{}" ]
             const userRecord = await this.queryFormat.Query(sql, params)
 
             return { userRecord }
@@ -28,11 +28,13 @@ export default class StudentModel {
 
     public async getLectureLists(id: string): Promise<any> {
         try {
-            let sql = `SELECT * FROM students
-            JOIN lectures_students ON students.id === lectures_students.student_id
-            JOIN lectures ON lectures_students.lecture_id === lectures.id
+            let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            FROM students
+            JOIN lectures_students ON students.id = lectures_students.student_id
+            JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ?`;
             const lecturesList = await this.queryFormat.Query(sql, [ id ])
+            console.log(lecturesList)
             
             return { lecturesList }
         }

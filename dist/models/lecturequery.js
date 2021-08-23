@@ -33,12 +33,8 @@ let LectureModel = class LectureModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { instructor, category, title, description, price } = lectureData;
-                let sql = `SELECT * FROM instructors WHERE name = ?`;
-                let params = [instructor];
-                const instructorInfo = yield this.queryFormat.Query(sql, params);
-                console.log(instructorInfo);
-                sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
-                params = [[instructor, category[0], title, description, price]];
+                let sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
+                let params = [[instructor, category[0], title, description, price]];
                 const lectureRecord = yield this.queryFormat.Query(sql, params);
                 return { lectureRecord };
             }
@@ -46,7 +42,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    }
+    } // 완료
     registerLectureQuery(registerData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -56,13 +52,17 @@ let LectureModel = class LectureModel {
                 let sql = `UPDATE lectures SET students = ? WHERE id = ${lectureId}`;
                 let params = [JSON.stringify(students)];
                 const updateStudentsInfo = yield this.queryFormat.Query(sql, params);
+                sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;
+                params = [lectureId, studentId];
+                const a = yield this.queryFormat.Query(sql, params);
+                console.log(updateStudentsInfo, a);
                 return { updateStudentsInfo };
             }
             catch (err) {
                 console.log(err);
             }
         });
-    }
+    } // 완료
 };
 LectureModel = __decorate([
     typedi_1.Service(),

@@ -58,7 +58,6 @@ export const sortLecturesByAttendance = async (req: Request, res: Response): Pro
     }
 };
 
-
 export const createLecture = async (req: Request, res: Response): Promise<any> => {
     try {
         const { instructor, category, title, description, price } = req.body;
@@ -72,7 +71,7 @@ export const createLecture = async (req: Request, res: Response): Promise<any> =
     catch (err) {
         console.log(err)
     }
-};
+}; // 완료
 
 export const updateLectureInfo = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -114,4 +113,4 @@ export const registerLecture = async (req: Request, res: Response): Promise<any>
     catch (err) {
         console.log(err)
     }
-};
+}; // 완료

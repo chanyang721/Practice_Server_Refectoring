@@ -18,13 +18,8 @@ export default class LectureModel {
         try {
             const { instructor, category, title, description, price } = lectureData
 
-            let sql = `SELECT * FROM instructors WHERE name = ?`;
-            let params = [ instructor ];
-            const instructorInfo = await this.queryFormat.Query(sql, params);
-            console.log(instructorInfo)
-
-            sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
-            params = [ [ instructor, category[0], title, description, price ] ]
+            let sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
+            let params = [ [ instructor, category[0], title, description, price ] ]
             const lectureRecord = await this.queryFormat.Query(sql, params);
             
             return { lectureRecord };
@@ -32,12 +27,11 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료
 
-    public async registerLectureQuery (registerData: IregusterLecture): Promise<any> {
+    public async registerLectureQuery (registerData: any): Promise<any> {
         try {
             const { students, lectureId, studentId } = registerData;
-            
             const registerDay = dayjs().format("YYYY/MM/DD");
     
             students[studentId] = registerDay;
@@ -45,12 +39,18 @@ export default class LectureModel {
             let sql = `UPDATE lectures SET students = ? WHERE id = ${lectureId}`;
             let params = [ JSON.stringify(students) ];
             const updateStudentsInfo = await this.queryFormat.Query(sql, params);
+
+            sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;
+            params = [ lectureId, studentId ]
+            const a = await this.queryFormat.Query(sql, params);
+
+            console.log(updateStudentsInfo, a)
     
             return { updateStudentsInfo }
         }
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료
 
 }

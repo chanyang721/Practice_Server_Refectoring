@@ -31,8 +31,8 @@ let StudentModel = class StudentModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const nickName = email.split("@")[0];
-                const params = [nickName, email, "{}"];
                 let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+                let params = [nickName, email, "{}"];
                 const userRecord = yield this.queryFormat.Query(sql, params);
                 return { userRecord };
             }
@@ -44,11 +44,13 @@ let StudentModel = class StudentModel {
     getLectureLists(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT * FROM students
-            JOIN lectures_students ON students.id === lectures_students.student_id
-            JOIN lectures ON lectures_students.lecture_id === lectures.id
+                let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            FROM students
+            JOIN lectures_students ON students.id = lectures_students.student_id
+            JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ?`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id]);
+                console.log(lecturesList);
                 return { lecturesList };
             }
             catch (err) {

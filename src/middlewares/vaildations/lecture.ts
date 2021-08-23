@@ -73,20 +73,19 @@ export const deleteLectureVaildation = async (req: Request, res: Response, next:
 
 export const registerLectureVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
-        const { lectureId, studentId } = req.body
-    
+        
         const schema = Joi.object({
             lectureId: Joi.number().integer().positive().min(1).required(),
             studentId: Joi.number().integer().positive().min(1).required(),
         })
-    
-        try {
-            await schema.validateAsync(req.body)
-        }
-        catch (err) {
-            return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, err.details[0].message))
+        
+        const { value, error } = await schema.validate(req.body)
+        if (error) {
+            return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error.details[0].message))
         }
         
+        req.body = value
+        const { lectureId, studentId } = req.body
     
         let sql = `SELECT * FROM students WHERE id = ?`; 
         let params = [ studentId ]
