@@ -33,4 +33,4 @@ export const getListByStudentId = async (req: Request, res: Response): Promise<a
     catch (err) {
         return res.status(400).json(responseFormat(400, "학생의 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-};
+}; // 완료

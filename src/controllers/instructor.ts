@@ -16,5 +16,5 @@ export const getListByinstructorName = async (req: Request, res: Response): Prom
     }
     catch (err) {
         console.log(err)
-    }
+    } // 완료
 };
