@@ -57,7 +57,7 @@ let StudentModel = class StudentModel {
                 console.log(err);
             }
         });
-    }
+    } // 완료
 };
 StudentModel = __decorate([
     typedi_1.Service(),

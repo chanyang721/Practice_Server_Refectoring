@@ -41,5 +41,5 @@ export default class StudentModel {
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료
 }
