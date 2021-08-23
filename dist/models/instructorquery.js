@@ -33,7 +33,7 @@ let InstructorModel = class InstructorModel {
                 // 강사 이름이 같은 강의들만 가져온다.
                 let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
             FROM instructors 
-            JOIN lectures ON lectures.instructor_id = instructors.id
+            JOIN lectures ON lectures.instructor = instructors.name
             WHERE name = ?`;
                 const lecturesList = yield this.queryFormat.Query(sql, [name]);
                 console.log(lecturesList);
