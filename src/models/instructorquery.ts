@@ -1,16 +1,26 @@
 import { Service } from 'typedi';
-import db from "../database";
+import QueryFormat from "../utils/query"
 @Service()
 export default class InstructorModel {
+
+    private queryFormat: QueryFormat
+
+    public constructor (QueryFormat: QueryFormat) {
+        this.queryFormat = QueryFormat
+    }
 
 
     public async getListByName (name: string) {
         try {
             // 강사 이름이 같은 강의들만 가져온다.
-            let sql = `SELECT * FROM instructors 
-            JOIN lectures ON 
-            WHERE instructors_name = ?`;
-            const lecturesList = await this.Query(sql, [ name ]);
+            let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor_id = instructors.id
+            WHERE name = ?`;
+            const lecturesList = await this.queryFormat.Query(sql, [ name ]);
+            console.log(lecturesList)
+            lecturesList
+            
 
             return { lecturesList }
         }
@@ -19,13 +29,4 @@ export default class InstructorModel {
         }
     }
 
-    public Query(sql, params?) {
-        return new Promise((resolve, reject) =>{
-            db.query(sql, params, (err, result) => {
-                if (err)
-                    return reject(err);
-                resolve(result);
-            });
-        });
-    }
 }

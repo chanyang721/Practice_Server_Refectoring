@@ -11,15 +11,14 @@ export const createStudent = async (req: Request, res: Response): Promise<any> =
 
         const studentModelInstance = Container.get(StudentModel);
 
-        const userRecord = await studentModelInstance.createUser(email)
+        await studentModelInstance.createUser(email)
 
-        if (userRecord) res.status(200).json(responseFormat(200, "유저 생성 완료"));
-        else res.status(403).json(responseFormat(403, "중복된 이메일이 존재합니다"))
+        return res.status(200).json(responseFormat(200, "유저 생성 완료"));
     }
     catch(err) {
-        console.log(err)
+        return res.status(400).json(responseFormat(400, "유서 생성 오류", null, err));
     }
-};
+}; // 완료
 
 export const getListByStudentId = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -29,10 +28,9 @@ export const getListByStudentId = async (req: Request, res: Response): Promise<a
 
         const { lecturesList } = await studentModelInstance.getLectureLists(id)
 
-        res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 목록입니다", lecturesList))
+        return res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        console.log(err)
+        return res.status(400).json(responseFormat(400, "학생의 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-
 };

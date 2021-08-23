@@ -1,20 +1,30 @@
 import { Service } from 'typedi';
-import db from "../database";
+import { IregusterLecture } from "../interfaces" 
+import QueryFormat from "../utils/query";
+import dayjs from 'dayjs';
+dayjs().format()
+
 @Service()
 export default class LectureModel {
 
+    private queryFormat: QueryFormat;
+    
+    public constructor(QueryFormat: QueryFormat) {
+        this.queryFormat = QueryFormat;
+    }
 
-    public async makeLecture (lectureData: any): Promise<any> {
+
+    public async createLectureQuery (lectureData: any): Promise<any> {
         try {
             const { instructor, category, title, description, price } = lectureData
 
-            let sql = `SELECT id FROM instructors WHERE name = ?`;
-            let params = [ instructor ]
-            const instructorData = await this.Query(sql, params);
+            // let sql = `SELECT * FROM instructors WHERE `;
+            // let params = [];
+            // const instructorInfo = 
 
-            sql = `INSERT INTO lectures (instructor, category, title, description, price, instructor_id) VALUES (?)`;
-            params = [ [ instructor, category[0], title, description, price, instructorData[0].id ] ]
-            const lectureRecord = await this.Query(sql, params);
+            let sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
+            let params = [ [ instructor, category[0], title, description, price ] ]
+            const lectureRecord = await this.queryFormat.Query(sql, params);
             
             return { lectureRecord };
         }
@@ -23,14 +33,23 @@ export default class LectureModel {
         }
     }
 
-
-    public Query(sql, params?) {
-        return new Promise((resolve, reject) =>{
-            db.query(sql, params, (err, result) => {
-                if (err)
-                    return reject(err);
-                resolve(result);
-            });
-        });
+    public async registerLectureQuery (registerData: IregusterLecture): Promise<any> {
+        try {
+            const { students, lectureId, studentId } = registerData;
+            
+            const registerDay = dayjs().format("YYYY/MM/DD");
+    
+            students[studentId] = registerDay;
+            
+            let sql = `UPDATE lectures SET students = ? WHERE id = ${lectureId}`;
+            let params = [ JSON.stringify(students) ];
+            const updateStudentsInfo = await this.queryFormat.Query(sql, params);
+    
+            return { updateStudentsInfo }
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
+
 }

@@ -1,5 +1,7 @@
 
 
-export interface Ilecture {
-    
+export interface IregusterLecture {
+    students: Object, 
+    lectureId: number, 
+    studentId: number
 };

@@ -75,11 +75,8 @@ const createLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { instructor, category, title, description, price } = req.body;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        const lectureRecord = yield LectureModelInstance.makeLecture({ instructor, category, title, description, price });
-        if (lectureRecord)
-            res.status(200).json(responseFormat(200, "강의 생성 완료"));
-        else
-            res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"));
+        yield LectureModelInstance.createLectureQuery({ instructor, category, title, description, price });
+        return res.status(200).json(responseFormat(200, "강의 생성 완료"));
     }
     catch (err) {
         console.log(err);
@@ -115,7 +112,10 @@ const deleteLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.deleteLecture = deleteLecture;
 const registerLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send("registerLecture");
+        const { students, lectureId, studentId } = req.body;
+        const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
+        yield LectureModelInstance.registerLectureQuery({ students, lectureId, studentId });
+        return res.status(200).json(responseFormat(200, "수강 신청이 완료되었습니다."));
     }
     catch (err) {
         console.log(err);

@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -19,18 +22,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = require("typedi");
-const database_1 = __importDefault(require("../database"));
+const query_1 = __importDefault(require("../utils/query"));
+const dayjs_1 = __importDefault(require("dayjs"));
+dayjs_1.default().format();
 let LectureModel = class LectureModel {
-    makeLecture(lectureData) {
+    constructor(QueryFormat) {
+        this.queryFormat = QueryFormat;
+    }
+    createLectureQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { instructor, category, title, description, price } = lectureData;
-                let sql = `SELECT id FROM instructors WHERE name = ?`;
-                let params = [instructor];
-                const instructorData = yield this.Query(sql, params);
-                sql = `INSERT INTO lectures (instructor, category, title, description, price, instructor_id) VALUES (?)`;
-                params = [[instructor, category[0], title, description, price, instructorData[0].id]];
-                const lectureRecord = yield this.Query(sql, params);
+                // let sql = `SELECT * FROM instructors WHERE `;
+                // let params = [];
+                // const instructorInfo = 
+                let sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
+                let params = [[instructor, category[0], title, description, price]];
+                const lectureRecord = yield this.queryFormat.Query(sql, params);
                 return { lectureRecord };
             }
             catch (err) {
@@ -38,17 +46,25 @@ let LectureModel = class LectureModel {
             }
         });
     }
-    Query(sql, params) {
-        return new Promise((resolve, reject) => {
-            database_1.default.query(sql, params, (err, result) => {
-                if (err)
-                    return reject(err);
-                resolve(result);
-            });
+    registerLectureQuery(registerData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { students, lectureId, studentId } = registerData;
+                const registerDay = dayjs_1.default().format("YYYY/MM/DD");
+                students[studentId] = registerDay;
+                let sql = `UPDATE lectures SET students = ? WHERE id = ${lectureId}`;
+                let params = [JSON.stringify(students)];
+                const updateStudentsInfo = yield this.queryFormat.Query(sql, params);
+                return { updateStudentsInfo };
+            }
+            catch (err) {
+                console.log(err);
+            }
         });
     }
 };
 LectureModel = __decorate([
-    typedi_1.Service()
+    typedi_1.Service(),
+    __metadata("design:paramtypes", [query_1.default])
 ], LectureModel);
 exports.default = LectureModel;

@@ -16,17 +16,33 @@ exports.createStudentVaildation = void 0;
 const typedi_1 = require("typedi");
 const joi_1 = __importDefault(require("joi"));
 const requestFormat_1 = __importDefault(require("../../utils/requestFormat"));
+const database_1 = __importDefault(require("../../database"));
 const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const schema = joi_1.default.object({
         email: joi_1.default.string().email().trim().max(30).required()
     });
-    try {
-        yield schema.validateAsync(req.body);
-        return next();
+    const { value, error } = yield schema.validate(req.body);
+    if (error) {
+        return res.status(400).json(responseFormat(400, "유효한 형식이 아닙니다.", null, error));
     }
-    catch (err) {
-        res.send(responseFormat(400, "유효한 형식이 아닙니다", null, err.details[0].message));
+    req.body = value;
+    const { email } = req.body;
+    let sql = `SELECT * FROM students WHERE email = ?`;
+    let params = [email];
+    const DuplicStudent = yield Query(sql, params);
+    if (DuplicStudent[0]) {
+        return res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다."));
     }
-});
+    return next();
+}); // 완료 
 exports.createStudentVaildation = createStudentVaildation;
+const Query = (sql, params) => {
+    return new Promise((resolve, reject) => {
+        database_1.default.query(sql, params, (err, result) => {
+            if (err)
+                return reject(err);
+            resolve(result);
+        });
+    });
+};

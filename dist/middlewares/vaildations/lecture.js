@@ -16,23 +16,32 @@ exports.registerLectureVaildation = exports.deleteLectureVaildation = exports.op
 const typedi_1 = require("typedi");
 const joi_1 = __importDefault(require("joi"));
 const requestFormat_1 = __importDefault(require("../../utils/requestFormat"));
+const database_1 = __importDefault(require("../../database"));
 const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const schema = joi_1.default.object({
-        instructor: joi_1.default.string().max(30).trim().required(),
+        instructor: joi_1.default.string().trim().max(30).required(),
         category: joi_1.default.array().items(joi_1.default.string()).max(1).required(),
         title: joi_1.default.string().trim().required(),
         description: joi_1.default.string().trim().required(),
         price: joi_1.default.number().integer().positive().required(),
     });
-    try {
-        yield schema.validateAsync(req.body);
-        return next();
+    const { value, error } = yield schema.validate(req.body);
+    console.log(value, error);
+    if (error) {
+        return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error[0].details.message));
     }
-    catch (err) {
-        res.send(responseFormat(400, "유효한 형식이 아닙니다", null, err.details[0].message));
+    req.body = value;
+    const { title } = req.body;
+    let sql = `SELECT * FROM lectures WHERE title = ?`;
+    let params = [title];
+    const duplicLecture = yield Query(sql, params);
+    if (duplicLecture[0]) {
+        return res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"));
     }
-});
+    console.log(duplicLecture);
+    return next();
+}); // 완료
 exports.createLectureVaildation = createLectureVaildation;
 const updateLectureInfoVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const {} = req.body;
@@ -56,9 +65,52 @@ const deleteLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
 });
 exports.deleteLectureVaildation = deleteLectureVaildation;
 const registerLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const {} = req.body;
-    const schema = joi_1.default.object({});
-    const { value, error } = yield schema.validateAsync(req.body);
-    return next();
-});
+    try {
+        const { lectureId, studentId } = req.body;
+        const schema = joi_1.default.object({
+            lectureId: joi_1.default.number().integer().positive().min(1).required(),
+            studentId: joi_1.default.number().integer().positive().min(1).required(),
+        });
+        try {
+            yield schema.validateAsync(req.body);
+        }
+        catch (err) {
+            return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, err.details[0].message));
+        }
+        let sql = `SELECT * FROM students WHERE id = ?`;
+        let params = [studentId];
+        const checkStudentExist = yield Query(sql, params);
+        if (!checkStudentExist[0]) {
+            return res.status(400).json(responseFormat(400, "가입된 수강생만 수강 신청할 수 있습니다."));
+        }
+        ;
+        sql = `SELECT students, open FROM lectures WHERE id = ?`;
+        params = [lectureId];
+        const checkLectureExist = yield Query(sql, params);
+        if (!checkLectureExist[0]) {
+            return res.status(400).json(responseFormat(400, "삭제된 강의는 수강 신청할 수 없습니다."));
+        }
+        if (!checkLectureExist[0].open) {
+            return res.status(400).json(responseFormat(400, "비공개된 강의는 수강 신청할 수 없습니다."));
+        }
+        const students = JSON.parse(checkLectureExist[0].students);
+        if (students[checkStudentExist[0].id]) {
+            return res.status(400).json(responseFormat(400, "동일 강의를 수강신청할 수는 없습니다."));
+        }
+        req.body.students = students;
+        return next();
+    }
+    catch (err) {
+        console.log(err);
+    }
+}); // 완료 
 exports.registerLectureVaildation = registerLectureVaildation;
+const Query = (sql, params) => {
+    return new Promise((resolve, reject) => {
+        database_1.default.query(sql, params, (err, result) => {
+            if (err)
+                return reject(err);
+            resolve(result);
+        });
+    });
+};

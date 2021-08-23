@@ -34,7 +34,7 @@ router.get("/lecture/sort/desc", sortLecturesByTime)
 
 router.get("/lecture/sort/attendance", sortLecturesByAttendance)
 
-router.post("/lecture", createLectureVaildation, createLecture) 
+router.post("/lecture", createLectureVaildation, createLecture) // 완료
 
 router.patch("/lecture/:id", updateLectureInfoVaildation, updateLectureInfo)
 
@@ -42,7 +42,7 @@ router.patch("/lecture/:id/open", openLectureVaildation, openLecture)
 
 router.delete("/lecture/:id", deleteLectureVaildation, deleteLecture)
 
-router.post("/lecture/register", registerLectureVaildation, registerLecture)
+router.post("/lecture/register", registerLectureVaildation, registerLecture) // 완료
 
 
 export default router;

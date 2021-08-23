@@ -62,12 +62,12 @@ export const sortLecturesByAttendance = async (req: Request, res: Response): Pro
 export const createLecture = async (req: Request, res: Response): Promise<any> => {
     try {
         const { instructor, category, title, description, price } = req.body;
+
         const LectureModelInstance = Container.get(LectureModel)
         
-        const lectureRecord = await LectureModelInstance.makeLecture({ instructor, category, title, description, price })
+        await LectureModelInstance.createLectureQuery({ instructor, category, title, description, price })
 
-        if (lectureRecord) res.status(200).json(responseFormat(200, "강의 생성 완료"))
-        else res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"))
+        return res.status(200).json(responseFormat(200, "강의 생성 완료"))
     }
     catch (err) {
         console.log(err)
@@ -103,7 +103,13 @@ export const deleteLecture = async (req: Request, res: Response): Promise<any> =
 
 export const registerLecture = async (req: Request, res: Response): Promise<any> => {
     try {
-        res.send("registerLecture")
+        const { students, lectureId, studentId } = req.body;
+
+        const LectureModelInstance = Container.get(LectureModel);
+
+        await LectureModelInstance.registerLectureQuery({ students, lectureId, studentId })
+
+        return res.status(200).json(responseFormat(200, "수강 신청이 완료되었습니다."))
     }
     catch (err) {
         console.log(err)
