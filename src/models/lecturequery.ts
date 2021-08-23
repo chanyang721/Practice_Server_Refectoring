@@ -4,7 +4,7 @@ import db from "../database";
 export default class LectureModel {
 
 
-    public async createLectureService (lectureData: any): Promise<any> {
+    public async makeLecture (lectureData: any): Promise<any> {
         try {
             const { instructor, category, title, description, price } = lectureData
 

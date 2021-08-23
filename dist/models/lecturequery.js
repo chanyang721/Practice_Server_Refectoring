@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = require("typedi");
 const database_1 = __importDefault(require("../database"));
 let LectureModel = class LectureModel {
-    createLectureService(lectureData) {
+    makeLecture(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { instructor, category, title, description, price } = lectureData;

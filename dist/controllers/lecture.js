@@ -75,7 +75,7 @@ const createLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { instructor, category, title, description, price } = req.body;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        const lectureRecord = yield LectureModelInstance.createLectureService({ instructor, category, title, description, price });
+        const lectureRecord = yield LectureModelInstance.makeLecture({ instructor, category, title, description, price });
         if (lectureRecord)
             res.status(200).json(responseFormat(200, "강의 생성 완료"));
         else
