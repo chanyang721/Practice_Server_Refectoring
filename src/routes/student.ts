@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/student", createStudentVaildation, createStudent) // 완료
 
-router.get("/student/:id", getListByStudentId) 
+router.get("/student/:id", getListByStudentId) // 완료
 
 
 export default router;

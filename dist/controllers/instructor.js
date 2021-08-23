@@ -26,6 +26,6 @@ const getListByinstructorName = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
     catch (err) {
         console.log(err);
-    } // 완료
-});
+    }
+}); // 완료
 exports.getListByinstructorName = getListByinstructorName;
