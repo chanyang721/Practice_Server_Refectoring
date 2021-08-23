@@ -9,11 +9,11 @@ USE Inflearn
 
 CREATE TABLE instructors (
   id INT AUTO_INCREMENT,
-  instructor_name varchar(255) NOT NULL,
+  name varchar(255) NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  INDEX (instructor_name)
+  INDEX (name)
 );
 
 CREATE TABLE students (
@@ -30,19 +30,19 @@ CREATE TABLE students (
 
 CREATE TABLE lectures (
   id INT AUTO_INCREMENT,
-  instructor_name varchar(255) NOT NULL,
+  instructor varchar(255) NOT NULL,
   category varchar(255) NOT NULL,
-  class_name varchar(255) NOT NULL,
-  class_description varchar(3000) NOT NULL,
+  name varchar(255) NOT NULL,
+  description varchar(3000) NOT NULL,
   price INT NOT NULL,
-  students_info varchar(255) NOT NULL, 
+  students varchar(255) NOT NULL, 
   public tinyint(1) DEFAULT 0 NOT NULL,
   instructor_id INT NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (instructor_id) REFERENCES instructors (id),
-  INDEX (class_name, category, students_info)
+  INDEX (name, category, public, students)
 );
 
 
