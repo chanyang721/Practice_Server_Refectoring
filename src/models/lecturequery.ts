@@ -18,12 +18,13 @@ export default class LectureModel {
         try {
             const { instructor, category, title, description, price } = lectureData
 
-            // let sql = `SELECT * FROM instructors WHERE `;
-            // let params = [];
-            // const instructorInfo = 
+            let sql = `SELECT * FROM instructors WHERE name = ?`;
+            let params = [ instructor ];
+            const instructorInfo = await this.queryFormat.Query(sql, params);
+            console.log(instructorInfo)
 
-            let sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
-            let params = [ [ instructor, category[0], title, description, price ] ]
+            sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
+            params = [ [ instructor, category[0], title, description, price ] ]
             const lectureRecord = await this.queryFormat.Query(sql, params);
             
             return { lectureRecord };

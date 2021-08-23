@@ -20,7 +20,7 @@ CREATE TABLE students (
   id INT AUTO_INCREMENT,
   nickname varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
-  lectures varchar(255) NOT NULL,
+  lectures varchar(255) DEFAULT "{}" NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -35,16 +35,15 @@ CREATE TABLE lectures (
   title varchar(255) NOT NULL,
   description varchar(3000) NOT NULL,
   price INT NOT NULL,
-  students_Info varchar(255) DEFAULT "{}" NOT NULL,
-  Attendance INT DEFAULT 0 NOT NULL,
+  students varchar(255) DEFAULT "{}" NOT NULL,
+  attendance INT DEFAULT 0 NOT NULL,
   open tinyint(1) DEFAULT 0 NOT NULL,
-  instructor_id INT NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (instructor_id) REFERENCES instructors (id),
+  FOREIGN KEY (instructor) REFERENCES instructors (name),
   UNIQUE KEY (title),
-  INDEX (title, category, open, students_Info)
+  INDEX (title, category, open, students)
 );
 
 

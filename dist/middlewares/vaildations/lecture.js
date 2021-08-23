@@ -27,9 +27,8 @@ const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
         price: joi_1.default.number().integer().positive().required(),
     });
     const { value, error } = yield schema.validate(req.body);
-    console.log(value, error);
     if (error) {
-        return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error[0].details.message));
+        return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error.details[0].message));
     }
     req.body = value;
     const { title } = req.body;
@@ -39,7 +38,6 @@ const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
     if (duplicLecture[0]) {
         return res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"));
     }
-    console.log(duplicLecture);
     return next();
 }); // 완료
 exports.createLectureVaildation = createLectureVaildation;

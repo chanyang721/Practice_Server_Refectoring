@@ -18,11 +18,10 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
     
     
     const { value, error } = await schema.validate(req.body)
-    console.log(value, error)
     if (error) {
-        return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error[0].details.message))
+        return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error.details[0].message))
     }
-
+    
     req.body = value
     const { title } = req.body
     
@@ -32,9 +31,7 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
     if (duplicLecture[0]) {
         return res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"))
     }
-
-    console.log(duplicLecture)
-
+    
     return next();
 } // 완료
 
