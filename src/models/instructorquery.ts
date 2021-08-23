@@ -27,6 +27,6 @@ export default class InstructorModel {
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료
 
 }

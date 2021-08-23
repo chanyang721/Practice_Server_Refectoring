@@ -54,8 +54,7 @@ let LectureModel = class LectureModel {
                 const updateStudentsInfo = yield this.queryFormat.Query(sql, params);
                 sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;
                 params = [lectureId, studentId];
-                const a = yield this.queryFormat.Query(sql, params);
-                console.log(updateStudentsInfo, a);
+                yield this.queryFormat.Query(sql, params);
                 return { updateStudentsInfo };
             }
             catch (err) {

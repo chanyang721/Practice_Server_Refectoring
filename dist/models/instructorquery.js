@@ -44,7 +44,7 @@ let InstructorModel = class InstructorModel {
                 console.log(err);
             }
         });
-    }
+    } // 완료
 };
 InstructorModel = __decorate([
     typedi_1.Service(),

@@ -42,9 +42,7 @@ export default class LectureModel {
 
             sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;
             params = [ lectureId, studentId ]
-            const a = await this.queryFormat.Query(sql, params);
-
-            console.log(updateStudentsInfo, a)
+            await this.queryFormat.Query(sql, params);
     
             return { updateStudentsInfo }
         }
