@@ -59,13 +59,32 @@ let LectureModel = class LectureModel {
     } // 완료 
     openLectureQuery(lecturesData) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id } = lecturesData;
-            let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
-            let params = [id];
-            const queryInfo = yield this.queryFormat.Query(sql, params);
-            return { queryInfo };
+            try {
+                const { id } = lecturesData;
+                let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
+                let params = [id];
+                const queryInfo = yield this.queryFormat.Query(sql, params);
+                return { queryInfo };
+            }
+            catch (err) {
+                console.log(err);
+            }
         });
     } // 완료 
+    deleteLecureQuery(lectureData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = lectureData;
+                let sql = `DELETE FROM lectures WHERE id = ?`;
+                let params = [id];
+                const queryInfo = yield this.queryFormat.Query(sql, params);
+                return { queryInfo };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
     registerLectureQuery(registerData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

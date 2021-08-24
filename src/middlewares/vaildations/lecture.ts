@@ -86,7 +86,7 @@ export const openLectureVaildation = async (req: Request, res: Response, next: N
     const lectureExist = await Query(sql, params)
 
     if (!lectureExist[0]) {
-        return res.status(400).json(responseFormat(400, "해당 강의 정보가 없습니다."))
+        return res.status(400).json(responseFormat(400, "해당 강의는 존재하지 않습니다."))
     }
 
     // 이미 오픈 상태인 경우
@@ -98,13 +98,26 @@ export const openLectureVaildation = async (req: Request, res: Response, next: N
 } // 완료
 
 export const deleteLectureVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    const {  } = req.body;
+    const { id } = req.params;
 
-    const schema = Joi.object({
+    let sql = `SELECT * FROM lectures WHERE id = ?`;
+    let params = [ id ];
+    const lectureInfo = await Query(sql, params);
 
-    })
+    // 해당 강의가 없는 경우
+    if (!lectureInfo[0]) {
+        return res.status(400).json(responseFormat(400, "해당 강의는 존재하지 않습니다."))
+    };
 
-    const { value, error } = await schema.validateAsync(req.body)
+    // 해당 강의에 수강생이 있는 경우 삭제 불가
+    if (lectureInfo[0].attendance) {
+        return res.status(400).json(responseFormat(400, "수강생이 존재하는 강의는 삭제할 수 없습니다."))
+    };
+
+    // 해당 강의가 open 상태인 경우 삭제 불가
+    if (lectureInfo[0].open) {
+        return res.status(400).json(responseFormat(400, "오픈된 강의는 삭제가 불가능합니다."))
+    };
 
     return next();
 }

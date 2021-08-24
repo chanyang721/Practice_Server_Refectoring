@@ -82,7 +82,7 @@ const openLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void
     let params = [id];
     const lectureExist = yield Query(sql, params);
     if (!lectureExist[0]) {
-        return res.status(400).json(responseFormat(400, "해당 강의 정보가 없습니다."));
+        return res.status(400).json(responseFormat(400, "해당 강의는 존재하지 않습니다."));
     }
     // 이미 오픈 상태인 경우
     if (lectureExist[0].open) {
@@ -92,9 +92,25 @@ const openLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void
 }); // 완료
 exports.openLectureVaildation = openLectureVaildation;
 const deleteLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const {} = req.body;
-    const schema = joi_1.default.object({});
-    const { value, error } = yield schema.validateAsync(req.body);
+    const { id } = req.params;
+    let sql = `SELECT * FROM lectures WHERE id = ?`;
+    let params = [id];
+    const lectureInfo = yield Query(sql, params);
+    // 해당 강의가 없는 경우
+    if (!lectureInfo[0]) {
+        return res.status(400).json(responseFormat(400, "해당 강의는 존재하지 않습니다."));
+    }
+    ;
+    // 해당 강의에 수강생이 있는 경우 삭제 불가
+    if (lectureInfo[0].attendance) {
+        return res.status(400).json(responseFormat(400, "수강생이 존재하는 강의는 삭제할 수 없습니다."));
+    }
+    ;
+    // 해당 강의가 open 상태인 경우 삭제 불가
+    if (lectureInfo[0].open) {
+        return res.status(400).json(responseFormat(400, "오픈된 강의는 삭제가 불가능합니다."));
+    }
+    ;
     return next();
 });
 exports.deleteLectureVaildation = deleteLectureVaildation;

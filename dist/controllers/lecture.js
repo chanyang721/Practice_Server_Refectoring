@@ -109,7 +109,10 @@ const openLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.openLecture = openLecture;
 const deleteLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send("deleteLecture");
+        const { id } = req.params;
+        const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
+        const { queryInfo } = yield LectureModelInstance.deleteLecureQuery({ id });
+        res.status(200).json(responseFormat(200, "강의 삭제 완료"));
     }
     catch (err) {
         console.log(err);

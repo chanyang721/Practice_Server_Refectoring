@@ -45,14 +45,34 @@ export default class LectureModel {
     } // 완료 
 
     public async openLectureQuery (lecturesData: any): Promise<any> {
-        const { id } = lecturesData;
-
-        let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
-        let params = [ id ];
-        const queryInfo = await this.queryFormat.Query(sql, params)
-
-        return { queryInfo };
+        try {
+            const { id } = lecturesData;
+    
+            let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
+            let params = [ id ];
+            const queryInfo = await this.queryFormat.Query(sql, params)
+    
+            return { queryInfo };
+        }
+        catch (err) {
+            console.log(err)
+        }
     } // 완료 
+
+    public async deleteLecureQuery (lectureData: any): Promise<any> {
+        try {
+            const { id } = lectureData;
+
+            let sql = `DELETE FROM lectures WHERE id = ?`;
+            let params = [ id ];
+            const queryInfo = await this.queryFormat.Query(sql, params);
+
+            return { queryInfo }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
     public async registerLectureQuery (registerData: any): Promise<any> {
         try {

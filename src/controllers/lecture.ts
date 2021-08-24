@@ -105,7 +105,13 @@ export const openLecture = async (req: Request, res: Response): Promise<any> => 
 
 export const deleteLecture = async (req: Request, res: Response): Promise<any> => {
     try {
-        res.send("deleteLecture")
+        const { id } = req.params;
+
+        const LectureModelInstance = Container.get(LectureModel);
+
+        const { queryInfo } = await LectureModelInstance.deleteLecureQuery({ id })
+
+        res.status(200).json(responseFormat(200, "강의 삭제 완료"))
     }
     catch (err) {
         console.log(err)
