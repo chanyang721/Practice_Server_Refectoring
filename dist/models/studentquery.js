@@ -27,7 +27,7 @@ let StudentModel = class StudentModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
     }
-    createUser({ email }) {
+    createUserQuery({ email }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const nickName = email.split("@")[0];
@@ -41,7 +41,7 @@ let StudentModel = class StudentModel {
             }
         });
     } // 완료
-    getLectureLists({ id }) {
+    getLectureListsQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
@@ -57,7 +57,7 @@ let StudentModel = class StudentModel {
             }
         });
     } // 완료
-    getLectureListsWithCategoryName({ id, name }) {
+    getLectureListsWithCategoryNameQuery({ id, name }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
@@ -66,6 +66,39 @@ let StudentModel = class StudentModel {
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1 AND lectures.category = ?`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id, name]);
+                return { lecturesList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    } // 완료
+    sortStudentByTimeQuery({ id }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            FROM students
+            JOIN lectures_students ON students.id = lectures_students.student_id
+            JOIN lectures ON lectures.id = lectures_students.lecture_id
+            WHERE students.id = ? AND lectures.open = 1`;
+                const lecturesList = yield this.queryFormat.Query(sql, [id]);
+                const sortList = lecturesList.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
+                return { sortList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    } // 완료
+    sortStudentByAttendanceQuery({ id }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            FROM students
+            JOIN lectures_students ON students.id = lectures_students.student_id
+            JOIN lectures ON lectures.id = lectures_students.lecture_id
+            WHERE students.id = ? AND lectures.open = 1`;
+                const lecturesList = yield this.queryFormat.Query(sql, [id]);
                 return { lecturesList };
             }
             catch (err) {

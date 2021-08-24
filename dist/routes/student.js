@@ -7,4 +7,6 @@ const router = express_1.Router();
 router.post("/student", student_2.createStudentVaildation, student_1.createStudent); // 완료
 router.get("/student/:id", student_1.getListByStudentId); // 완료
 router.get("/student/:id/category/:name", student_1.getListByIdWithCategoryName); // 완료
+router.get("/student/:id/sort/desc", student_1.sortStudentByTime);
+router.get("/student/:id/sort/attendance", student_1.sortStudentByAttendance);
 exports.default = router;
