@@ -39,10 +39,16 @@ export const updateLectureInfoVaildation = async (req: Request, res: Response, n
     const {  } = req.body;
 
     const schema = Joi.object({
-        
+        title: Joi.string().trim().required(),
+        description: Joi.string().trim().required(),
+        price: Joi.number().integer().positive().required(),
     })
 
     const { value, error } = await schema.validateAsync(req.body)
+    if (error) {
+        return res.status(400).json(responseFormat(400, "유효한 형식이 아닙니다.", null, error.details[0].message))
+    }
+    req.body = value;
 
     return next();
 }

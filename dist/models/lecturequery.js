@@ -43,13 +43,22 @@ let LectureModel = class LectureModel {
             }
         });
     } // 완료
+    updateLectureInfoQuery() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
     registerLectureQuery(registerData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { students, lectureId, studentId } = registerData;
                 const registerDay = dayjs_1.default().format("YYYY/MM/DD");
                 students[studentId] = registerDay;
-                let sql = `UPDATE lectures SET students = ? WHERE id = ${lectureId}`;
+                let sql = `UPDATE lectures SET students = ?, attendance = attendance + 1 WHERE id = ${lectureId}`;
                 let params = [JSON.stringify(students)];
                 const updateStudentsInfo = yield this.queryFormat.Query(sql, params);
                 sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;

@@ -4,9 +4,9 @@ INSERT INTO instructors (name) VALUES ("chanyang3");
 INSERT INTO instructors (name) VALUES ("chanyang4");
 
 INSERT INTO lectures (instructor, category, title, description, price, attendance, open) VALUES ("chanyang1", "웹", "test1", "test1", 1, 0, 0);
-INSERT INTO lectures (instructor, category, title, description, price, attendance, open) VALUES ("chanyang2", "웹", "test2", "test2", 2, 2, 1);
+INSERT INTO lectures (instructor, category, title, description, price, attendance, open) VALUES ("chanyang2", "웹", "test2", "test2", 2, 0, 1);
 INSERT INTO lectures (instructor, category, title, description, price, attendance, open) VALUES ("chanyang3", "웹", "test3", "test3", 3, 0, 0);
-INSERT INTO lectures (instructor, category, title, description, price, attendance, open) VALUES ("chanyang4", "웹", "test4", "test4", 4, 4, 1);
+INSERT INTO lectures (instructor, category, title, description, price, attendance, open) VALUES ("chanyang4", "웹", "test4", "test4", 4, 0, 1);
 
 INSERT INTO students (nickname, email) VALUES ("chanyang7211", "chanyang7211@gmail.com");
 INSERT INTO students (nickname, email) VALUES ("chanyang7212", "chanyang7212@gmail.com");

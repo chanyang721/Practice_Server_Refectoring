@@ -29,6 +29,15 @@ export default class LectureModel {
         }
     } // 완료
 
+    public async updateLectureInfoQuery (): Promise<any> {
+        try {
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     public async registerLectureQuery (registerData: any): Promise<any> {
         try {
             const { students, lectureId, studentId } = registerData;
@@ -36,7 +45,7 @@ export default class LectureModel {
     
             students[studentId] = registerDay;
             
-            let sql = `UPDATE lectures SET students = ? WHERE id = ${lectureId}`;
+            let sql = `UPDATE lectures SET students = ?, attendance = attendance + 1 WHERE id = ${lectureId}`;
             let params = [ JSON.stringify(students) ];
             const updateStudentsInfo = await this.queryFormat.Query(sql, params);
 

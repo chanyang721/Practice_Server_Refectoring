@@ -43,8 +43,16 @@ const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
 exports.createLectureVaildation = createLectureVaildation;
 const updateLectureInfoVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const {} = req.body;
-    const schema = joi_1.default.object({});
+    const schema = joi_1.default.object({
+        title: joi_1.default.string().trim().required(),
+        description: joi_1.default.string().trim().required(),
+        price: joi_1.default.number().integer().positive().required(),
+    });
     const { value, error } = yield schema.validateAsync(req.body);
+    if (error) {
+        return res.status(400).json(responseFormat(400, "유효한 형식이 아닙니다.", null, error.details[0].message));
+    }
+    req.body = value;
     return next();
 });
 exports.updateLectureInfoVaildation = updateLectureInfoVaildation;
