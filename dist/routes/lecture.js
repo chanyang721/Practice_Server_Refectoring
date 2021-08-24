@@ -5,7 +5,7 @@ const router = express_1.Router();
 const lecture_1 = require("../controllers/lecture");
 const lecture_2 = require("../middlewares/vaildations/lecture");
 router.get("/lecture/:name", lecture_1.getListBylectureName);
-router.get("/lecture/category/:name", lecture_1.getListByCategoryName);
+router.get("/lecture/:id/category/:name", lecture_1.getListByCategoryName);
 router.get("/lecture/category", lecture_1.getListByAllCategory);
 router.get("/lecture/:id/details", lecture_1.getLectureById);
 router.get("/lecture/sort/desc", lecture_1.sortLecturesByTime);

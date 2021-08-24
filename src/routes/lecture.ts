@@ -24,7 +24,7 @@ import {
 
 router.get("/lecture/:name", getListBylectureName)
 
-router.get("/lecture/category/:name", getListByCategoryName)
+router.get("/lecture/:id/category/:name", getListByCategoryName)
 
 router.get("/lecture/category", getListByAllCategory)
 

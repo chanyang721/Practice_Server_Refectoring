@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getListByStudentId = exports.createStudent = void 0;
+exports.getListByIdWithCategoryName = exports.getListByStudentId = exports.createStudent = void 0;
 const typedi_1 = require("typedi");
 const studentquery_1 = __importDefault(require("../models/studentquery"));
 const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
@@ -21,7 +21,7 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { email } = req.body;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
-        yield studentModelInstance.createUser(email);
+        yield studentModelInstance.createUser({ email });
         return res.status(200).json(responseFormat(200, "유저 생성 완료"));
     }
     catch (err) {
@@ -33,7 +33,7 @@ const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const { id } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
-        const { lecturesList } = yield studentModelInstance.getLectureLists(id);
+        const { lecturesList } = yield studentModelInstance.getLectureLists({ id });
         return res.status(200).json(responseFormat(200, "해당 학생의 모든 강의 목록입니다.", lecturesList));
     }
     catch (err) {
@@ -41,3 +41,15 @@ const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }); // 완료
 exports.getListByStudentId = getListByStudentId;
+const getListByIdWithCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id, name } = req.params;
+        const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
+        const { lecturesList } = yield studentModelInstance.getLectureListsWithCategoryName({ id, name });
+        return res.status(200).json(responseFormat(200, "해당 학생의 카테고리 목록입니다.", lecturesList));
+    }
+    catch (err) {
+        return res.status(400).json(responseFormat(400, "학생의 강의 목록을 불러오는데 실패했습니다.", null, err));
+    }
+}); // 완료
+exports.getListByIdWithCategoryName = getListByIdWithCategoryName;
