@@ -44,6 +44,16 @@ export default class LectureModel {
         }
     } // 완료 
 
+    public async openLectureQuery (lecturesData: any): Promise<any> {
+        const { id } = lecturesData;
+
+        let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
+        let params = [ id ];
+        const queryInfo = await this.queryFormat.Query(sql, params)
+
+        return { queryInfo };
+    } // 완료 
+
     public async registerLectureQuery (registerData: any): Promise<any> {
         try {
             const { students, lectureId, studentId } = registerData;

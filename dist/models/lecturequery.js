@@ -57,6 +57,15 @@ let LectureModel = class LectureModel {
             }
         });
     } // 완료 
+    openLectureQuery(lecturesData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = lecturesData;
+            let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
+            let params = [id];
+            const queryInfo = yield this.queryFormat.Query(sql, params);
+            return { queryInfo };
+        });
+    } // 완료 
     registerLectureQuery(registerData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

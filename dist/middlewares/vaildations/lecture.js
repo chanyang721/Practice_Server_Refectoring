@@ -76,11 +76,20 @@ const updateLectureInfoVaildation = (req, res, next) => __awaiter(void 0, void 0
 }); // 완료
 exports.updateLectureInfoVaildation = updateLectureInfoVaildation;
 const openLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const {} = req.body;
-    const schema = joi_1.default.object({});
-    const { value, error } = yield schema.validateAsync(req.body);
+    const { id } = req.params;
+    // 해당 강의가 삭제된 경우
+    let sql = `SELECT * FROM lectures WHERE id = ?`;
+    let params = [id];
+    const lectureExist = yield Query(sql, params);
+    if (!lectureExist[0]) {
+        return res.status(400).json(responseFormat(400, "해당 강의 정보가 없습니다."));
+    }
+    // 이미 오픈 상태인 경우
+    if (lectureExist[0].open) {
+        return res.status(400).json(responseFormat(400, "해당 강의는 이미 오픈된 상태입니다."));
+    }
     return next();
-});
+}); // 완료
 exports.openLectureVaildation = openLectureVaildation;
 const deleteLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const {} = req.body;

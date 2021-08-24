@@ -97,12 +97,15 @@ const updateLectureInfo = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.updateLectureInfo = updateLectureInfo;
 const openLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send("openLecture");
+        const { id } = req.params;
+        const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
+        const { queryInfo } = yield LectureModelInstance.openLectureQuery({ id });
+        res.status(200).json(responseFormat(200, "강의 오픈 완료"));
     }
     catch (err) {
         console.log(err);
     }
-});
+}); // 완료
 exports.openLecture = openLecture;
 const deleteLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

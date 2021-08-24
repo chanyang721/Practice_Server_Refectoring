@@ -90,12 +90,18 @@ export const updateLectureInfo = async (req: Request, res: Response): Promise<an
 
 export const openLecture = async (req: Request, res: Response): Promise<any> => {
     try {
-        res.send("openLecture")
+        const { id } = req.params;
+
+        const LectureModelInstance = Container.get(LectureModel);
+
+        const { queryInfo } = await LectureModelInstance.openLectureQuery({ id })
+
+        res.status(200).json(responseFormat(200, "강의 오픈 완료"))
     }
     catch (err) {
         console.log(err)
     }
-};
+}; // 완료
 
 export const deleteLecture = async (req: Request, res: Response): Promise<any> => {
     try {

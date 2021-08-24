@@ -36,7 +36,7 @@ router.get("/lecture/sort/attendance", sortLecturesByAttendance)
 
 router.post("/lecture", createLectureVaildation, createLecture) // 완료
 
-router.patch("/lecture/:id", updateLectureInfoVaildation, updateLectureInfo)
+router.put("/lecture/:id", updateLectureInfoVaildation, updateLectureInfo)
 
 router.patch("/lecture/:id/open", openLectureVaildation, openLecture)
 
