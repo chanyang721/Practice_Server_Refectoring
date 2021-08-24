@@ -17,9 +17,9 @@ router.get("/student/:id", getListByStudentId) // 완료
 
 router.get("/student/:id/category/:name", getListByStudentIdAndCategoryName) // 완료
 
-router.get("/student/:id/sort/desc", sortStudentLectureListByTime)
+router.get("/student/:id/sort/desc", sortStudentLectureListByTime) // 완료
 
-router.get("/student/:id/sort/attendance", sortStudentLectureListByAttendance)
+router.get("/student/:id/sort/attendance", sortStudentLectureListByAttendance) // 완료
 
 
 export default router;
