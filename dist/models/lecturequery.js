@@ -84,7 +84,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    }
+    } // 완료 
     registerLectureQuery(registerData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

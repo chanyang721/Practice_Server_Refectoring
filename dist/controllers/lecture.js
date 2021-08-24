@@ -117,7 +117,7 @@ const deleteLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         console.log(err);
     }
-});
+}); // 완료
 exports.deleteLecture = deleteLecture;
 const registerLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

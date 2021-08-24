@@ -112,7 +112,7 @@ const deleteLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
     }
     ;
     return next();
-});
+}); // 완료
 exports.deleteLectureVaildation = deleteLectureVaildation;
 const registerLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

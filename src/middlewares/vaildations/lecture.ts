@@ -120,7 +120,7 @@ export const deleteLectureVaildation = async (req: Request, res: Response, next:
     };
 
     return next();
-}
+} // 완료
 
 export const registerLectureVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {

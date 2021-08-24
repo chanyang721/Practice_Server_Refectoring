@@ -116,7 +116,7 @@ export const deleteLecture = async (req: Request, res: Response): Promise<any> =
     catch (err) {
         console.log(err)
     }
-};
+}; // 완료
 
 export const registerLecture = async (req: Request, res: Response): Promise<any> => {
     try {

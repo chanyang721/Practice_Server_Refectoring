@@ -72,7 +72,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료 
 
     public async registerLectureQuery (registerData: any): Promise<any> {
         try {
