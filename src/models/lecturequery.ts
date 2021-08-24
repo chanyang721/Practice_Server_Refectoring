@@ -29,9 +29,15 @@ export default class LectureModel {
         }
     } // 완료
 
-    public async updateLectureInfoQuery (): Promise<any> {
+    public async updateLectureInfoQuery (lectureData: any): Promise<any> {
         try {
+            const { title, description, price, id } = lectureData;
 
+            let sql = `UPDATE lectures SET title = ?, description = ?, price = ? WHERE id = ?`;
+            let params = [ title, description, price, id ];
+            const updateLectureInfo = await this.queryFormat.Query(sql, params);
+
+            return { updateLectureInfo };
         }
         catch (err) {
             console.log(err)

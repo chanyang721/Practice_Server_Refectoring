@@ -24,7 +24,7 @@ const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
         category: joi_1.default.array().items(joi_1.default.string()).max(1).required(),
         title: joi_1.default.string().trim().required(),
         description: joi_1.default.string().trim().required(),
-        price: joi_1.default.number().integer().positive().required(),
+        price: joi_1.default.number().integer().min(0).required(),
     });
     const { value, error } = yield schema.validate(req.body);
     if (error) {
@@ -42,19 +42,38 @@ const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
 }); // 완료
 exports.createLectureVaildation = createLectureVaildation;
 const updateLectureInfoVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const {} = req.body;
     const schema = joi_1.default.object({
         title: joi_1.default.string().trim().required(),
         description: joi_1.default.string().trim().required(),
-        price: joi_1.default.number().integer().positive().required(),
+        price: joi_1.default.number().integer().min(0).required(),
     });
-    const { value, error } = yield schema.validateAsync(req.body);
+    const { value, error } = yield schema.validate(req.body);
     if (error) {
         return res.status(400).json(responseFormat(400, "유효한 형식이 아닙니다.", null, error.details[0].message));
     }
     req.body = value;
+    const { body: { title, price }, params: { id } } = req;
+    let sql = `SELECT open, title, price FROM lectures WHERE id = ?`;
+    let params = [id];
+    const checkLectureInfo = yield Query(sql, params);
+    // open 되었지만 무료 강의의 경우 제한 없이 수정 가능
+    if (checkLectureInfo[0].open && checkLectureInfo[0].price === 0) {
+        return next();
+    }
+    // open 되었지만 무료가 아닌 경우 비활성화해야 수정 가능
+    if (checkLectureInfo[0].open && checkLectureInfo[0].price > 0) {
+        return res.status(400).json(responseFormat(400, "비활성화 상태의 강의만 수정이 가능합니다."));
+    }
+    // 업로드 하는 강의명이 중복되는지 확인
+    sql = `SELECT title FROM lectures WHERE title = ?`;
+    params = [title];
+    const duplicTitle = yield Query(sql, params);
+    console.log(duplicTitle);
+    if (duplicTitle[0]) {
+        return res.status(400).json(responseFormat(400, "중복된 강의명이 존재합니다."));
+    }
     return next();
-});
+}); // 완료
 exports.updateLectureInfoVaildation = updateLectureInfoVaildation;
 const openLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const {} = req.body;

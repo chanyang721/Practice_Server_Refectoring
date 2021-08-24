@@ -13,7 +13,7 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
         category: Joi.array().items(Joi.string()).max(1).required(),
         title: Joi.string().trim().required(),
         description: Joi.string().trim().required(),
-        price: Joi.number().integer().positive().required(),
+        price: Joi.number().integer().min(0).required(),
     })
     
     
@@ -36,22 +36,46 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
 } // 완료
 
 export const updateLectureInfoVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    const {  } = req.body;
 
     const schema = Joi.object({
         title: Joi.string().trim().required(),
         description: Joi.string().trim().required(),
-        price: Joi.number().integer().positive().required(),
+        price: Joi.number().integer().min(0).required(),
     })
-
-    const { value, error } = await schema.validateAsync(req.body)
+    
+    const { value, error } = await schema.validate(req.body)
     if (error) {
         return res.status(400).json(responseFormat(400, "유효한 형식이 아닙니다.", null, error.details[0].message))
     }
+
     req.body = value;
+    const { body: { title, price }, params: { id } } = req
+
+    let sql = `SELECT open, title, price FROM lectures WHERE id = ?`;
+    let params = [ id ];
+    const checkLectureInfo = await Query(sql, params);
+    
+    // open 되었지만 무료 강의의 경우 제한 없이 수정 가능
+    if (checkLectureInfo[0].open && checkLectureInfo[0].price === 0) {
+        return next();
+    }
+    
+    // open 되었지만 무료가 아닌 경우 비활성화해야 수정 가능
+    if (checkLectureInfo[0].open && checkLectureInfo[0].price > 0) {
+        return res.status(400).json(responseFormat(400, "비활성화 상태의 강의만 수정이 가능합니다."));
+    }
+    
+    // 업로드 하는 강의명이 중복되는지 확인
+    sql = `SELECT title FROM lectures WHERE title = ?`;
+    params = [ title ];
+    const duplicTitle = await Query(sql, params);
+    console.log(duplicTitle)
+    if (duplicTitle[0]) {
+        return res.status(400).json(responseFormat(400, "중복된 강의명이 존재합니다."));
+    }
 
     return next();
-}
+} // 완료
 
 export const openLectureVaildation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const {  } = req.body;

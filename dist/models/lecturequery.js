@@ -43,9 +43,14 @@ let LectureModel = class LectureModel {
             }
         });
     } // 완료
-    updateLectureInfoQuery() {
+    updateLectureInfoQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const { title, description, price, id } = lectureData;
+                let sql = `UPDATE lectures SET title = ?, description = ?, price = ? WHERE id = ?`;
+                let params = [title, description, price, id];
+                const updateLectureInfo = yield this.queryFormat.Query(sql, params);
+                return { updateLectureInfo };
             }
             catch (err) {
                 console.log(err);
