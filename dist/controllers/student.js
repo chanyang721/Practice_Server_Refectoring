@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sortStudentByAttendance = exports.sortStudentByTime = exports.getListByIdWithCategoryName = exports.getListByStudentId = exports.createStudent = void 0;
+exports.sortStudentLectureListByAttendance = exports.sortStudentLectureListByTime = exports.getListByStudentIdAndCategoryName = exports.getListByStudentId = exports.createStudent = void 0;
 const typedi_1 = require("typedi");
 const studentquery_1 = __importDefault(require("../models/studentquery"));
 const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
@@ -41,7 +41,7 @@ const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }); // 완료
 exports.getListByStudentId = getListByStudentId;
-const getListByIdWithCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getListByStudentIdAndCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id, name } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
@@ -52,8 +52,8 @@ const getListByIdWithCategoryName = (req, res) => __awaiter(void 0, void 0, void
         return res.status(400).json(responseFormat(400, "학생의 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
 }); // 완료
-exports.getListByIdWithCategoryName = getListByIdWithCategoryName;
-const sortStudentByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getListByStudentIdAndCategoryName = getListByStudentIdAndCategoryName;
+const sortStudentLectureListByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
@@ -64,8 +64,8 @@ const sortStudentByTime = (req, res) => __awaiter(void 0, void 0, void 0, functi
         return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
 }); // 완료
-exports.sortStudentByTime = sortStudentByTime;
-const sortStudentByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.sortStudentLectureListByTime = sortStudentLectureListByTime;
+const sortStudentLectureListByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
@@ -76,4 +76,4 @@ const sortStudentByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, 
         return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
 }); // 완료
-exports.sortStudentByAttendance = sortStudentByAttendance;
+exports.sortStudentLectureListByAttendance = sortStudentLectureListByAttendance;

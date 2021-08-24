@@ -2,9 +2,9 @@ import { Router } from "express";
 import { 
     createStudent, 
     getListByStudentId, 
-    getListByIdWithCategoryName,
-    sortStudentByTime,
-    sortStudentByAttendance,
+    getListByStudentIdAndCategoryName,
+    sortStudentLectureListByTime,
+    sortStudentLectureListByAttendance,
 } from "../controllers/student";
 import { createStudentVaildation } from "../middlewares/vaildations/student";
 
@@ -15,11 +15,11 @@ router.post("/student", createStudentVaildation, createStudent) // 완료
 
 router.get("/student/:id", getListByStudentId) // 완료
 
-router.get("/student/:id/category/:name", getListByIdWithCategoryName) // 완료
+router.get("/student/:id/category/:name", getListByStudentIdAndCategoryName) // 완료
 
-router.get("/student/:id/sort/desc", sortStudentByTime)
+router.get("/student/:id/sort/desc", sortStudentLectureListByTime)
 
-router.get("/student/:id/sort/attendance", sortStudentByAttendance)
+router.get("/student/:id/sort/attendance", sortStudentLectureListByAttendance)
 
 
 export default router;

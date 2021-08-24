@@ -35,7 +35,7 @@ export const getListByStudentId = async (req: Request, res: Response): Promise<a
     }
 }; // 완료
 
-export const getListByIdWithCategoryName = async (req: Request, res: Response): Promise<any> => {
+export const getListByStudentIdAndCategoryName = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id, name } = req.params;
 
@@ -50,7 +50,7 @@ export const getListByIdWithCategoryName = async (req: Request, res: Response): 
     }
 }; // 완료
 
-export const sortStudentByTime = async (req: Request, res: Response): Promise<any> => {
+export const sortStudentLectureListByTime = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id } = req.params;
 
@@ -65,7 +65,7 @@ export const sortStudentByTime = async (req: Request, res: Response): Promise<an
     }
 }; // 완료
 
-export const sortStudentByAttendance = async (req: Request, res: Response): Promise<any> => {
+export const sortStudentLectureListByAttendance = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id } = req.params;
 

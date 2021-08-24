@@ -27,10 +27,9 @@ let InstructorModel = class InstructorModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
     }
-    getListByName(name) {
+    getListByNameQuery(name) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                // 강사 이름이 같은 강의들만 가져온다.
                 let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
@@ -42,7 +41,58 @@ let InstructorModel = class InstructorModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
+    ; // 완료
+    getListByInstructorNameAndCategoryNameQuery({ name, category }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name = ? AND lectures.open = 1 AND lectures.category = ?`;
+                const lecturesList = yield this.queryFormat.Query(sql, [name, category]);
+                return { lecturesList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
+    ;
+    sortInstructorLectureListByTimeQuery(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name = ? AND lectures.open = 1`;
+                const lecturesList = yield this.queryFormat.Query(sql, [name]);
+                const sortList = lecturesList.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
+                return { sortList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
+    ;
+    sortInstructorLectureListByAttendanceQuery(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name = ? AND lectures.open = 1`;
+                const lecturesList = yield this.queryFormat.Query(sql, [name]);
+                const sortList = lecturesList.sort((a, b) => a.attendance > b.attendance ? -1 : 1);
+                return { sortList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
+    ;
 };
 InstructorModel = __decorate([
     typedi_1.Service(),
