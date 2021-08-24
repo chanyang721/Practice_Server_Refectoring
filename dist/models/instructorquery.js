@@ -36,8 +36,6 @@ let InstructorModel = class InstructorModel {
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE name = ? AND lectures.open = 1`;
                 const lecturesList = yield this.queryFormat.Query(sql, [name]);
-                console.log(lecturesList);
-                lecturesList;
                 return { lecturesList };
             }
             catch (err) {
