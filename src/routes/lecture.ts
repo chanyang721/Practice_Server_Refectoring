@@ -36,11 +36,11 @@ router.get("/lecture/sort/attendance", sortLecturesByAttendance)
 
 router.post("/lecture", createLectureVaildation, createLecture) // 완료
 
-router.put("/lecture/:id", updateLectureInfoVaildation, updateLectureInfo)
+router.put("/lecture/:id", updateLectureInfoVaildation, updateLectureInfo) // 완료 
 
-router.patch("/lecture/:id/open", openLectureVaildation, openLecture)
+router.patch("/lecture/:id/open", openLectureVaildation, openLecture) // 완료 
 
-router.delete("/lecture/:id", deleteLectureVaildation, deleteLecture)
+router.delete("/lecture/:id", deleteLectureVaildation, deleteLecture) // 완료 
 
 router.post("/lecture/register", registerLectureVaildation, registerLecture) // 완료
 

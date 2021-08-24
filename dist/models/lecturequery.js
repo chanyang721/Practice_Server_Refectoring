@@ -29,6 +29,15 @@ let LectureModel = class LectureModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
     }
+    getListBylectureNameQuery(lectrueData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
     createLectureQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

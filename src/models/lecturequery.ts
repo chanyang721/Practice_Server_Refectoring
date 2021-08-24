@@ -13,6 +13,14 @@ export default class LectureModel {
         this.queryFormat = QueryFormat;
     }
 
+    public async getListBylectureNameQuery (lectrueData: any): Promise<any> {
+        try {
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
     public async createLectureQuery (lectureData: any): Promise<any> {
         try {
