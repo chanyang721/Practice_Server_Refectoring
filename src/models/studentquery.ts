@@ -66,7 +66,7 @@ export default class StudentModel {
             WHERE students.id = ? AND lectures.open = 1`;
             const lecturesList: any = await this.queryFormat.Query(sql, [ id ])
             const sortList = lecturesList.sort((a, b) => a.created_at > b.created_at ? -1 : 1)
-            
+
             return { sortList }
         }
         catch (err) {
@@ -81,9 +81,10 @@ export default class StudentModel {
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1`;
-            const lecturesList = await this.queryFormat.Query(sql, [ id ])
+            const lecturesList: any = await this.queryFormat.Query(sql, [ id ]);
+            const sortList = lecturesList.sort((a, b) => a.attendance > b.attendance ? -1 : 1)
             
-            return { lecturesList }
+            return { sortList }
         }
         catch (err) {
             console.log(err)

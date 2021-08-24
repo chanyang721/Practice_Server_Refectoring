@@ -63,17 +63,17 @@ const sortStudentByTime = (req, res) => __awaiter(void 0, void 0, void 0, functi
     catch (err) {
         return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
-});
+}); // 완료
 exports.sortStudentByTime = sortStudentByTime;
 const sortStudentByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
-        const { lecturesList } = yield studentModelInstance.sortStudentByAttendanceQuery({ id });
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList));
+        const { sortList } = yield studentModelInstance.sortStudentByAttendanceQuery({ id });
+        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", sortList));
     }
     catch (err) {
         return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
-});
+}); // 완료
 exports.sortStudentByAttendance = sortStudentByAttendance;

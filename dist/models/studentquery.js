@@ -99,7 +99,8 @@ let StudentModel = class StudentModel {
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id]);
-                return { lecturesList };
+                const sortList = lecturesList.sort((a, b) => a.attendance > b.attendance ? -1 : 1);
+                return { sortList };
             }
             catch (err) {
                 console.log(err);
