@@ -48,7 +48,7 @@ let StudentModel = class StudentModel {
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
-            WHERE students.id = ?`;
+            WHERE students.id = ? AND lectures.open = 1`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id]);
                 console.log(lecturesList);
                 return { lecturesList };

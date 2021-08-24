@@ -34,7 +34,7 @@ let InstructorModel = class InstructorModel {
                 let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name = ?`;
+            WHERE name = ? AND lectures.open = 1`;
                 const lecturesList = yield this.queryFormat.Query(sql, [name]);
                 console.log(lecturesList);
                 lecturesList;
