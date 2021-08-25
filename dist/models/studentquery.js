@@ -57,7 +57,7 @@ let StudentModel = class StudentModel {
             }
         });
     } // 완료
-    getLectureListsWithCategoryNameQuery({ id, name }) {
+    getLectureListsWithCategoryNameQuery({ id, category }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
@@ -65,7 +65,7 @@ let StudentModel = class StudentModel {
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1 AND lectures.category = ?`;
-                const lecturesList = yield this.queryFormat.Query(sql, [id, name]);
+                const lecturesList = yield this.queryFormat.Query(sql, [id, category]);
                 return { lecturesList };
             }
             catch (err) {
@@ -93,7 +93,7 @@ let StudentModel = class StudentModel {
     sortStudentByAttendanceQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id as lectureId., lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id

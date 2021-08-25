@@ -13,14 +13,14 @@ export default class LectureModel {
         this.queryFormat = QueryFormat;
     }
 
-    public async getListBylectureNameOrinstructorNameQuery (lectureData: any): Promise<any> {
+    public async getListBylectureTitleOrinstructorNameQuery (lectureData: any): Promise<any> {
         try {
             const { name } = lectureData;
 
             let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name LIKE "%${name}%" OR category LIKE "%${name}%" AND lectures.open = 1 
+            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
             ORDER BY lectures.attendance DESC`;
             let lecturesList: any = await this.queryFormat.Query(sql);
             lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
@@ -32,7 +32,7 @@ export default class LectureModel {
         }
     } // 완료 이름으로 오픈된 강의 조회
 
-    public async getListByCategoryNameQuery (lectureData: any): Promise<any> {
+    public async getListAddConditionCategoryNameQuery (lectureData: any): Promise<any> {
         try {
             const { name, category } = lectureData;
 
@@ -71,12 +71,12 @@ export default class LectureModel {
 
     public async sortLecturesByTimeQuery (lectureData: any): Promise<any> {
         try {
-            const { name } = lectureData;
+            const { title } = lectureData;
 
             let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            WHERE name LIKE "%${title}%" OR title LIKE "%${title}%" AND lectures.open = 1 
             ORDER BY lectures.created_at DESC`;
             let lecturesList: any = await this.queryFormat.Query(sql);
             lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
@@ -90,12 +90,12 @@ export default class LectureModel {
 
     public async sortLecturesByAttendanceQuery (lectureData: any): Promise<any> {
         try {
-            const { name } = lectureData;
+            const { title } = lectureData;
 
             let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            WHERE name LIKE "%${title}%" OR title LIKE "%${title}%" AND lectures.open = 1 
             ORDER BY lectures.attendance DESC`;
             let lecturesList: any = await this.queryFormat.Query(sql);
             lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });

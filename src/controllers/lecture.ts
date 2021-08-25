@@ -5,13 +5,13 @@ import MessageFormat from "../utils/requestFormat";
 const { responseFormat } = Container.get(MessageFormat)
 
 
-export const getListBylectureNameOrinstructorName = async (req: Request, res: Response): Promise<any> => {
+export const getListBylectureTitleOrinstructorName = async (req: Request, res: Response): Promise<any> => {
     try {
         const { name } = req.params;
 
         const LectureModelInstance = Container.get(LectureModel)
 
-        const { lecturesList } = await LectureModelInstance.getListBylectureNameOrinstructorNameQuery({ name })
+        const { lecturesList } = await LectureModelInstance.getListBylectureTitleOrinstructorNameQuery({ name })
 
         return res.status(200).json(responseFormat(200, "입력된 강의명과 관련된 모든 강의 목록입니다.", lecturesList))
     }
@@ -20,13 +20,13 @@ export const getListBylectureNameOrinstructorName = async (req: Request, res: Re
     }
 }; // 완료
 
-export const getListByCategoryName = async (req: Request, res: Response): Promise<any> => {
+export const getListAddConditionCategoryName = async (req: Request, res: Response): Promise<any> => {
     try {
         const { name, category } = req.params;
 
         const LectureModelInstance = Container.get(LectureModel)
 
-        const { lecturesList } = await LectureModelInstance.getListByCategoryNameQuery({ name, category })
+        const { lecturesList } = await LectureModelInstance.getListAddConditionCategoryNameQuery({ name, category })
 
         return res.status(200).json(responseFormat(200, "해당 강의명과 카테고리를 정보를 포함한 강의 목록입니다.", lecturesList))
     }
@@ -52,11 +52,11 @@ export const getLectureByIdDetail = async (req: Request, res: Response): Promise
 
 export const sortLecturesByTime = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { name } = req.params;
+        const { title } = req.params;
 
         const LectureModelInstance = Container.get(LectureModel)
 
-        const { lecturesList } = await LectureModelInstance.sortLecturesByTimeQuery({ name })
+        const { lecturesList } = await LectureModelInstance.sortLecturesByTimeQuery({ title })
 
         return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList))
     }
@@ -67,11 +67,11 @@ export const sortLecturesByTime = async (req: Request, res: Response): Promise<a
 
 export const sortLecturesByAttendance = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { name } = req.params;
+        const { title } = req.params;
 
         const LectureModelInstance = Container.get(LectureModel)
 
-        const { lecturesList } = await LectureModelInstance.sortLecturesByAttendanceQuery({ name })
+        const { lecturesList } = await LectureModelInstance.sortLecturesByAttendanceQuery({ title })
 
         return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList))
     }

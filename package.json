@@ -7,7 +7,7 @@
     "start": "tsc-watch --onSuccess \" node dist/index.js \" ",
     "restart": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
     "debug": "ts-node-dev --inspect -- src/index.ts",
-    "test": "jest"
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
     "dayjs": "^1.10.6",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "jest": "^27.0.6",
     "joi": "^17.4.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.12",
@@ -41,6 +40,9 @@
     "@types/jest": "^27.0.1",
     "@types/joi": "^17.2.3",
     "@types/mysql": "^2.15.19",
+    "jest": "^27.0.6",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.5",
     "ts-node": "^10.2.0",
     "ts-node-dev": "^1.1.8"
   }

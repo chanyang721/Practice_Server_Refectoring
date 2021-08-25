@@ -1,9 +1,8 @@
 import { Router } from "express";
 const router = Router();
 import { 
-    getListBylectureNameOrinstructorName, 
-    getListByCategoryName,
-    // getListByIdAllCategory,
+    getListBylectureTitleOrinstructorName, 
+    getListAddConditionCategoryName,
     getLectureByIdDetail,
     sortLecturesByTime,
     sortLecturesByAttendance,
@@ -22,11 +21,11 @@ import {
 } from "../middlewares/vaildations/lecture"
 
 
-router.get("/lecture/:name", getListBylectureNameOrinstructorName) // 완료
+router.get("/lecture/:name", getListBylectureTitleOrinstructorName) // 완료
 
-router.get("/lecture/:name/category/:category", getListByCategoryName) // 완료
+router.get("/lecture/:name/category/:category", getListAddConditionCategoryName) // 완료
 
-router.get("/lecture/:name/detail", getLectureByIdDetail) // 완료
+router.get("/lecture/:id/detail", getLectureByIdDetail) // 완료
 
 router.get("/lecture/:name/sort/desc", sortLecturesByTime) // 완료
 

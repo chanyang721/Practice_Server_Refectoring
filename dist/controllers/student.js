@@ -43,9 +43,9 @@ const getListByStudentId = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.getListByStudentId = getListByStudentId;
 const getListByStudentIdAndCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id, name } = req.params;
+        const { id, category } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
-        const { lecturesList } = yield studentModelInstance.getLectureListsWithCategoryNameQuery({ id, name });
+        const { lecturesList } = yield studentModelInstance.getLectureListsWithCategoryNameQuery({ id, category });
         return res.status(200).json(responseFormat(200, "해당 학생의 카테고리 목록입니다.", lecturesList));
     }
     catch (err) {

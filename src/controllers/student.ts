@@ -37,11 +37,11 @@ export const getListByStudentId = async (req: Request, res: Response): Promise<a
 
 export const getListByStudentIdAndCategoryName = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { id, name } = req.params;
+        const { id, category } = req.params;
 
         const studentModelInstance = Container.get(StudentModel);
 
-        const { lecturesList } = await studentModelInstance.getLectureListsWithCategoryNameQuery({ id, name })
+        const { lecturesList } = await studentModelInstance.getLectureListsWithCategoryNameQuery({ id, category })
 
         return res.status(200).json(responseFormat(200, "해당 학생의 카테고리 목록입니다.", lecturesList))
     }

@@ -15,7 +15,7 @@ router.post("/student", createStudentVaildation, createStudent) // 완료
 
 router.get("/student/:id", getListByStudentId) // 완료
 
-router.get("/student/:id/category/:name", getListByStudentIdAndCategoryName) // 완료
+router.get("/student/:id/category/:category", getListByStudentIdAndCategoryName) // 완료
 
 router.get("/student/:id/sort/desc", sortStudentLectureListByTime) // 완료
 

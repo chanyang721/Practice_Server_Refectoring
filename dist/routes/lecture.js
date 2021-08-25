@@ -4,9 +4,9 @@ const express_1 = require("express");
 const router = express_1.Router();
 const lecture_1 = require("../controllers/lecture");
 const lecture_2 = require("../middlewares/vaildations/lecture");
-router.get("/lecture/:name", lecture_1.getListBylectureNameOrinstructorName); // 완료
-router.get("/lecture/:name/category/:category", lecture_1.getListByCategoryName); // 완료
-router.get("/lecture/:name/detail", lecture_1.getLectureByIdDetail); // 완료
+router.get("/lecture/:name", lecture_1.getListBylectureTitleOrinstructorName); // 완료
+router.get("/lecture/:name/category/:category", lecture_1.getListAddConditionCategoryName); // 완료
+router.get("/lecture/:id/detail", lecture_1.getLectureByIdDetail); // 완료
 router.get("/lecture/:name/sort/desc", lecture_1.sortLecturesByTime); // 완료
 router.get("/lecture/:name/sort/attendance", lecture_1.sortLecturesByAttendance); // 완료
 router.post("/lecture", lecture_2.createLectureVaildation, lecture_1.createLecture); // 완료
