@@ -1,17 +1,15 @@
 
 
 export interface IdetailLecture {
-    lecturesInfo: {
+    lecturesList: {
         title: string,
         description: string,
         category: string,
         price: number,
         attendance: number,
-        students: {
-            
-        },
-        created_at,
-        updated_at
+        students: Object,
+        created_at: Date,
+        updated_at:Date,
     }, 
 };
 

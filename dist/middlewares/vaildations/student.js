@@ -31,6 +31,7 @@ const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
     let sql = `SELECT * FROM students WHERE email = ?`;
     let params = [email];
     const DuplicStudent = yield Query(sql, params);
+    // 이메일 중복 확인
     if (DuplicStudent[0]) {
         return res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다."));
     }

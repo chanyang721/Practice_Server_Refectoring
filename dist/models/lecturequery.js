@@ -29,7 +29,43 @@ let LectureModel = class LectureModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
     }
-    getLectureByIdDetailsQuery(lectureData) {
+    getListBylectureNameOrinstructorNameQuery(lectureData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { name } = lectureData;
+                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name LIKE "%${name}%" OR category LIKE "%${name}%" AND lectures.open = 1 
+            ORDER BY lectures.attendance DESC`;
+                let lecturesList = yield this.queryFormat.Query(sql);
+                lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
+                return { lecturesList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    } // 완료 이름으로 오픈된 강의 조회
+    getListByCategoryNameQuery(lectureData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { name, category } = lectureData;
+                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at, lectures.updated_at
+            FROM lectures
+            JOIN instructors ON lectures.instructor = instructors.name
+            WHERE instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%" AND lectures.category = ? AND lectures.open = 1`;
+                let params = [category];
+                let lecturesList = yield this.queryFormat.Query(sql, params);
+                lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
+                return { lecturesList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    } // 완료
+    getLectureByIdDetailQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = lectureData;
@@ -37,24 +73,51 @@ let LectureModel = class LectureModel {
             FROM lectures
             WHERE lectures.id = ?`;
                 let params = [id];
-                let lecturesInfo = yield this.queryFormat.Query(sql, params);
-                lecturesInfo = lecturesInfo.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
-                return { lecturesInfo };
+                let lecturesList = yield this.queryFormat.Query(sql, params);
+                lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
+                return { lecturesList };
             }
             catch (err) {
                 console.log(err);
             }
         });
-    }
-    getListBylectureNameQuery(lectureData) {
+    } // 완료
+    sortLecturesByTimeQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const { name } = lectureData;
+                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            ORDER BY lectures.created_at DESC`;
+                let lecturesList = yield this.queryFormat.Query(sql);
+                lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
+                return { lecturesList };
             }
             catch (err) {
                 console.log(err);
             }
         });
-    }
+    } // 완료
+    sortLecturesByAttendanceQuery(lectureData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { name } = lectureData;
+                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            ORDER BY lectures.attendance DESC`;
+                let lecturesList = yield this.queryFormat.Query(sql);
+                lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
+                return { lecturesList };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    } // 완료
     createLectureQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -97,7 +160,7 @@ let LectureModel = class LectureModel {
             }
         });
     } // 완료 
-    deleteLecureQuery(lectureData) {
+    deleteLectureQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = lectureData;

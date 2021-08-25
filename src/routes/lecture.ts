@@ -1,10 +1,10 @@
 import { Router } from "express";
 const router = Router();
 import { 
-    getListBylectureName, 
+    getListBylectureNameOrinstructorName, 
     getListByCategoryName,
-    getListByIdAllCategory,
-    getLectureByIdDetails,
+    // getListByIdAllCategory,
+    getLectureByIdDetail,
     sortLecturesByTime,
     sortLecturesByAttendance,
     createLecture,
@@ -22,17 +22,15 @@ import {
 } from "../middlewares/vaildations/lecture"
 
 
-router.get("/lecture/:name", getListBylectureName)
+router.get("/lecture/:name", getListBylectureNameOrinstructorName) // 완료
 
-router.get("/lecture/:id", getListByIdAllCategory)
+router.get("/lecture/:name/category/:category", getListByCategoryName) // 완료
 
-router.get("/lecture/:id/category/:name", getListByCategoryName)
+router.get("/lecture/:name/detail", getLectureByIdDetail) // 완료
 
-router.get("/lecture/:id/details", getLectureByIdDetails)
+router.get("/lecture/:name/sort/desc", sortLecturesByTime) // 완료
 
-router.get("/lecture/:id/sort/desc", sortLecturesByTime)
-
-router.get("/lecture/:id/sort/attendance", sortLecturesByAttendance)
+router.get("/lecture/:name/sort/attendance", sortLecturesByAttendance) // 완료
 
 router.post("/lecture", createLectureVaildation, createLecture) // 완료
 

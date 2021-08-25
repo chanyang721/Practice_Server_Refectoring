@@ -32,12 +32,18 @@ const createLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
             return res.send(responseFormat(403, "유효한 형식이 아닙니다", null, error.details[0].message));
         }
         req.body = value;
-        const { title } = req.body;
+        const { title, category } = req.body;
+        // 강의명 중복 확인
         let sql = `SELECT * FROM lectures WHERE title = ?`;
         let params = [title];
         const duplicLecture = yield Query(sql, params);
         if (duplicLecture[0]) {
             return res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"));
+        }
+        // 지정된 카테고리값을 가지는지 확인
+        const defaultCategory = ["웹", "앱", "게임", "알고리즘", "인프라", "데이터베이스"];
+        if (category[0] && !defaultCategory.includes(category)) {
+            return res.status(400).json(responseFormat(400, "지정된 카테고리를 입력해 주세요"));
         }
         return next();
     }
@@ -88,14 +94,14 @@ exports.updateLectureInfoVaildation = updateLectureInfoVaildation;
 const openLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        // 해당 강의가 삭제된 경우
+        // 해당 강의가 삭제된 경우 확인
         let sql = `SELECT * FROM lectures WHERE id = ?`;
         let params = [id];
         const lectureExist = yield Query(sql, params);
         if (!lectureExist[0]) {
             return res.status(400).json(responseFormat(400, "해당 강의는 존재하지 않습니다."));
         }
-        // 이미 오픈 상태인 경우
+        // 이미 오픈 상태인 경우 확인
         if (lectureExist[0].open) {
             return res.status(400).json(responseFormat(400, "해당 강의는 이미 오픈된 상태입니다."));
         }
@@ -112,7 +118,7 @@ const deleteLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
         let sql = `SELECT * FROM lectures WHERE id = ?`;
         let params = [id];
         const lectureInfo = yield Query(sql, params);
-        // 해당 강의가 없는 경우
+        // 해당 강의가 없는 경우 확인
         if (!lectureInfo[0]) {
             return res.status(400).json(responseFormat(400, "해당 강의는 존재하지 않습니다."));
         }
@@ -149,6 +155,7 @@ const registerLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, 
         let sql = `SELECT * FROM students WHERE id = ?`;
         let params = [studentId];
         const checkStudentExist = yield Query(sql, params);
+        // 해당 학생이 없는 경우 확인
         if (!checkStudentExist[0]) {
             return res.status(400).json(responseFormat(400, "가입된 수강생만 수강 신청할 수 있습니다."));
         }
@@ -156,12 +163,15 @@ const registerLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, 
         sql = `SELECT students, open FROM lectures WHERE id = ?`;
         params = [lectureId];
         const checkLectureExist = yield Query(sql, params);
+        // 해당 강의가 없는 경우 확인
         if (!checkLectureExist[0]) {
             return res.status(400).json(responseFormat(400, "삭제된 강의는 수강 신청할 수 없습니다."));
         }
+        // 비공개된 강의를 신청할 경우 확인
         if (!checkLectureExist[0].open) {
             return res.status(400).json(responseFormat(400, "비공개된 강의는 수강 신청할 수 없습니다."));
         }
+        // 중복 강의 신청 확인
         const students = JSON.parse(checkLectureExist[0].students);
         if (students[checkStudentExist[0].id]) {
             return res.status(400).json(responseFormat(400, "동일 강의를 수강신청할 수는 없습니다."));

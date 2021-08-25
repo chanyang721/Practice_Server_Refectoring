@@ -27,7 +27,7 @@ export default class StudentModel {
 
     public async getLectureListsQuery({ id }: { id: string }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
@@ -43,7 +43,7 @@ export default class StudentModel {
 
     public async getLectureListsWithCategoryNameQuery ({ id, name }: { id: string, name: string }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
@@ -59,7 +59,7 @@ export default class StudentModel {
 
     public async sortStudentByTimeQuery ({ id }: { id: any }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
@@ -76,7 +76,7 @@ export default class StudentModel {
 
     public async sortStudentByAttendanceQuery ({ id }: { id: string }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
+            let sql = `SELECT lectures.id as lectureId., lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id

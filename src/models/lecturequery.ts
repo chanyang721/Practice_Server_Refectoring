@@ -13,7 +13,45 @@ export default class LectureModel {
         this.queryFormat = QueryFormat;
     }
 
-    public async getLectureByIdDetailsQuery (lectureData: any): Promise<IdetailLecture> {
+    public async getListBylectureNameOrinstructorNameQuery (lectureData: any): Promise<any> {
+        try {
+            const { name } = lectureData;
+
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name LIKE "%${name}%" OR category LIKE "%${name}%" AND lectures.open = 1 
+            ORDER BY lectures.attendance DESC`;
+            let lecturesList: any = await this.queryFormat.Query(sql);
+            lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
+
+            return { lecturesList }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    } // 완료 이름으로 오픈된 강의 조회
+
+    public async getListByCategoryNameQuery (lectureData: any): Promise<any> {
+        try {
+            const { name, category } = lectureData;
+
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at, lectures.updated_at
+            FROM lectures
+            JOIN instructors ON lectures.instructor = instructors.name
+            WHERE instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%" AND lectures.category = ? AND lectures.open = 1`;
+            let params = [ category ];
+            let lecturesList: any = await this.queryFormat.Query(sql, params)
+            lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
+
+            return { lecturesList }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    } // 완료
+
+    public async getLectureByIdDetailQuery (lectureData: any): Promise<IdetailLecture> {
         try {
             const { id } = lectureData;
 
@@ -21,24 +59,53 @@ export default class LectureModel {
             FROM lectures
             WHERE lectures.id = ?`;
             let params = [ id ];
-            let lecturesInfo: any = await this.queryFormat.Query(sql, params)
-            lecturesInfo = lecturesInfo.map(el => el = { ...el, students: JSON.parse(el.students) });
+            let lecturesList: any = await this.queryFormat.Query(sql, params)
+            lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
 
-            return { lecturesInfo }
+            return { lecturesList }
         }
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료
 
-    public async getListBylectureNameQuery (lectureData: any): Promise<any> {
+    public async sortLecturesByTimeQuery (lectureData: any): Promise<any> {
         try {
+            const { name } = lectureData;
 
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            ORDER BY lectures.created_at DESC`;
+            let lecturesList: any = await this.queryFormat.Query(sql);
+            lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
+
+            return { lecturesList }
         }
         catch (err) {
             console.log(err)
         }
-    }
+    } // 완료
+
+    public async sortLecturesByAttendanceQuery (lectureData: any): Promise<any> {
+        try {
+            const { name } = lectureData;
+
+            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            FROM instructors 
+            JOIN lectures ON lectures.instructor = instructors.name
+            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            ORDER BY lectures.attendance DESC`;
+            let lecturesList: any = await this.queryFormat.Query(sql);
+            lecturesList = lecturesList.map(el => el = { ...el, students: JSON.parse(el.students) });
+
+            return { lecturesList }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    } // 완료
 
     public async createLectureQuery (lectureData: any): Promise<any> {
         try {
@@ -85,7 +152,7 @@ export default class LectureModel {
         }
     } // 완료 
 
-    public async deleteLecureQuery (lectureData: any): Promise<any> {
+    public async deleteLectureQuery (lectureData: any): Promise<any> {
         try {
             const { id } = lectureData;
 
