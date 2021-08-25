@@ -19,8 +19,10 @@ CREATE TABLE instructors (
 CREATE TABLE students (
   id INT AUTO_INCREMENT,
   nickname varchar(255) NOT NULL,
+  introduce varchar(2000),
+  blog varchar(255),
   email varchar(255) NOT NULL,
-  lectures varchar(255) DEFAULT "{}" NOT NULL,
+  phone varchar(255),
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

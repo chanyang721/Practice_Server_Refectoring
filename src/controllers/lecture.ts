@@ -13,6 +13,15 @@ export const getListBylectureName = async (req: Request, res: Response): Promise
     }
 };
 
+export const getListByIdAllCategory = async (req: Request, res: Response): Promise<any> => {
+    try {
+        res.send("getListByAllCategory")
+    }
+    catch (err) {
+        console.log(err)
+    }
+};
+
 export const getListByCategoryName = async (req: Request, res: Response): Promise<any> => {
     try {
         res.send("getListByCategoryName")
@@ -22,18 +31,15 @@ export const getListByCategoryName = async (req: Request, res: Response): Promis
     }
 };
 
-export const getListByAllCategory = async (req: Request, res: Response): Promise<any> => {
+export const getLectureByIdDetails = async (req: Request, res: Response): Promise<any> => {
     try {
-        res.send("getListByAllCategory")
-    }
-    catch (err) {
-        console.log(err)
-    }
-};
+        const { id } = req.params;
 
-export const getLectureById = async (req: Request, res: Response): Promise<any> => {
-    try {
-        res.send("getLectureById")
+        const LectureModelInstance = Container.get(LectureModel)
+        
+        const { lecturesInfo } = await LectureModelInstance.getLectureByIdDetailsQuery({ id })
+
+        return res.status(200).json(responseFormat(200, "오픈 여부를 제거한 모든 강의 목록입니다.", lecturesInfo))
     }
     catch (err) {
         console.log(err)

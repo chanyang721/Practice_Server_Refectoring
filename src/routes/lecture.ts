@@ -3,8 +3,8 @@ const router = Router();
 import { 
     getListBylectureName, 
     getListByCategoryName,
-    getListByAllCategory,
-    getLectureById,
+    getListByIdAllCategory,
+    getLectureByIdDetails,
     sortLecturesByTime,
     sortLecturesByAttendance,
     createLecture,
@@ -24,15 +24,15 @@ import {
 
 router.get("/lecture/:name", getListBylectureName)
 
+router.get("/lecture/:id", getListByIdAllCategory)
+
 router.get("/lecture/:id/category/:name", getListByCategoryName)
 
-router.get("/lecture/category", getListByAllCategory)
+router.get("/lecture/:id/details", getLectureByIdDetails)
 
-router.get("/lecture/:id/details", getLectureById)
+router.get("/lecture/:id/sort/desc", sortLecturesByTime)
 
-router.get("/lecture/sort/desc", sortLecturesByTime)
-
-router.get("/lecture/sort/attendance", sortLecturesByAttendance)
+router.get("/lecture/:id/sort/attendance", sortLecturesByAttendance)
 
 router.post("/lecture", createLectureVaildation, createLecture) // 완료
 

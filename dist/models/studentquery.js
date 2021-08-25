@@ -80,10 +80,10 @@ let StudentModel = class StudentModel {
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
-            WHERE students.id = ? AND lectures.open = 1`;
+            WHERE students.id = ? AND lectures.open = 1
+            ORDER BY lectures.created_at DESC`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id]);
-                const sortList = lecturesList.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
-                return { sortList };
+                return { lecturesList };
             }
             catch (err) {
                 console.log(err);
@@ -97,10 +97,10 @@ let StudentModel = class StudentModel {
             FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
-            WHERE students.id = ? AND lectures.open = 1`;
+            WHERE students.id = ? AND lectures.open = 1
+            ORDER BY lectures.attendance DESC`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id]);
-                const sortList = lecturesList.sort((a, b) => a.attendance > b.attendance ? -1 : 1);
-                return { sortList };
+                return { lecturesList };
             }
             catch (err) {
                 console.log(err);

@@ -29,7 +29,31 @@ let LectureModel = class LectureModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
     }
-    getListBylectureNameQuery(lectrueData) {
+    getLectureByIdDetailsQuery(lectureData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = lectureData;
+                let sql = `SELECT title, description, category, price, attendance, lectures.students, lectures.created_at, lectures.updated_at, students.id, students.nickname
+            FROM lectures
+            JOIN lectures_students ON lectures.id = lectures_students.lecture_id
+            JOIN students ON students.id = lectures_students.student_id
+            WHERE lectures.id = ?
+            GROUP BY lectures_students.lecture.id`;
+                let params = [id];
+                const lecturesInfo = yield this.queryFormat.Query(sql, params);
+                // for (let lecture = 0; lecture < lecturesInfo.length; lecture++) {
+                //     let { id, nickname, students } = lecturesInfo
+                //     students = JSON.parse(students);
+                //     lecturesInfo[lecture].studentsList = { nickname , "registerDay": lecturesInfo.student[id] }
+                // }
+                return { lecturesInfo };
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
+    getListBylectureNameQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
             }

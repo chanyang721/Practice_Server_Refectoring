@@ -56,9 +56,9 @@ export const sortStudentLectureListByTime = async (req: Request, res: Response):
 
         const studentModelInstance = Container.get(StudentModel);
 
-        const { sortList } = await studentModelInstance.sortStudentByTimeQuery({ id })
+        const { lecturesList } = await studentModelInstance.sortStudentByTimeQuery({ id })
 
-        return res.status(200).json(responseFormat(200, "최신 순으로 정렬된 강의 목록입니다.", sortList))
+        return res.status(200).json(responseFormat(200, "최신 순으로 정렬된 강의 목록입니다.", lecturesList))
     }
     catch (err) {
         return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
@@ -71,9 +71,9 @@ export const sortStudentLectureListByAttendance = async (req: Request, res: Resp
 
         const studentModelInstance = Container.get(StudentModel);
 
-        const { sortList } = await studentModelInstance.sortStudentByAttendanceQuery({ id })
+        const { lecturesList } = await studentModelInstance.sortStudentByAttendanceQuery({ id })
 
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", sortList))
+        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList))
     }
     catch (err) {
         return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))

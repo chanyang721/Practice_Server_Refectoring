@@ -42,14 +42,14 @@ export default class InstructorModel {
 
     public async sortInstructorLectureListByTimeQuery (name: string) {
         try {
-            let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+            let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name = ? AND lectures.open = 1`;
+            WHERE name = ? AND lectures.open = 1
+            ORDER BY lectures.created_at DESC`;
             const lecturesList: any = await this.queryFormat.Query(sql, [ name ]);
-            const sortList = lecturesList.sort((a, b) => a.created_at > b.created_at ? -1 : 1)
 
-            return { sortList }
+            return { lecturesList }
         }
         catch (err) {
             console.log(err)
@@ -58,14 +58,14 @@ export default class InstructorModel {
 
     public async sortInstructorLectureListByAttendanceQuery (name: string) {
         try {
-            let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+            let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name = ? AND lectures.open = 1`;
+            WHERE name = ? AND lectures.open = 1
+            ORDER BY lectures.attendance DESC`;
             const lecturesList: any = await this.queryFormat.Query(sql, [ name ]);
-            const sortList = lecturesList.sort((a, b) => a.attendance > b.attendance ? -1 : 1)
 
-            return { sortList }
+            return { lecturesList }
         }
         catch (err) {
             console.log(err)

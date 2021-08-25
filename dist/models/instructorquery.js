@@ -62,13 +62,13 @@ let InstructorModel = class InstructorModel {
     sortInstructorLectureListByTimeQuery(name) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name = ? AND lectures.open = 1`;
+            WHERE name = ? AND lectures.open = 1
+            ORDER BY lectures.created_at DESC`;
                 const lecturesList = yield this.queryFormat.Query(sql, [name]);
-                const sortList = lecturesList.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
-                return { sortList };
+                return { lecturesList };
             }
             catch (err) {
                 console.log(err);
@@ -79,13 +79,13 @@ let InstructorModel = class InstructorModel {
     sortInstructorLectureListByAttendanceQuery(name) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.students, lectures.created_at
+                let sql = `SELECT lectures.id, lectures.category, lectures.title, instructors.name, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name = ? AND lectures.open = 1`;
+            WHERE name = ? AND lectures.open = 1
+            ORDER BY lectures.attendance DESC`;
                 const lecturesList = yield this.queryFormat.Query(sql, [name]);
-                const sortList = lecturesList.sort((a, b) => a.attendance > b.attendance ? -1 : 1);
-                return { sortList };
+                return { lecturesList };
             }
             catch (err) {
                 console.log(err);

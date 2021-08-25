@@ -45,8 +45,8 @@ const sortInstructorLectureListByTime = (req, res) => __awaiter(void 0, void 0, 
     try {
         const { name } = req.params;
         const InstructorModelInstance = typedi_1.Container.get(instructorquery_1.default);
-        const { sortList } = yield InstructorModelInstance.sortInstructorLectureListByTimeQuery(name);
-        res.status(200).json(responseFormat(200, "최신 순으로 정렬된 해당 강사의 강의 목록입니다.", sortList));
+        const { lecturesList } = yield InstructorModelInstance.sortInstructorLectureListByTimeQuery(name);
+        res.status(200).json(responseFormat(200, "최신 순으로 정렬된 해당 강사의 강의 목록입니다.", lecturesList));
     }
     catch (err) {
         return res.status(400).json(responseFormat(400, "최신순으로 정렬된 해당 강사의 강의 목록을 불러오는데 실패했습니다.", null, err));
@@ -57,8 +57,8 @@ const sortInstructorLectureListByAttendance = (req, res) => __awaiter(void 0, vo
     try {
         const { name } = req.params;
         const InstructorModelInstance = typedi_1.Container.get(instructorquery_1.default);
-        const { sortList } = yield InstructorModelInstance.sortInstructorLectureListByAttendanceQuery(name);
-        res.status(200).json(responseFormat(200, "수강생수로 정렬된 해당 강사의 강의 목록입니다.", sortList));
+        const { lecturesList } = yield InstructorModelInstance.sortInstructorLectureListByAttendanceQuery(name);
+        res.status(200).json(responseFormat(200, "수강생수로 정렬된 해당 강사의 강의 목록입니다.", lecturesList));
     }
     catch (err) {
         return res.status(400).json(responseFormat(400, "수강생수로 정렬된 해당 강사의 강의 목록을 불러오는데 실패했습니다.", null, err));

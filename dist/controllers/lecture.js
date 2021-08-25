@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerLecture = exports.deleteLecture = exports.openLecture = exports.updateLectureInfo = exports.createLecture = exports.sortLecturesByAttendance = exports.sortLecturesByTime = exports.getLectureById = exports.getListByAllCategory = exports.getListByCategoryName = exports.getListBylectureName = void 0;
+exports.registerLecture = exports.deleteLecture = exports.openLecture = exports.updateLectureInfo = exports.createLecture = exports.sortLecturesByAttendance = exports.sortLecturesByTime = exports.getLectureByIdDetails = exports.getListByCategoryName = exports.getListByIdAllCategory = exports.getListBylectureName = void 0;
 const typedi_1 = require("typedi");
 const lecturequery_1 = __importDefault(require("../models/lecturequery"));
 const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
@@ -26,6 +26,15 @@ const getListBylectureName = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getListBylectureName = getListBylectureName;
+const getListByIdAllCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.send("getListByAllCategory");
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+exports.getListByIdAllCategory = getListByIdAllCategory;
 const getListByCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         res.send("getListByCategoryName");
@@ -35,24 +44,18 @@ const getListByCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.getListByCategoryName = getListByCategoryName;
-const getListByAllCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getLectureByIdDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send("getListByAllCategory");
+        const { id } = req.params;
+        const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
+        const { lecturesInfo } = yield LectureModelInstance.getLectureByIdDetailsQuery({ id });
+        return res.status(200).json(responseFormat(200, "오픈 여부를 제거한 모든 강의 목록입니다.", lecturesInfo));
     }
     catch (err) {
         console.log(err);
     }
 });
-exports.getListByAllCategory = getListByAllCategory;
-const getLectureById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        res.send("getLectureById");
-    }
-    catch (err) {
-        console.log(err);
-    }
-});
-exports.getLectureById = getLectureById;
+exports.getLectureByIdDetails = getLectureByIdDetails;
 const sortLecturesByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         res.send("sortLecturesByTime");
