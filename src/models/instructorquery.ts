@@ -47,7 +47,7 @@ export default class InstructorModel {
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE name = ? AND lectures.open = 1
             ORDER BY lectures.created_at DESC`;
-            const lecturesList: any = await this.queryFormat.Query(sql, [ name ]);
+            const lecturesList = await this.queryFormat.Query(sql, [ name ]);
 
             return { lecturesList }
         }
@@ -63,7 +63,7 @@ export default class InstructorModel {
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE name = ? AND lectures.open = 1
             ORDER BY lectures.attendance DESC`;
-            const lecturesList: any = await this.queryFormat.Query(sql, [ name ]);
+            const lecturesList = await this.queryFormat.Query(sql, [ name ]);
 
             return { lecturesList }
         }

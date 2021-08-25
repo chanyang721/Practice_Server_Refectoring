@@ -44,7 +44,7 @@ export const getLectureByIdDetails = async (req: Request, res: Response): Promis
     catch (err) {
         console.log(err)
     }
-};
+}; // 완료
 
 export const sortLecturesByTime = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -126,11 +126,11 @@ export const deleteLecture = async (req: Request, res: Response): Promise<any> =
 
 export const registerLecture = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { students, lectureId, studentId } = req.body;
+        const { students, nickname, lectureId, studentId } = req.body;
 
         const LectureModelInstance = Container.get(LectureModel);
 
-        await LectureModelInstance.registerLectureQuery({ students, lectureId, studentId })
+        await LectureModelInstance.registerLectureQuery({ students, nickname, lectureId, studentId })
 
         return res.status(200).json(responseFormat(200, "수강 신청이 완료되었습니다."))
     }

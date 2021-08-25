@@ -65,5 +65,3 @@ export const sortInstructorLectureListByAttendance = async (req: Request, res: R
 }; 
 
 
-
-

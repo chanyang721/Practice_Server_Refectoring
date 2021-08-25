@@ -167,6 +167,7 @@ const registerLectureVaildation = (req, res, next) => __awaiter(void 0, void 0, 
             return res.status(400).json(responseFormat(400, "동일 강의를 수강신청할 수는 없습니다."));
         }
         req.body.students = students;
+        req.body.nickname = checkStudentExist[0].nickname;
         return next();
     }
     catch (err) {

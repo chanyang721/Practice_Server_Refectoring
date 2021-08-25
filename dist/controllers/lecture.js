@@ -54,7 +54,7 @@ const getLectureByIdDetails = (req, res) => __awaiter(void 0, void 0, void 0, fu
     catch (err) {
         console.log(err);
     }
-});
+}); // 완료
 exports.getLectureByIdDetails = getLectureByIdDetails;
 const sortLecturesByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -124,9 +124,9 @@ const deleteLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.deleteLecture = deleteLecture;
 const registerLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { students, lectureId, studentId } = req.body;
+        const { students, nickname, lectureId, studentId } = req.body;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        yield LectureModelInstance.registerLectureQuery({ students, lectureId, studentId });
+        yield LectureModelInstance.registerLectureQuery({ students, nickname, lectureId, studentId });
         return res.status(200).json(responseFormat(200, "수강 신청이 완료되었습니다."));
     }
     catch (err) {

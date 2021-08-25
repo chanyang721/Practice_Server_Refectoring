@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { IregusterLecture } from "../interfaces" 
+import { IdetailLecture } from "../interfaces" 
 import QueryFormat from "../utils/query";
 import dayjs from 'dayjs';
 dayjs().format()
@@ -13,24 +13,16 @@ export default class LectureModel {
         this.queryFormat = QueryFormat;
     }
 
-    public async getLectureByIdDetailsQuery (lectureData: any): Promise<any> {
+    public async getLectureByIdDetailsQuery (lectureData: any): Promise<IdetailLecture> {
         try {
             const { id } = lectureData;
 
-            let sql = `SELECT title, description, category, price, attendance, lectures.students, lectures.created_at, lectures.updated_at, students.id, students.nickname
+            let sql = `SELECT title, description, category, price, attendance, students, created_at, updated_at
             FROM lectures
-            JOIN lectures_students ON lectures.id = lectures_students.lecture_id
-            JOIN students ON students.id = lectures_students.student_id
-            WHERE lectures.id = ?
-            GROUP BY lectures_students.lecture.id`;
+            WHERE lectures.id = ?`;
             let params = [ id ];
-            const lecturesInfo: any = await this.queryFormat.Query(sql, params)
-
-            // for (let lecture = 0; lecture < lecturesInfo.length; lecture++) {
-            //     let { id, nickname, students } = lecturesInfo
-            //     students = JSON.parse(students);
-            //     lecturesInfo[lecture].studentsList = { nickname , "registerDay": lecturesInfo.student[id] }
-            // }
+            let lecturesInfo: any = await this.queryFormat.Query(sql, params)
+            lecturesInfo = lecturesInfo.map(el => el = { ...el, students: JSON.parse(el.students) });
 
             return { lecturesInfo }
         }
@@ -110,10 +102,10 @@ export default class LectureModel {
 
     public async registerLectureQuery (registerData: any): Promise<any> {
         try {
-            const { students, lectureId, studentId } = registerData;
+            const { students, nickname, lectureId, studentId } = registerData;
             const registerDay = dayjs().format("YYYY/MM/DD");
     
-            students[studentId] = registerDay;
+            students[studentId] = { nickname, registerDay };
             
             let sql = `UPDATE lectures SET students = ?, attendance = attendance + 1 WHERE id = ${lectureId}`;
             let params = [ JSON.stringify(students) ];

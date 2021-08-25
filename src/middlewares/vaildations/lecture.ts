@@ -179,6 +179,7 @@ export const registerLectureVaildation = async (req: Request, res: Response, nex
         }
     
         req.body.students = students
+        req.body.nickname = checkStudentExist[0].nickname;
         return next();
     }
     catch(err) {
