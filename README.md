@@ -9,6 +9,7 @@
 * TS 공식문서를 08.16일까지 블로깅 하면서 협업하기 좋고, 구조화된, 확장성이 열린 서버를 구축할 예정이다.
 * 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것은 어떤 구조인가를 익혀서 블로깅 할 예정이다.
 * 
+
 <details>
     <summary></summary>
     <p>
@@ -36,14 +37,14 @@
         <ul>
             <li>내가 지금까지 만들었던 서버들은 과연 어떤 부분을 리팩토링 했어야 할까 ? 지금까지 내가 만든 서버라는 것은 요청에 의한 적절한 응답값을 주는 도구였다. 하지만, 백엔드에서 서버 설계라는 것을 생각하지 않고 구축하다보니 협업, 구조화, 확장성이라는 사고 방식을 서버 설계에 주입하지 않았다. 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것을 어떻게 설계해야 하는지에 대한 사고 방식과 구조를 공부해서 적용해보고 싶어졌다. 스택들을 익히고, 서버를 설계 단계부터 다시 익혀야한다. 남은 12일이라는 시간이 적어 보인다.</li>
             <li>데이터베이스를 구축하면서 ORM을 사용하지 않고 테이블을 생성하기 위한 방법을 고민했다. schema.sql파일에 생성하고 싶은 테이블과 관계 형성, 인덱스 생성하는 방법들을 찾아봤고 이를 mysql 실행문을 통해 연결된 데이터베이스에 생성할 수 있었다. 두개의 방법을 찾았다.
-1. 터미널 상에서 "mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]"
-2. mysql 접속 후 "use [데이터베이스 이름]"으로 데이터 베이스 선택 -> "source [schema.sql 파일 경로]" 작성 후 엔터</li>
+            1. 터미널 상에서 "mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]"
+            2. mysql 접속 후 "use [데이터베이스 이름]"으로 데이터 베이스 선택 -> "source [schema.sql 파일 경로]" 작성 후 엔터</li>
             <li>관심사 분리? 라는 측면을 생각해보니 vaildation과 query를 한 뒤에 컨트롤러로 넘겨주는 미들웨어를 만들어 결과값만을 컨트롤러에서 다루는 구조는 어떨까? 모든 진행 과정을 나누어 모듈화하는것이 협업에 좋은, 구조화되며, 확정성에 좋은게 맞는건지 잘 모르겠다. 모든 것이 다른 파일에 있기 때문에 git 상에서 충돌이 적기 때문일까?</li>
             <li>
-            Reference
-                - [도메인 주도 설계(Domain-Driven Design) in Real Project](https://medium.com/react-native-seoul/%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%A3%BC%EB%8F%84-%EC%84%A4%EA%B3%84-domain-driven-design-in-real-project-1-%EB%8F%84%EB%A9%94%EC%9D%B8-83a5e31c5e45) <br>
-                - [DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94) <br>
-                - [MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial) <br>
+            Reference <br>
+                - ![도메인 주도 설계(Domain-Driven Design) in Real Project](https://medium.com/react-native-seoul/%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%A3%BC%EB%8F%84-%EC%84%A4%EA%B3%84-domain-driven-design-in-real-project-1-%EB%8F%84%EB%A9%94%EC%9D%B8-83a5e31c5e45) <br>
+                - ![DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94) <br>
+                - ![MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial) <br>
             </li>
         </ul>
     </p>
@@ -54,7 +55,7 @@
     <summary>21.08.16</summary>
     <p>
         <ul>
-            <li>[Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)</li>
+            <li>![Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)</li>
         </ul>
     </p>
 </details>
@@ -88,42 +89,42 @@
                 </pre>
             </li>
             <li>models에서 쿼리문을 작성하고 controllers에서는 결과값 models를 통해 받아와 response객체를 생성하려고한다. models에서 쿼리문을 통해 이메일 체크를 하고 controllers로 next()를 이용해 넘어갔다. 하지만 controllers에서 유저를 생성하는 쿼리문을 다시 작성할 수 없어서 models에 utils를 만든 후 utils함수에 callback함수를 적용한 후 다시 import했다. 
-                <pre>
-                    <code>
-export const utils = {
-    students: {
-        create: (email: string, callback: Function): void => {
-            const nickName = email.split("@")[0];
-            
-            const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-            const params = [nickName, email, "{}"]
-            db.query(sql, params, (error, result) => {
-                if (error) console.log(error);
-                callback(error, result);
-            })
-        },
-    },
-}
-                    </code>
-                </pre>
-                <pre>
-                    <code>
-// controllers/students.ts // 
-export const createStudent = async (req: Request, res: Response): Promise<any> => {
-    const { DuplicUser, email } = req.body
+            <div>
+                <pre><code>
+                        export const utils = {
+                            students: {
+                                create: (email: string, callback: Function): void => {
+                                    const nickName = email.split("@")[0];
+                                    
+                                    const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+                                    const params = [nickName, email, "{}"]
+                                    db.query(sql, params, (error, result) => {
+                                        if (error) console.log(error);
+                                        callback(error, result);
+                                    })
+                                },
+                            },
+                        }
+                    </code></pre>
+                </div>
+                <div>
+                    <pre><code>
+                        // controllers/students.ts // 
+                        export const createStudent = async (req: Request, res: Response): Promise<any> => {
+                            const { DuplicUser, email } = req.body
 
-    if (!DuplicUser) {
-        utils.students.create(email, (error: Error, result: any) => {
-            if (error) res.status(400).json(messageFormat(400, "생성 오류 발생", error));
-            else res.status(201).json(messageFormat(201, "생성 완료"));
-        })
-    }
-    else {
-        res.status(400).json(messageFormat(400, "중복된 이메일이 존재합니다."))
-    }
-};
-                    </code>
-                </pre>
+                            if (!DuplicUser) {
+                                utils.students.create(email, (error: Error, result: any) => {
+                                    if (error) res.status(400).json(messageFormat(400, "생성 오류 발생", error));
+                                    else res.status(201).json(messageFormat(201, "생성 완료"));
+                                })
+                            }
+                            else {
+                                res.status(400).json(messageFormat(400, "중복된 이메일이 존재합니다."))
+                            }
+                        };
+                    </code></pre>
+                </div>
             </li>
         </ul>
     </p>
