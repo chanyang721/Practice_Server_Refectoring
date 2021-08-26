@@ -20,7 +20,6 @@
 
 
 # 구현하면서 했던 고민
-### 21.08.13
 <details>
     <summary>21.08.13</summary>
     <p>
@@ -30,19 +29,48 @@
     </p>
 </details>
 
-### 21.08.15
-* 내가 지금까지 만들었던 서버들은 과연 어떤 부분을 리팩토링 했어야 할까 ? 지금까지 내가 만든 서버라는 것은 요청에 의한 적절한 응답값을 주는 도구였다. 하지만, 백엔드에서 서버 설계라는 것을 생각하지 않고 구축하다보니 협업, 구조화, 확장성이라는 사고 방식을 서버 설계에 주입하지 않았다. 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것을 어떻게 설계해야 하는지에 대한 사고 방식과 구조를 공부해서 적용해보고 싶어졌다. 스택들을 익히고, 서버를 설계 단계부터 다시 익혀야한다. 남은 12일이라는 시간이 적어 보인다.
-* 데이터베이스를 구축하면서 ORM을 사용하지 않고 테이블을 생성하기 위한 방법을 고민했다. schema.sql파일에 생성하고 싶은 테이블과 관계 형성, 인덱스 생성하는 방법들을 찾아봤고 이를 mysql 실행문을 통해 연결된 데이터베이스에 생성할 수 있었다. 두개의 방법을 찾았다.
-1. 터미널 상에서 "mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]"
-2. mysql 접속 후 "use [데이터베이스 이름]"으로 데이터 베이스 선택 -> "source [schema.sql 파일 경로]" 작성 후 엔터
-* 관심사 분리? 라는 측면을 생각해보니 vaildation과 query를 한 뒤에 컨트롤러로 넘겨주는 미들웨어를 만들어 결과값만을 컨트롤러에서 다루는 구조는 어떨까? 모든 진행 과정을 나누어 모듈화하는것이 협업에 좋은, 구조화되며, 확정성에 좋은게 맞는건지 잘 모르겠다. 모든 것이 다른 파일에 있기 때문에 git 상에서 충돌이 적기 때문일까?
-* Reference : https://www.javatpoint.com/mysql-tutorial
 
-### 21.08.16
+<details>
+    <summary>21.08.15</summary>
+    <p>
+        <ul>
+            <li>내가 지금까지 만들었던 서버들은 과연 어떤 부분을 리팩토링 했어야 할까 ? 지금까지 내가 만든 서버라는 것은 요청에 의한 적절한 응답값을 주는 도구였다. 하지만, 백엔드에서 서버 설계라는 것을 생각하지 않고 구축하다보니 협업, 구조화, 확장성이라는 사고 방식을 서버 설계에 주입하지 않았다. 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것을 어떻게 설계해야 하는지에 대한 사고 방식과 구조를 공부해서 적용해보고 싶어졌다. 스택들을 익히고, 서버를 설계 단계부터 다시 익혀야한다. 남은 12일이라는 시간이 적어 보인다.</li>
+            <li>데이터베이스를 구축하면서 ORM을 사용하지 않고 테이블을 생성하기 위한 방법을 고민했다. schema.sql파일에 생성하고 싶은 테이블과 관계 형성, 인덱스 생성하는 방법들을 찾아봤고 이를 mysql 실행문을 통해 연결된 데이터베이스에 생성할 수 있었다. 두개의 방법을 찾았다.
+1. 터미널 상에서 "mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]"
+2. mysql 접속 후 "use [데이터베이스 이름]"으로 데이터 베이스 선택 -> "source [schema.sql 파일 경로]" 작성 후 엔터</li>
+            <li>관심사 분리? 라는 측면을 생각해보니 vaildation과 query를 한 뒤에 컨트롤러로 넘겨주는 미들웨어를 만들어 결과값만을 컨트롤러에서 다루는 구조는 어떨까? 모든 진행 과정을 나누어 모듈화하는것이 협업에 좋은, 구조화되며, 확정성에 좋은게 맞는건지 잘 모르겠다. 모든 것이 다른 파일에 있기 때문에 git 상에서 충돌이 적기 때문일까?</li>
+            <li>
+            Reference
+                - [도메인 주도 설계(Domain-Driven Design) in Real Project](https://medium.com/react-native-seoul/%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%A3%BC%EB%8F%84-%EC%84%A4%EA%B3%84-domain-driven-design-in-real-project-1-%EB%8F%84%EB%A9%94%EC%9D%B8-83a5e31c5e45)
+                - [DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94)
+                - [MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial)
+            </li>
+        </ul>
+    </p>
+</details>
+
+* 21.08.16
 * [Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)
 
-### 21.08.17 
-* [TIL](https://chanyang721.notion.site/TIL-2021-08-17-Tues-df0894ada89349089b703e2b1f8a30c6)
+
+<details>
+    <summary>21.08.17</summary>
+    <p>
+        <ul>
+            <li>sql문에서 WHERE 절에 @를 사용할 수 없다는 이상한 규칙을 발견했다. 찾아본 봐로는 @가 다른 역할을 하기 때문에 그렇다는데 그럼 이메일은 어떻게 가져오는지 모르겠다.
+            ```
+            let sql = `SELECT * FROM students WHERE email = ${email}`;
+                db.query(sql, (error, result) => {
+                    if (error) res.send(error);
+                    req.body.DuplicUser = result[0]
+                    return next();
+                })
+            ```
+            </li>
+        </ul>
+    </p>
+</details>
+
 
 ### 21.08.18 
 * [TIL](https://chanyang721.notion.site/TIL-2021-08-18-Wed-34f2cc269d684afdb5b57e0535900506)
