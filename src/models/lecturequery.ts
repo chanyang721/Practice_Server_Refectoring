@@ -30,7 +30,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async getListAddConditionCategoryNameQuery (lectureData: any): Promise<any> {
         try {
@@ -49,7 +49,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async getLectureByIdDetailQuery (lectureData: any): Promise<IdetailLecture> {
         try {
@@ -67,7 +67,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async sortLecturesByTimeQuery (lectureData: any): Promise<any> {
         try {
@@ -86,7 +86,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async sortLecturesByAttendanceQuery (lectureData: any): Promise<any> {
         try {
@@ -105,7 +105,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async createLectureQuery (lectureData: any): Promise<any> {
         try {
@@ -120,7 +120,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async updateLectureInfoQuery (lectureData: any): Promise<any> {
         try {
@@ -135,7 +135,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료 
+    } 
 
     public async openLectureQuery (lecturesData: any): Promise<any> {
         try {
@@ -150,7 +150,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료 
+    } 
 
     public async deleteLectureQuery (lectureData: any): Promise<any> {
         try {
@@ -165,7 +165,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료 
+    } 
 
     public async registerLectureQuery (registerData: any): Promise<any> {
         try {
@@ -187,6 +187,6 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
 }

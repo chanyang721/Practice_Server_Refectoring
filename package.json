@@ -7,7 +7,7 @@
     "start": "tsc-watch --onSuccess \" node dist/index.js \" ",
     "restart": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
     "debug": "ts-node-dev --inspect -- src/index.ts",
-    "test": "jest --detectOpenHandles --forceExit --maxWorkers=1"
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",

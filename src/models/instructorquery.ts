@@ -9,5 +9,9 @@ export default class InstructorModel {
         this.queryFormat = QueryFormat
     }
 
+    public test1(email: string) {
+        return email;
+    }
+
 
 }

@@ -23,7 +23,7 @@ export default class StudentModel {
         catch(err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async getLectureListsQuery({ id }: { id: string }): Promise<any> {
         try {
@@ -39,7 +39,7 @@ export default class StudentModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async getLectureListsWithCategoryNameQuery ({ id, category }: { id: string, category: string }): Promise<any> {
         try {
@@ -55,7 +55,7 @@ export default class StudentModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async sortStudentByTimeQuery ({ id }: { id: any }): Promise<any> {
         try {
@@ -72,7 +72,7 @@ export default class StudentModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 
     public async sortStudentByAttendanceQuery ({ id }: { id: string }): Promise<any> {
         try {
@@ -89,5 +89,5 @@ export default class StudentModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료
+    }
 }

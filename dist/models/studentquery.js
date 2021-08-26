@@ -40,7 +40,7 @@ let StudentModel = class StudentModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     getLectureListsQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -56,7 +56,7 @@ let StudentModel = class StudentModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     getLectureListsWithCategoryNameQuery({ id, category }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -72,7 +72,7 @@ let StudentModel = class StudentModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     sortStudentByTimeQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -89,7 +89,7 @@ let StudentModel = class StudentModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     sortStudentByAttendanceQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -106,7 +106,7 @@ let StudentModel = class StudentModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
 };
 StudentModel = __decorate([
     typedi_1.Service(),

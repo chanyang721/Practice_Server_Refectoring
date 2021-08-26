@@ -18,6 +18,9 @@ let InstructorModel = class InstructorModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
     }
+    test1(email) {
+        return email;
+    }
 };
 InstructorModel = __decorate([
     typedi_1.Service(),

@@ -46,7 +46,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     getListAddConditionCategoryNameQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -64,7 +64,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     getLectureByIdDetailQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -81,7 +81,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     sortLecturesByTimeQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -99,7 +99,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     sortLecturesByAttendanceQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -117,7 +117,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     createLectureQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -131,7 +131,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
     updateLectureInfoQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -145,7 +145,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료 
+    }
     openLectureQuery(lecturesData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -159,7 +159,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료 
+    }
     deleteLectureQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -173,7 +173,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료 
+    }
     registerLectureQuery(registerData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -192,7 +192,7 @@ let LectureModel = class LectureModel {
                 console.log(err);
             }
         });
-    } // 완료
+    }
 };
 LectureModel = __decorate([
     typedi_1.Service(),
