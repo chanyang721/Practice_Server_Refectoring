@@ -24,7 +24,7 @@ const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
     });
     const { value, error } = yield schema.validate(req.body);
     if (error) {
-        return res.status(400).json(responseFormat(400, "유효한 형식이 아닙니다.", null, error.details[0].message));
+        return res.status(403).json(responseFormat(403, "유효한 형식이 아닙니다.", null, error.details[0].message));
     }
     req.body = value;
     const { email } = req.body;
@@ -33,10 +33,10 @@ const createStudentVaildation = (req, res, next) => __awaiter(void 0, void 0, vo
     const DuplicStudent = yield Query(sql, params);
     // 이메일 중복 확인
     if (DuplicStudent[0]) {
-        return res.status(400).json(responseFormat(400, "중복된 이메일이 존재합니다."));
+        return res.status(403).json(responseFormat(403, "중복된 이메일이 존재합니다."));
     }
     return next();
-}); // 완료 
+});
 exports.createStudentVaildation = createStudentVaildation;
 const Query = (sql, params) => {
     return new Promise((resolve, reject) => {

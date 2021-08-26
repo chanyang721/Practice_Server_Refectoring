@@ -1,11 +1,11 @@
 -- 테이블 생성 방법
 /* 
-    mysql -u root -p --database=Inflearn < [schema.sql 파일 경로] 
+    mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]
 */
 
-DROP database IF EXISTS Inflearn;
-CREATE database IF NOT EXISTS Inflearn;
-USE Inflearn 
+-- DROP database IF EXISTS Inflearn;
+-- CREATE database Inflearn;
+-- USE Inflearn 
 
 CREATE TABLE instructors (
   id INT AUTO_INCREMENT,

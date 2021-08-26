@@ -18,8 +18,8 @@
 * 데이터베이스를 구축하면서 ORM을 사용하지 않고 테이블을 생성하기 위한 방법을 고민했다. schema.sql파일에 생성하고 싶은 테이블과 관계 형성, 인덱스 생성하는 방법들을 찾아봤고 이를 mysql 실행문을 통해 연결된 데이터베이스에 생성할 수 있었다. 두개의 방법을 찾았다.
 1. 터미널 상에서 "mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]"
 2. mysql 접속 후 "use [데이터베이스 이름]"으로 데이터 베이스 선택 -> "source [schema.sql 파일 경로]" 작성 후 엔터
-Reference : https://www.javatpoint.com/mysql-tutorial
 * 관심사 분리? 라는 측면을 생각해보니 vaildation과 query를 한 뒤에 컨트롤러로 넘겨주는 미들웨어를 만들어 결과값만을 컨트롤러에서 다루는 구조는 어떨까? 모든 진행 과정을 나누어 모듈화하는것이 협업에 좋은, 구조화되며, 확정성에 좋은게 맞는건지 잘 모르겠다. 모든 것이 다른 파일에 있기 때문에 git 상에서 충돌이 적기 때문일까?
+* Reference : https://www.javatpoint.com/mysql-tutorial
 
 ### 21.08.16
 * [Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)
@@ -46,8 +46,6 @@ Reference : https://www.javatpoint.com/mysql-tutorial
 * Joi로 카테고리의 값을 1개로 제한하는 방법을 고민하던 중, Joi.array().items(Joi.string).max(1)로 해결한듯 하다. length(1)은 길이가 1로 정해지기 때문에 카테고리를 선택하지 않은 경우를 포함하지 않기 때문이다.
 * 아직 TypeScript를 어떻게 사용하는지 모르겠다. 각종 타입들과 튜플, 제네릭, Interface등을 어떻게 사용하는지 모르는거같다. 기회가 된다면 공식문서를 블로깅할 예정이다. 입력값 interface를 정의해서 넣으면 이상하게 로직 내부에 있는 params에 적용한 값에서 typeError가 발생하는데 아직 이유를 알지 못한다. 
 
-### 21.08.24
-
 ### 21.08.25
 * 강의 목록 조회를 구현하면서 강사명, 강의명, 수강생ID에 따라 검색을 하는 부분에서 반복되는 쿼리문들이 늘어난다. 이 쿼리문들이 조금씩 다른데 이것은 카테고리를 검색 조건으로 걸고 최신순, 수강생수로 정렬하는것에서 조금씩 다른 코드들이 하나씩 더 늘어나게 되었는데 어떻게 하면 다른 부분을 변수로 만들어 하나의 코드로 만들수 있을까 ? 
 * 우선 강사명, 강의명, 수강생ID 중 어떤것이 입력되는지에 따라 쿼리문에서 FROM "table"인 테이블과 JOIN 테이블과 열결해야하기 때문에 변경할 수 없다. 그렇다면 카테고리, 최신순, 수강생수로 검색하기 위한 쿼리문들은 줄일수있을까 ?
@@ -65,6 +63,13 @@ Reference : https://www.javatpoint.com/mysql-tutorial
 * OR을 이용하니 강사명과 강의명을 구분할 수 있게되었다. 하지만, 일부만 검색해도 조회가 되도록 LIKE % + ? + %을 대신 넣어봤지만 이상하게 모든 강의가 나오게 된다. 아쉽지만 일단 완성을 위해 넘긴다.
 * LIKE "%${name}%"으로 적으니 작동한다. LIKE "%" + ? + "%"으로 params를 이용해 넣으면 쿼리문에 넣으면 "%'name'%"형식으로 sql문으로 들어가 신택스 에러를 발생시켰던거 같다.
 * 카테고리를 검색 조건으로 사용한다는것이 우선 강의명, 강사명으로 검색한뒤 그 결과리스트에서 카테고리를 추가로 입력하여 다시한번 걸러낸다는 의미라고 생각했다.
+* Reference
+1. https://www.javatpoint.com/mysql-tutorial
+2. https://github.com/sapegin/jest-cheat-sheet
+3. https://www.daleseo.com/jest-async/
+
+### 21.08.26
+* 
 
 # Entity Relationship Diagram (ERD)
 - ERD에는 아래 항목들이 포함되어 있어야 합니다.

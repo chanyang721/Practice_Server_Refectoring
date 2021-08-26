@@ -13,12 +13,12 @@ export const createStudent = async (req: Request, res: Response): Promise<any> =
 
         await studentModelInstance.createUserQuery({ email })
 
-        return res.status(200).json(responseFormat(200, "유저 생성 완료"));
+        return res.status(201).json(responseFormat(201, "유저 생성 완료"));
     }
     catch(err) {
         return res.status(400).json(responseFormat(400, "유서 생성 오류", null, err));
     }
-}; // 완료
+};
 
 export const getListByStudentId = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -33,7 +33,7 @@ export const getListByStudentId = async (req: Request, res: Response): Promise<a
     catch (err) {
         return res.status(400).json(responseFormat(400, "학생의 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+};
 
 export const getListByStudentIdAndCategoryName = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -43,12 +43,12 @@ export const getListByStudentIdAndCategoryName = async (req: Request, res: Respo
 
         const { lecturesList } = await studentModelInstance.getLectureListsWithCategoryNameQuery({ id, category })
 
-        return res.status(200).json(responseFormat(200, "해당 학생의 카테고리 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "입력된 카테고리를 가진 해당 학생의 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "학생의 강의 목록을 불러오는데 실패했습니다.", null, err))
+        return res.status(400).json(responseFormat(400, "입력된 카테고리를 가진 해당 학생의 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+};
 
 export const sortStudentLectureListByTime = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -58,12 +58,12 @@ export const sortStudentLectureListByTime = async (req: Request, res: Response):
 
         const { lecturesList } = await studentModelInstance.sortStudentByTimeQuery({ id })
 
-        return res.status(200).json(responseFormat(200, "최신 순으로 정렬된 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "최신순으로 정렬된 강의 목록입니다.", lecturesList))
     }
     catch (err) {
         return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+};
 
 export const sortStudentLectureListByAttendance = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -73,9 +73,9 @@ export const sortStudentLectureListByAttendance = async (req: Request, res: Resp
 
         const { lecturesList } = await studentModelInstance.sortStudentByAttendanceQuery({ id })
 
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "수강생수가 많은 순서대로 정렬된 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
+        return res.status(400).json(responseFormat(400, "수강생수가 많은 순서대로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+};

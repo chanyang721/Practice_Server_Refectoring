@@ -30,7 +30,7 @@ export default class LectureModel {
         catch (err) {
             console.log(err)
         }
-    } // 완료 이름으로 오픈된 강의 조회
+    } // 완료
 
     public async getListAddConditionCategoryNameQuery (lectureData: any): Promise<any> {
         try {

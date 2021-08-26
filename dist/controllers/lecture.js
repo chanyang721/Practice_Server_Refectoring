@@ -22,118 +22,118 @@ const getListBylectureTitleOrinstructorName = (req, res) => __awaiter(void 0, vo
         const { name } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         const { lecturesList } = yield LectureModelInstance.getListBylectureTitleOrinstructorNameQuery({ name });
-        return res.status(200).json(responseFormat(200, "입력된 강의명과 관련된 모든 강의 목록입니다.", lecturesList));
+        return res.status(200).json(responseFormat(200, "입력된 강의명 혹은 강사명과 관련된 모든 강의 목록입니다.", lecturesList));
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "입력된 강의명과 관련된 모든 강의 목록을 불러오는데 실패했습니다.", null, err));
+        return res.status(400).json(responseFormat(400, "입력된 강의명 혹은 강사명과 관련된 모든 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
-}); // 완료
+});
 exports.getListBylectureTitleOrinstructorName = getListBylectureTitleOrinstructorName;
 const getListAddConditionCategoryName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, category } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         const { lecturesList } = yield LectureModelInstance.getListAddConditionCategoryNameQuery({ name, category });
-        return res.status(200).json(responseFormat(200, "해당 강의명과 카테고리를 정보를 포함한 강의 목록입니다.", lecturesList));
+        return res.status(200).json(responseFormat(200, "해당 강의명 혹은 강사명과 입력된 카테고리를 정보를 포함한 강의 목록입니다.", lecturesList));
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "해당 강의명과 카테고리를 정보를 포함한 강의 목록을 불러오는데 실패했습니다.", null, err));
+        return res.status(400).json(responseFormat(400, "해당 강의명 혹은 강사명과 입력된 카테고리를 정보를 포함한 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
-}); // 완료
+});
 exports.getListAddConditionCategoryName = getListAddConditionCategoryName;
 const getLectureByIdDetail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         const { lecturesList } = yield LectureModelInstance.getLectureByIdDetailQuery({ id });
-        return res.status(200).json(responseFormat(200, "모든 강의 목록입니다.", lecturesList));
+        return res.status(200).json(responseFormat(200, "오픈되지 않은 강의를 포함한 모든 강의 목록입니다.", lecturesList));
     }
     catch (err) {
         console.log(err);
     }
-}); // 완료
+});
 exports.getLectureByIdDetail = getLectureByIdDetail;
 const sortLecturesByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         const { lecturesList } = yield LectureModelInstance.sortLecturesByTimeQuery({ title });
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList));
+        return res.status(200).json(responseFormat(200, "최신순으로 정렬된 강의 목록입니다.", lecturesList));
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
+        return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
-}); // 완료
+});
 exports.sortLecturesByTime = sortLecturesByTime;
 const sortLecturesByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         const { lecturesList } = yield LectureModelInstance.sortLecturesByAttendanceQuery({ title });
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList));
+        return res.status(200).json(responseFormat(200, "수강생수가 많은 순서대로 정렬된 강의 목록입니다.", lecturesList));
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
+        return res.status(400).json(responseFormat(400, "수강생수가 많은 순서대로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
-}); // 완료
+});
 exports.sortLecturesByAttendance = sortLecturesByAttendance;
 const createLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { instructor, category, title, description, price } = req.body;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         yield LectureModelInstance.createLectureQuery({ instructor, category, title, description, price });
-        return res.status(200).json(responseFormat(200, "강의 생성 완료"));
+        return res.status(201).json(responseFormat(201, "강의 생성 완료"));
     }
     catch (err) {
         console.log(err);
     }
-}); // 완료
+});
 exports.createLecture = createLecture;
 const updateLectureInfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { body: { title, description, price }, params: { id } } = req;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         yield LectureModelInstance.updateLectureInfoQuery({ title, description, price, id });
-        return res.status(200).json(responseFormat(200, "강의 정보 수정 완료"));
+        return res.status(201).json(responseFormat(201, "강의 정보 수정 완료"));
     }
     catch (err) {
         console.log(err);
     }
-}); // 완료 
+});
 exports.updateLectureInfo = updateLectureInfo;
 const openLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        const { queryInfo } = yield LectureModelInstance.openLectureQuery({ id });
-        res.status(200).json(responseFormat(200, "강의 오픈 완료"));
+        yield LectureModelInstance.openLectureQuery({ id });
+        res.status(201).json(responseFormat(201, "강의 오픈 완료"));
     }
     catch (err) {
         console.log(err);
     }
-}); // 완료
+});
 exports.openLecture = openLecture;
 const deleteLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        const { queryInfo } = yield LectureModelInstance.deleteLectureQuery({ id });
+        yield LectureModelInstance.deleteLectureQuery({ id });
         res.status(200).json(responseFormat(200, "강의 삭제 완료"));
     }
     catch (err) {
         console.log(err);
     }
-}); // 완료
+});
 exports.deleteLecture = deleteLecture;
 const registerLecture = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { students, nickname, lectureId, studentId } = req.body;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
         yield LectureModelInstance.registerLectureQuery({ students, nickname, lectureId, studentId });
-        return res.status(200).json(responseFormat(200, "수강 신청이 완료되었습니다."));
+        return res.status(201).json(responseFormat(201, "수강 신청 완료"));
     }
     catch (err) {
         console.log(err);
     }
-}); // 완료
+});
 exports.registerLecture = registerLecture;

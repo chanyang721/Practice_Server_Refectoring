@@ -13,12 +13,12 @@ export const getListBylectureTitleOrinstructorName = async (req: Request, res: R
 
         const { lecturesList } = await LectureModelInstance.getListBylectureTitleOrinstructorNameQuery({ name })
 
-        return res.status(200).json(responseFormat(200, "입력된 강의명과 관련된 모든 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "입력된 강의명 혹은 강사명과 관련된 모든 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "입력된 강의명과 관련된 모든 강의 목록을 불러오는데 실패했습니다.", null, err))
+        return res.status(400).json(responseFormat(400, "입력된 강의명 혹은 강사명과 관련된 모든 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+}; 
 
 export const getListAddConditionCategoryName = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -28,12 +28,12 @@ export const getListAddConditionCategoryName = async (req: Request, res: Respons
 
         const { lecturesList } = await LectureModelInstance.getListAddConditionCategoryNameQuery({ name, category })
 
-        return res.status(200).json(responseFormat(200, "해당 강의명과 카테고리를 정보를 포함한 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "해당 강의명 혹은 강사명과 입력된 카테고리를 정보를 포함한 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "해당 강의명과 카테고리를 정보를 포함한 강의 목록을 불러오는데 실패했습니다.", null, err))
+        return res.status(400).json(responseFormat(400, "해당 강의명 혹은 강사명과 입력된 카테고리를 정보를 포함한 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+}; 
 
 export const getLectureByIdDetail = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -43,12 +43,12 @@ export const getLectureByIdDetail = async (req: Request, res: Response): Promise
         
         const { lecturesList } = await LectureModelInstance.getLectureByIdDetailQuery({ id })
 
-        return res.status(200).json(responseFormat(200, "모든 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "오픈되지 않은 강의를 포함한 모든 강의 목록입니다.", lecturesList))
     }
     catch (err) {
         console.log(err)
     }
-}; // 완료
+}; 
 
 export const sortLecturesByTime = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -58,12 +58,12 @@ export const sortLecturesByTime = async (req: Request, res: Response): Promise<a
 
         const { lecturesList } = await LectureModelInstance.sortLecturesByTimeQuery({ title })
 
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "최신순으로 정렬된 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
+        return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+}; 
 
 export const sortLecturesByAttendance = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -73,12 +73,12 @@ export const sortLecturesByAttendance = async (req: Request, res: Response): Pro
 
         const { lecturesList } = await LectureModelInstance.sortLecturesByAttendanceQuery({ title })
 
-        return res.status(200).json(responseFormat(200, "수강생수로 정렬된 강의 목록입니다.", lecturesList))
+        return res.status(200).json(responseFormat(200, "수강생수가 많은 순서대로 정렬된 강의 목록입니다.", lecturesList))
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "수강생수로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
+        return res.status(400).json(responseFormat(400, "수강생수가 많은 순서대로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err))
     }
-}; // 완료
+}; 
 
 export const createLecture = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -88,12 +88,12 @@ export const createLecture = async (req: Request, res: Response): Promise<any> =
         
         await LectureModelInstance.createLectureQuery({ instructor, category, title, description, price })
 
-        return res.status(200).json(responseFormat(200, "강의 생성 완료"))
+        return res.status(201).json(responseFormat(201, "강의 생성 완료"))
     }
     catch (err) {
         console.log(err)
     }
-}; // 완료
+}; 
 
 export const updateLectureInfo = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -103,12 +103,12 @@ export const updateLectureInfo = async (req: Request, res: Response): Promise<an
 
         await LectureModelInstance.updateLectureInfoQuery({ title, description, price, id })
 
-        return res.status(200).json(responseFormat(200, "강의 정보 수정 완료"))
+        return res.status(201).json(responseFormat(201, "강의 정보 수정 완료"))
     }
     catch (err) {
         console.log(err)
     }
-}; // 완료 
+};  
 
 export const openLecture = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -116,14 +116,14 @@ export const openLecture = async (req: Request, res: Response): Promise<any> => 
 
         const LectureModelInstance = Container.get(LectureModel);
 
-        const { queryInfo } = await LectureModelInstance.openLectureQuery({ id })
+        await LectureModelInstance.openLectureQuery({ id })
 
-        res.status(200).json(responseFormat(200, "강의 오픈 완료"))
+        res.status(201).json(responseFormat(201, "강의 오픈 완료"))
     }
     catch (err) {
         console.log(err)
     }
-}; // 완료
+}; 
 
 export const deleteLecture = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -131,14 +131,14 @@ export const deleteLecture = async (req: Request, res: Response): Promise<any> =
 
         const LectureModelInstance = Container.get(LectureModel);
 
-        const { queryInfo } = await LectureModelInstance.deleteLectureQuery({ id })
+        await LectureModelInstance.deleteLectureQuery({ id })
 
         res.status(200).json(responseFormat(200, "강의 삭제 완료"))
     }
     catch (err) {
         console.log(err)
     }
-}; // 완료
+}; 
 
 export const registerLecture = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -148,9 +148,9 @@ export const registerLecture = async (req: Request, res: Response): Promise<any>
 
         await LectureModelInstance.registerLectureQuery({ students, nickname, lectureId, studentId })
 
-        return res.status(200).json(responseFormat(200, "수강 신청이 완료되었습니다."))
+        return res.status(201).json(responseFormat(201, "수강 신청 완료"))
     }
     catch (err) {
         console.log(err)
     }
-}; // 완료
+}; 
