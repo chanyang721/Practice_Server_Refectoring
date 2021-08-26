@@ -23,8 +23,8 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
         }
         
         req.body = value
-        const { title, category } = req.body
-        
+        const { body: { title, category, instructor } } = req
+
         // 강의명 중복 확인
         let sql = `SELECT * FROM lectures WHERE title = ?`;
         let params = [ title ]
@@ -35,8 +35,17 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
 
         // 지정된 카테고리값을 가지는지 확인
         const defaultCategory = [ "웹", "앱", "게임", "알고리즘", "인프라", "데이터베이스" ]
-        if (category[0] && !defaultCategory.includes(category)) {
+        if (category[0] && !defaultCategory.includes(category[0])) {
             return res.status(403).json(responseFormat(403, "지정된 카테고리를 입력해 주세요"))
+        }
+
+        // 강의를 오픈하려는 강사가 존재하는지 확인
+        sql = `SELECT * FROM instructors WHERE name = ?`;
+        params = [ instructor ];
+        const checkInstructor = await Query(sql, params)
+        console.log(checkInstructor)
+        if (!checkInstructor[0]) {
+            return res.status(403).json(responseFormat(403, "강사로 등록해야 강의를 등록할 수 있습니다."))
         }
         
         return next();
@@ -78,7 +87,7 @@ export const updateLectureInfoVaildation = async (req: Request, res: Response, n
         
         // open 되었지만 무료가 아닌 경우 비활성화해야 수정 가능
         if (checkLectureInfo[0].open && checkLectureInfo[0].price > 0) {
-            return res.status(403).json(responseFormat(403, "비활성화 상태의 강의만 수정이 가능합니다."));
+            return res.status(403).json(responseFormat(403, "유료강의는 비활성화 상태에서만 수정이 가능합니다."));
         }
         
         // 업로드 하는 강의명이 중복되는지 확인
@@ -171,7 +180,7 @@ export const registerLectureVaildation = async (req: Request, res: Response, nex
         let params = [ studentId ]
         const checkStudentExist = await Query(sql, params);
 
-        // 해당 학생이 없는 경우 확인
+        // 해당 학생이 회원인지 확인
         if (!checkStudentExist[0]) {
             return res.status(403).json(responseFormat(403, "가입된 수강생만 수강 신청할 수 있습니다."));
         };
@@ -183,18 +192,18 @@ export const registerLectureVaildation = async (req: Request, res: Response, nex
 
         // 해당 강의가 없는 경우 확인
         if (!checkLectureExist[0]) {
-            return res.status(404).json(responseFormat(404, "삭제된 강의는 수강 신청할 수 없습니다."));
+            return res.status(404).json(responseFormat(404, "요청한 강의 정보를 찾을 수 없습니다."));
         }
 
         // 비공개된 강의를 신청할 경우 확인
         if (!checkLectureExist[0].open) {
-            return res.status(403).json(responseFormat(403, "비공개된 강의는 수강 신청할 수 없습니다."));
+            return res.status(403).json(responseFormat(403, "비공개된 강의를 수강 신청할 수 없습니다."));
         }
 
         // 중복 강의 신청 확인
         const students = JSON.parse(checkLectureExist[0].students)
         if (students[checkStudentExist[0].id]) {
-            return res.status(403).json(responseFormat(403, "동일 강의를 수강신청할 수는 없습니다."));
+            return res.status(403).json(responseFormat(403, "수강 중인 강의를 다시 수강 신청할 수 없습니다."));
         }
     
         req.body.students = students

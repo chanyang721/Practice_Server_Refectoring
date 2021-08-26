@@ -26,13 +26,14 @@ const query_1 = __importDefault(require("../utils/query"));
 let StudentModel = class StudentModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
+        this.defaultSelect = `lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at`;
     }
     createUserQuery({ email }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const nickName = email.split("@")[0];
-                let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-                let params = [nickName, email, "{}"];
+                let sql = `INSERT INTO students (nickname, email) VALUES (?, ?)`;
+                let params = [nickName, email];
                 const userRecord = yield this.queryFormat.Query(sql, params);
                 return { userRecord };
             }
@@ -44,8 +45,7 @@ let StudentModel = class StudentModel {
     getLectureListsQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+                let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1`;
@@ -60,11 +60,11 @@ let StudentModel = class StudentModel {
     getLectureListsWithCategoryNameQuery({ id, category }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+                let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
-            WHERE students.id = ? AND lectures.open = 1 AND lectures.category = ?`;
+            WHERE (students.id = ? AND lectures.open = 1) 
+            AND lectures.category = ?`;
                 const lecturesList = yield this.queryFormat.Query(sql, [id, category]);
                 return { lecturesList };
             }
@@ -76,8 +76,7 @@ let StudentModel = class StudentModel {
     sortStudentByTimeQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+                let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1
@@ -93,8 +92,7 @@ let StudentModel = class StudentModel {
     sortStudentByAttendanceQuery({ id }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+                let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1

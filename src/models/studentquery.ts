@@ -4,9 +4,11 @@ import QueryFormat from "../utils/query";
 @Service()
 export default class StudentModel {
     private queryFormat: QueryFormat
+    public defaultSelect;
 
     public constructor(QueryFormat: QueryFormat) {
         this.queryFormat = QueryFormat;
+        this.defaultSelect = `lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at`;
     }
 
 
@@ -14,8 +16,8 @@ export default class StudentModel {
         try{
             const nickName = email.split("@")[0];
             
-            let sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-            let params = [ nickName, email, "{}" ]
+            let sql = `INSERT INTO students (nickname, email) VALUES (?, ?)`;
+            let params = [ nickName, email ]
             const userRecord = await this.queryFormat.Query(sql, params)
 
             return { userRecord }
@@ -27,8 +29,7 @@ export default class StudentModel {
 
     public async getLectureListsQuery({ id }: { id: string }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+            let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1`;
@@ -43,11 +44,11 @@ export default class StudentModel {
 
     public async getLectureListsWithCategoryNameQuery ({ id, category }: { id: string, category: string }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+            let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
-            WHERE students.id = ? AND lectures.open = 1 AND lectures.category = ?`;
+            WHERE (students.id = ? AND lectures.open = 1) 
+            AND lectures.category = ?`;
             const lecturesList = await this.queryFormat.Query(sql, [ id, category ])
             
             return { lecturesList }
@@ -59,8 +60,7 @@ export default class StudentModel {
 
     public async sortStudentByTimeQuery ({ id }: { id: any }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+            let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1
@@ -76,8 +76,7 @@ export default class StudentModel {
 
     public async sortStudentByAttendanceQuery ({ id }: { id: string }): Promise<any> {
         try {
-            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.instructor, lectures.title, lectures.price, lectures.attendance, lectures.created_at
-            FROM students
+            let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1

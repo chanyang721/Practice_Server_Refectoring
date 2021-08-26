@@ -52,11 +52,11 @@ export const getLectureByIdDetail = async (req: Request, res: Response): Promise
 
 export const sortLecturesByTime = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { title } = req.params;
+        const { name } = req.params;
 
         const LectureModelInstance = Container.get(LectureModel)
 
-        const { lecturesList } = await LectureModelInstance.sortLecturesByTimeQuery({ title })
+        const { lecturesList } = await LectureModelInstance.sortLecturesByTimeQuery({ name })
 
         return res.status(200).json(responseFormat(200, "최신순으로 정렬된 강의 목록입니다.", lecturesList))
     }
@@ -67,11 +67,11 @@ export const sortLecturesByTime = async (req: Request, res: Response): Promise<a
 
 export const sortLecturesByAttendance = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { title } = req.params;
+        const { name } = req.params;
 
         const LectureModelInstance = Container.get(LectureModel)
 
-        const { lecturesList } = await LectureModelInstance.sortLecturesByAttendanceQuery({ title })
+        const { lecturesList } = await LectureModelInstance.sortLecturesByAttendanceQuery({ name })
 
         return res.status(200).json(responseFormat(200, "수강생수가 많은 순서대로 정렬된 강의 목록입니다.", lecturesList))
     }

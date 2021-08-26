@@ -19,63 +19,39 @@ const instructorquery_1 = __importDefault(require("../models/instructorquery"));
 const studentquery_1 = __importDefault(require("../models/studentquery"));
 const query_1 = __importDefault(require("../utils/query"));
 const config_1 = __importDefault(require("../config"));
-describe("Jest 실험실 오픈!!", () => {
-    let db;
+describe("Jest Testing 실험실 오픈!!", () => {
     test("일단 더하기를 해봅시다. 1 + 1 = 2가 참인 테스트를 만들자!", () => {
         expect(1 + 1).toEqual(2);
     });
     test("1 + 1 = 2가 거짓인 테스트를 만들자!", () => {
         expect(1 + 2).not.toEqual(2);
     });
+});
+describe("Jest import 실험실 오픈!!", () => {
+    let db;
+    beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(" ------------------------------------------ ");
+        console.log(config_1.default.test);
+        console.log(" ------------------------------------------ ");
+        db = mysql_1.default.createConnection(Object.assign(Object.assign({}, config_1.default.test), { multipleStatements: true }));
+        db.connect();
+    }));
     test("import로 가져온 함수를 실행시켜보자", () => __awaiter(void 0, void 0, void 0, function* () {
         const email = "chanyang721@gmail.com";
-        const testModel = new instructorquery_1.default(new query_1.default);
-        const result = yield testModel.test1(email);
+        const InstructorModelInstance = new instructorquery_1.default(new query_1.default);
+        const result = yield InstructorModelInstance.test1(email);
         expect(result).toEqual("chanyang721@gmail.com");
     }));
-    beforeAll(() => {
-        db = mysql_1.default.createConnection(Object.assign(Object.assign({}, config_1.default.test), { multipleStatements: true }));
+    describe("데이터 베이스 실험실 오픈!!", () => {
+        test("데이터 베이스에 쿼리문을 날려 응답을 받아보자!", () => __awaiter(void 0, void 0, void 0, function* () {
+            const email = "testUser@gmail.com";
+            const userRecord = {};
+            const studentsModelInstance = new studentquery_1.default(new query_1.default);
+            const result = yield studentsModelInstance.createUserQuery({ email });
+            expect(result).toEqual({});
+        }));
     });
-    test("데이터 베이스를 연결시켜 쿼리문을 날려 응답을 받아보자!", () => __awaiter(void 0, void 0, void 0, function* () {
-        const email = "testUser@gmail.com";
-        const studentsModel = new studentquery_1.default(new query_1.default);
-        const result = yield studentsModel.createUserQuery({ email });
-        expect(result).toEqual({});
-    }));
-    afterAll(() => {
+    afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         db.end();
-    });
+    }));
 });
-// const schema = fs.readFileSync('./schema.sql').toString();
-// const seed = fs.readFileSync('./seed.sql').toString();
-// const testDB = 'Inflearn_test';
-// describe('데이터 베이스 연결', () => {
-//     let db, app;
-//     beforeAll((done) => {
-//         db = mysql.createConnection({
-//             user: 'root',
-//             password: process.env.DATABASE_PASSWORD,
-//             multipleStatements: true
-//         });
-//         done()
-//     });
-//     describe('데이터 넣기', () => {
-//         beforeEach((done) => {
-//             db.query(
-//                 `DROP DATABASE IF EXISTS ${testDB};
-//                 CREATE DATABASE IF NOT EXISTS ${testDB};
-//                 USE ${testDB};
-//                 ${schema}
-//                 ${seed}`,
-//                 done()
-//             )
-//         });
-//         afterEach(() => {
-//         })  
-//         test("1 + 1 = 2", () => {
-//             expect(1 + 1).toBe(2)
-//         })
-//     })
-//     afterAll(function () {
-//     })
-// })

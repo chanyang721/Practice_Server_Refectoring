@@ -24,19 +24,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = require("typedi");
 const query_1 = __importDefault(require("../utils/query"));
 const dayjs_1 = __importDefault(require("dayjs"));
-dayjs_1.default().format();
 let LectureModel = class LectureModel {
     constructor(QueryFormat) {
         this.queryFormat = QueryFormat;
+        this.defaultSelect = `lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at, lectures.updated_at`;
     }
     getListBylectureTitleOrinstructorNameQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name } = lectureData;
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+                let sql = `SELECT ${this.defaultSelect}
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name LIKE "%${name}%" OR title LIKE "%${name}%" AND lectures.open = 1 
+            WHERE lectures.open = 1 
+            AND (name LIKE "%${name}%" OR title LIKE "%${name}%")
             ORDER BY lectures.attendance DESC`;
                 let lecturesList = yield this.queryFormat.Query(sql);
                 lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
@@ -51,10 +52,11 @@ let LectureModel = class LectureModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, category } = lectureData;
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at, lectures.updated_at
+                let sql = `SELECT ${this.defaultSelect}
             FROM lectures
             JOIN instructors ON lectures.instructor = instructors.name
-            WHERE instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%" AND lectures.category = ? AND lectures.open = 1`;
+            WHERE (lectures.open = 1 AND lectures.category = ?) 
+            AND (instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%")`;
                 let params = [category];
                 let lecturesList = yield this.queryFormat.Query(sql, params);
                 lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
@@ -85,11 +87,12 @@ let LectureModel = class LectureModel {
     sortLecturesByTimeQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { title } = lectureData;
+                const { name } = lectureData;
                 let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name LIKE "%${title}%" OR title LIKE "%${title}%" AND lectures.open = 1 
+            WHERE lectures.open = 1 
+            AND (instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%")
             ORDER BY lectures.created_at DESC`;
                 let lecturesList = yield this.queryFormat.Query(sql);
                 lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
@@ -103,11 +106,12 @@ let LectureModel = class LectureModel {
     sortLecturesByAttendanceQuery(lectureData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { title } = lectureData;
+                const { name } = lectureData;
                 let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
-            WHERE name LIKE "%${title}%" OR title LIKE "%${title}%" AND lectures.open = 1 
+            WHERE lectures.open = 1
+            AND (name LIKE "%${name}%" OR title LIKE "%${name}%")
             ORDER BY lectures.attendance DESC`;
                 let lecturesList = yield this.queryFormat.Query(sql);
                 lecturesList = lecturesList.map(el => el = Object.assign(Object.assign({}, el), { students: JSON.parse(el.students) }));
@@ -180,8 +184,8 @@ let LectureModel = class LectureModel {
                 const { students, nickname, lectureId, studentId } = registerData;
                 const registerDay = dayjs_1.default().format("YYYY/MM/DD");
                 students[studentId] = { nickname, registerDay };
-                let sql = `UPDATE lectures SET students = ?, attendance = attendance + 1 WHERE id = ${lectureId}`;
-                let params = [JSON.stringify(students)];
+                let sql = `UPDATE lectures SET students = ?, attendance = attendance + 1 WHERE id = ?`;
+                let params = [JSON.stringify(students), lectureId];
                 const updateStudentsInfo = yield this.queryFormat.Query(sql, params);
                 sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;
                 params = [lectureId, studentId];

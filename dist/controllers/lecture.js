@@ -55,9 +55,9 @@ const getLectureByIdDetail = (req, res) => __awaiter(void 0, void 0, void 0, fun
 exports.getLectureByIdDetail = getLectureByIdDetail;
 const sortLecturesByTime = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title } = req.params;
+        const { name } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        const { lecturesList } = yield LectureModelInstance.sortLecturesByTimeQuery({ title });
+        const { lecturesList } = yield LectureModelInstance.sortLecturesByTimeQuery({ name });
         return res.status(200).json(responseFormat(200, "최신순으로 정렬된 강의 목록입니다.", lecturesList));
     }
     catch (err) {
@@ -67,9 +67,9 @@ const sortLecturesByTime = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.sortLecturesByTime = sortLecturesByTime;
 const sortLecturesByAttendance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title } = req.params;
+        const { name } = req.params;
         const LectureModelInstance = typedi_1.Container.get(lecturequery_1.default);
-        const { lecturesList } = yield LectureModelInstance.sortLecturesByAttendanceQuery({ title });
+        const { lecturesList } = yield LectureModelInstance.sortLecturesByAttendanceQuery({ name });
         return res.status(200).json(responseFormat(200, "수강생수가 많은 순서대로 정렬된 강의 목록입니다.", lecturesList));
     }
     catch (err) {

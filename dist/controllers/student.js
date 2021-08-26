@@ -58,10 +58,10 @@ const sortStudentLectureListByTime = (req, res) => __awaiter(void 0, void 0, voi
         const { id } = req.params;
         const studentModelInstance = typedi_1.Container.get(studentquery_1.default);
         const { lecturesList } = yield studentModelInstance.sortStudentByTimeQuery({ id });
-        return res.status(200).json(responseFormat(200, "최신순으로 정렬된 강의 목록입니다.", lecturesList));
+        return res.status(200).json(responseFormat(200, "해당 수강생의 강의들을 최신순으로 정렬한 강의 목록입니다.", lecturesList));
     }
     catch (err) {
-        return res.status(400).json(responseFormat(400, "최신순으로 정렬된 강의 목록을 불러오는데 실패했습니다.", null, err));
+        return res.status(400).json(responseFormat(400, "해당 수강생의 강의들을 최신순으로 정렬한 강의 목록을 불러오는데 실패했습니다.", null, err));
     }
 });
 exports.sortStudentLectureListByTime = sortStudentLectureListByTime;

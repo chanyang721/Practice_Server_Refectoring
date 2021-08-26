@@ -3,9 +3,9 @@
     mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]
 */
 
--- DROP database IF EXISTS Inflearn;
--- CREATE database Inflearn;
--- USE Inflearn 
+DROP database IF EXISTS Inflearn;
+CREATE database Inflearn;
+USE Inflearn 
 
 CREATE TABLE instructors (
   id INT AUTO_INCREMENT,
