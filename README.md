@@ -41,31 +41,89 @@
             <li>관심사 분리? 라는 측면을 생각해보니 vaildation과 query를 한 뒤에 컨트롤러로 넘겨주는 미들웨어를 만들어 결과값만을 컨트롤러에서 다루는 구조는 어떨까? 모든 진행 과정을 나누어 모듈화하는것이 협업에 좋은, 구조화되며, 확정성에 좋은게 맞는건지 잘 모르겠다. 모든 것이 다른 파일에 있기 때문에 git 상에서 충돌이 적기 때문일까?</li>
             <li>
             Reference
-                - [도메인 주도 설계(Domain-Driven Design) in Real Project](https://medium.com/react-native-seoul/%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%A3%BC%EB%8F%84-%EC%84%A4%EA%B3%84-domain-driven-design-in-real-project-1-%EB%8F%84%EB%A9%94%EC%9D%B8-83a5e31c5e45)
-                - [DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94)
-                - [MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial)
+                - [도메인 주도 설계(Domain-Driven Design) in Real Project](https://medium.com/react-native-seoul/%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%A3%BC%EB%8F%84-%EC%84%A4%EA%B3%84-domain-driven-design-in-real-project-1-%EB%8F%84%EB%A9%94%EC%9D%B8-83a5e31c5e45) <br>
+                - [DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94) <br>
+                - [MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial) <br>
             </li>
         </ul>
     </p>
 </details>
 
-* 21.08.16
-* [Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)
 
+<details>
+    <summary>21.08.16</summary>
+    <p>
+        <ul>
+            <li>[Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)</li>
+        </ul>
+    </p>
+</details>
 
 <details>
     <summary>21.08.17</summary>
     <p>
         <ul>
             <li>sql문에서 WHERE 절에 @를 사용할 수 없다는 이상한 규칙을 발견했다. 찾아본 봐로는 @가 다른 역할을 하기 때문에 그렇다는데 그럼 이메일은 어떻게 가져오는지 모르겠다.
-            ```
-            let sql = `SELECT * FROM students WHERE email = ${email}`;
-                db.query(sql, (error, result) => {
-                    if (error) res.send(error);
-                    req.body.DuplicUser = result[0]
-                    return next();
-                })
-            ```
+                <pre>
+                    <code>
+                        let sql = `SELECT * FROM students WHERE email = ${email}`;
+                        db.query(sql, (error, result) => {
+                            if (error) res.send(error);
+                            req.body.DuplicUser = result[0]
+                            return next();
+                        })
+                    </code>
+                </pre>
+            </li>
+            <li>?와 params를 사용하여 쿼리문을 작성하니 해결되었다. 아직도 왜 WHERE절에 직접 변수를 할당하면 신택스 에러가 나는지 모르겠다. 
+                <pre>
+                    <code>
+                        let sql = `SELECT * FROM students WHERE email = ?`;
+                        db.query(sql, [ email ], (error, result) => {
+                            if (error) res.send(error);
+                            req.body.DuplicUser = result[0]
+                            return next();
+                        })
+                    </code>
+                </pre>
+            </li>
+            <li>models에서 쿼리문을 작성하고 controllers에서는 결과값 models를 통해 받아와 response객체를 생성하려고한다. models에서 쿼리문을 통해 이메일 체크를 하고 controllers로 next()를 이용해 넘어갔다. 하지만 controllers에서 유저를 생성하는 쿼리문을 다시 작성할 수 없어서 models에 utils를 만든 후 utils함수에 callback함수를 적용한 후 다시 import했다. 
+                <pre>
+                    <code>
+export const utils = {
+    students: {
+        create: (email: string, callback: Function): void => {
+            const nickName = email.split("@")[0];
+            
+            const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+            const params = [nickName, email, "{}"]
+            db.query(sql, params, (error, result) => {
+                if (error) console.log(error);
+                callback(error, result);
+            })
+        },
+    },
+}
+                    </code>
+                </pre>
+                <pre>
+                    <code>
+// controllers/students.ts // 
+export const createStudent = async (req: Request, res: Response): Promise<any> => {
+    const { DuplicUser, email } = req.body
+
+    if (!DuplicUser) {
+        utils.students.create(email, (error: Error, result: any) => {
+            if (error) res.status(400).json(messageFormat(400, "생성 오류 발생", error));
+            else res.status(201).json(messageFormat(201, "생성 완료"));
+        })
+    }
+    else {
+        res.status(400).json(messageFormat(400, "중복된 이메일이 존재합니다."))
+    }
+};
+                    </code>
+                </pre>
             </li>
         </ul>
     </p>
