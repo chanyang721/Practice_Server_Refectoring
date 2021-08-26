@@ -91,38 +91,38 @@
             <li>models에서 쿼리문을 작성하고 controllers에서는 결과값 models를 통해 받아와 response객체를 생성하려고한다. models에서 쿼리문을 통해 이메일 체크를 하고 controllers로 next()를 이용해 넘어갔다. 하지만 controllers에서 유저를 생성하는 쿼리문을 다시 작성할 수 없어서 models에 utils를 만든 후 utils함수에 callback함수를 적용한 후 다시 import했다. 
             <div>
                 <pre><code>
-                        export const utils = {
-                            students: {
-                                create: (email: string, callback: Function): void => {
-                                    const nickName = email.split("@")[0];
-                                    
-                                    const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
-                                    const params = [nickName, email, "{}"]
-                                    db.query(sql, params, (error, result) => {
-                                        if (error) console.log(error);
-                                        callback(error, result);
-                                    })
-                                },
-                            },
-                        }
+export const utils = {
+    students: {
+        create: (email: string, callback: Function): void => {
+            const nickName = email.split("@")[0];
+            
+            const sql = `INSERT INTO students (nickname, email, lectures) VALUES (?, ?, ?)`;
+            const params = [nickName, email, "{}"]
+            db.query(sql, params, (error, result) => {
+                if (error) console.log(error);
+                callback(error, result);
+            })
+        },
+    },
+}
                     </code></pre>
                 </div>
                 <div>
                     <pre><code>
-                        // controllers/students.ts // 
-                        export const createStudent = async (req: Request, res: Response): Promise<any> => {
-                            const { DuplicUser, email } = req.body
+// controllers/students.ts // 
+export const createStudent = async (req: Request, res: Response): Promise<any> => {
+    const { DuplicUser, email } = req.body
 
-                            if (!DuplicUser) {
-                                utils.students.create(email, (error: Error, result: any) => {
-                                    if (error) res.status(400).json(messageFormat(400, "생성 오류 발생", error));
-                                    else res.status(201).json(messageFormat(201, "생성 완료"));
-                                })
-                            }
-                            else {
-                                res.status(400).json(messageFormat(400, "중복된 이메일이 존재합니다."))
-                            }
-                        };
+    if (!DuplicUser) {
+        utils.students.create(email, (error: Error, result: any) => {
+            if (error) res.status(400).json(messageFormat(400, "생성 오류 발생", error));
+            else res.status(201).json(messageFormat(201, "생성 완료"));
+        })
+    }
+    else {
+        res.status(400).json(messageFormat(400, "중복된 이메일이 존재합니다."))
+    }
+};
                     </code></pre>
                 </div>
             </li>
