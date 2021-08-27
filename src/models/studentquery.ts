@@ -18,7 +18,7 @@ export default class StudentModel {
             
             let sql = `INSERT INTO students (nickname, email) VALUES (?, ?)`;
             let params = [ nickName, email ]
-            const userRecord = await this.queryFormat.Query(sql, params)
+            const userRecord: any = await this.queryFormat.Query(sql, params)
 
             return { userRecord }
         }
@@ -33,7 +33,7 @@ export default class StudentModel {
             JOIN lectures_students ON students.id = lectures_students.student_id
             JOIN lectures ON lectures.id = lectures_students.lecture_id
             WHERE students.id = ? AND lectures.open = 1`;
-            const lecturesList = await this.queryFormat.Query(sql, [ id ])
+            const lecturesList: any = await this.queryFormat.Query(sql, [ id ])
             
             return { lecturesList }
         }
@@ -58,7 +58,7 @@ export default class StudentModel {
         }
     }
 
-    public async sortStudentByTimeQuery ({ id }: { id: any }): Promise<any> {
+    public async sortStudentByTimeQuery ({ id }: { id: string }): Promise<any> {
         try {
             let sql = `SELECT ${this.defaultSelect} FROM students
             JOIN lectures_students ON students.id = lectures_students.student_id

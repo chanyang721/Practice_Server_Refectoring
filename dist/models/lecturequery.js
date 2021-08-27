@@ -88,7 +88,7 @@ let LectureModel = class LectureModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name } = lectureData;
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+                let sql = `SELECT ${this.defaultSelect}
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE lectures.open = 1 
@@ -107,7 +107,7 @@ let LectureModel = class LectureModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name } = lectureData;
-                let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+                let sql = `SELECT ${this.defaultSelect}
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE lectures.open = 1

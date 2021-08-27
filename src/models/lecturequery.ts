@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { IdetailLecture } from "../interfaces" 
+import { IdetailLecture, IdefaultLecture, IcreateLecture, IupdateLectureInfo, IregisterLecture } from "../interfaces" 
 import QueryFormat from "../utils/query";
 import dayjs from 'dayjs';
 
@@ -14,7 +14,7 @@ export default class LectureModel {
         this.defaultSelect = `lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at, lectures.updated_at`;
     }
 
-    public async getListBylectureTitleOrinstructorNameQuery (lectureData: any): Promise<any> {
+    public async getListBylectureTitleOrinstructorNameQuery (lectureData: { name: string }): Promise<IdefaultLecture> {
         try {
             const { name } = lectureData;
 
@@ -34,7 +34,7 @@ export default class LectureModel {
         }
     }
 
-    public async getListAddConditionCategoryNameQuery (lectureData: any): Promise<any> {
+    public async getListAddConditionCategoryNameQuery (lectureData: { name: string, category: string }): Promise<IdefaultLecture> {
         try {
             const { name, category } = lectureData;
 
@@ -54,7 +54,7 @@ export default class LectureModel {
         }
     }
 
-    public async getLectureByIdDetailQuery (lectureData: any): Promise<IdetailLecture> {
+    public async getLectureByIdDetailQuery (lectureData: { id: string }): Promise<IdetailLecture> {
         try {
             const { id } = lectureData;
 
@@ -72,11 +72,11 @@ export default class LectureModel {
         }
     }
 
-    public async sortLecturesByTimeQuery (lectureData: any): Promise<any> {
+    public async sortLecturesByTimeQuery (lectureData: { name: string }): Promise<IdefaultLecture> {
         try {
             const { name } = lectureData;
 
-            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            let sql = `SELECT ${this.defaultSelect}
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE lectures.open = 1 
@@ -92,11 +92,11 @@ export default class LectureModel {
         }
     }
 
-    public async sortLecturesByAttendanceQuery (lectureData: any): Promise<any> {
+    public async sortLecturesByAttendanceQuery (lectureData: { name: string }): Promise<IdefaultLecture> {
         try {
             const { name } = lectureData;
 
-            let sql = `SELECT lectures.id as lectureId, lectures.category, lectures.title, lectures.instructor, lectures.price, lectures.attendance, lectures.students, lectures.created_at
+            let sql = `SELECT ${this.defaultSelect}
             FROM instructors 
             JOIN lectures ON lectures.instructor = instructors.name
             WHERE lectures.open = 1
@@ -112,13 +112,13 @@ export default class LectureModel {
         }
     }
 
-    public async createLectureQuery (lectureData: any): Promise<any> {
+    public async createLectureQuery (lectureData: IcreateLecture): Promise<any> {
         try {
             const { instructor, category, title, description, price } = lectureData
 
             let sql = `INSERT INTO lectures (instructor, category, title, description, price) VALUES (?)`;
             let params = [ [ instructor, category[0], title, description, price ] ]
-            const lectureRecord = await this.queryFormat.Query(sql, params);
+            const lectureRecord: any = await this.queryFormat.Query(sql, params);
             
             return { lectureRecord };
         }
@@ -127,13 +127,13 @@ export default class LectureModel {
         }
     }
 
-    public async updateLectureInfoQuery (lectureData: any): Promise<any> {
+    public async updateLectureInfoQuery (lectureData: IupdateLectureInfo): Promise<any> {
         try {
             const { title, description, price, id } = lectureData;
 
             let sql = `UPDATE lectures SET title = ?, description = ?, price = ? WHERE id = ?`;
             let params = [ title, description, price, id ];
-            const updateLectureInfo = await this.queryFormat.Query(sql, params);
+            const updateLectureInfo: any = await this.queryFormat.Query(sql, params);
 
             return { updateLectureInfo };
         }
@@ -142,13 +142,13 @@ export default class LectureModel {
         }
     } 
 
-    public async openLectureQuery (lecturesData: any): Promise<any> {
+    public async openLectureQuery (lecturesData: { id: string }): Promise<any> {
         try {
             const { id } = lecturesData;
     
             let sql = `UPDATE lectures SET open = 1 WHERE id = ?`;
             let params = [ id ];
-            const queryInfo = await this.queryFormat.Query(sql, params)
+            const queryInfo: any = await this.queryFormat.Query(sql, params)
     
             return { queryInfo };
         }
@@ -157,13 +157,13 @@ export default class LectureModel {
         }
     } 
 
-    public async deleteLectureQuery (lectureData: any): Promise<any> {
+    public async deleteLectureQuery (lectureData: { id: string }): Promise<any> {
         try {
             const { id } = lectureData;
 
             let sql = `DELETE FROM lectures WHERE id = ?`;
             let params = [ id ];
-            const queryInfo = await this.queryFormat.Query(sql, params);
+            const queryInfo: any = await this.queryFormat.Query(sql, params);
 
             return { queryInfo }
         }
@@ -172,7 +172,7 @@ export default class LectureModel {
         }
     } 
 
-    public async registerLectureQuery (registerData: any): Promise<any> {
+    public async registerLectureQuery (registerData: IregisterLecture): Promise<any> {
         try {
             const { students, nickname, lectureId, studentId } = registerData;
             const registerDay = dayjs().format("YYYY/MM/DD");
@@ -181,7 +181,7 @@ export default class LectureModel {
             
             let sql = `UPDATE lectures SET students = ?, attendance = attendance + 1 WHERE id = ?`;
             let params = [ JSON.stringify(students), lectureId ];
-            const updateStudentsInfo = await this.queryFormat.Query(sql, params);
+            const updateStudentsInfo: any = await this.queryFormat.Query(sql, params);
 
             sql = `INSERT INTO lectures_students (lecture_id, student_id) VALUES (?, ?)`;
             params = [ lectureId, studentId ]

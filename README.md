@@ -20,7 +20,7 @@
 1. 터미널 상에서 "mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]"
 2. mysql 접속 후 "use [데이터베이스 이름]"으로 데이터 베이스 선택 -> "source [schema.sql 파일 경로]" 작성 후 엔터
 * 관심사 분리? 라는 측면을 생각해보니 vaildation과 query를 한 뒤에 컨트롤러로 넘겨주는 미들웨어를 만들어 결과값만을 컨트롤러에서 다루는 구조는 어떨까? 모든 진행 과정을 나누어 모듈화하는것이 협업에 좋은, 구조화되며, 확정성에 좋은게 맞는건지 잘 모르겠다. 모든 것이 다른 파일에 있기 때문에 git 상에서 충돌이 적기 때문일까?
-* Reference
+#### Reference
 - [도메인 주도 설계(Domain-Driven Design) in Real Project](https://medium.com/react-native-seoul/%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%A3%BC%EB%8F%84-%EC%84%A4%EA%B3%84-domain-driven-design-in-real-project-1-%EB%8F%84%EB%A9%94%EC%9D%B8-83a5e31c5e45)
 - [DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94)
 - [MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial)
@@ -226,7 +226,11 @@ public async createUser(email: string): Promise<any> {
 * 보통 ORM을 사용하다보면 models에 모델 정보들이 자동으로 들어가있었다. 하지만 ORM을 사용하지 않다보니 models에 들어가야 하는것이 무엇일까를 생각하게 되었다. MVC 디자인 패턴에서 Controller가 Models에게 사용자에게 받은 데이터를 주고 Models는 Database와 데이터를 주고 받는 역할이다. 따라서, models에는 쿼리문이 들어가야 하며, Request와 Respone객체를 받아서는 안된다. 그렇기 때문에 Models에서 각종 로직을 모두 처리한 후 Controller로 결과값을 전달해야 한다. Model에서는 모듈간 의존성 결합이 자주 일어나게 된다고 생각하여 TypeDI의 @Service()를 Models에서 사용하는 것이 적합하다고 판단하였다.
 * 다른 사람들의 서버 설계를 보면 service라는 파일이 자주 보인다. Service에서는 ORM을 이용한 데이터 처리 로직들이 들어가있는것을 확인했는데 그럼 models는 ORM을 사용하기 떄문에 사용하지 않고 Service라는 파일을 만든 것일까?
 
-### 21.08.20, [TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
+### 21.08.20, 
+* [TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
+
+### 21.08.21
+* 기존에는 vaildation과정에서 Joi를 이용한 `req.body`의 값이 유효한 값인지를 판단하고 controllers로 넘기다보니 입력값이 데이터베이스와 충돌하는 경우를 models에서 쿼리문과 같은 블럭내에 작성해야했다. 이를 보완하기 위해 vaildation에서 controller로 넘기기 전에 database와 충돌하는 부분이 있는지 확인하는 쿼리문을 날려 입력된 값이 데이터베이스의 값과 충돌하는 유효성 검사를 하고, 입력된 값의 형식을 Joi로 확인해야겠다. 
 
 ### 21.08.23
 * 의존성 주입이 되었는지 확인하는 방법을 찾아볼 예정이다. 의존성을 주입할 객체와 require로 불러온 객체가 다른 객체이면 의존성이 주입된것이라고 생각된다. 그 후 금일 내로 API 비즈니스 로직과 구현하며 변경되는 스키마를 완성하여 README.md의 ERD부분을 작성 완료하는 것이 목표이다.

@@ -25,10 +25,11 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
         req.body = value
         const { body: { title, category, instructor } } = req
 
-        // 강의명 중복 확인
         let sql = `SELECT * FROM lectures WHERE title = ?`;
         let params = [ title ]
         const duplicLecture = await Query(sql, params);
+        
+        // 강의명 중복 확인
         if (duplicLecture[0]) {
             return res.status(403).json(responseFormat(403, "중복된 강의명이 존재합니다"))
         }
@@ -39,11 +40,11 @@ export const createLectureVaildation = async (req: Request, res: Response, next:
             return res.status(403).json(responseFormat(403, "지정된 카테고리를 입력해 주세요"))
         }
 
-        // 강의를 오픈하려는 강사가 존재하는지 확인
         sql = `SELECT * FROM instructors WHERE name = ?`;
         params = [ instructor ];
         const checkInstructor = await Query(sql, params)
-        console.log(checkInstructor)
+
+        // 강의를 오픈하려는 강사가 존재하는지 확인
         if (!checkInstructor[0]) {
             return res.status(403).json(responseFormat(403, "강사로 등록해야 강의를 등록할 수 있습니다."))
         }
