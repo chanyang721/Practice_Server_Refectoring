@@ -278,8 +278,23 @@ AND (instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%")`;
 
 
 # Entity Relationship Diagram (ERD)
-- ERD에는 아래 항목들이 포함되어 있어야 합니다.
-- 컬럼명 / 타입 / 컬럼설명
-- PrimaryKey / UniqueKey / ForeignKey / Index
-
+* [dbdiagram.io Link](https://dbdiagram.io/d/60f253a14ed9be1c05d06d58)
+![ERD](https://github.com/chanyang721/Inflearn/blob/main/ERD_image.png?raw=true)
+### 칼럼 설명
+#### instructors 
+* PrimaryKey : id
+* UniqueKey: name
+* Index: name
+#### students 
+* PrimaryKey : id
+* UniqueKey: email
+* Index: nickname, email
+#### lectures 
+* PrimaryKey : id
+* UniqueKey: title
+* ForeignKey: instructor
+* Index: category, title, open, students
+#### stlectures_studentsudents 
+* ForeignKey: student_id, lecture_id
+* Index: student_id, lecture_id
 # 프로젝트를 실행할 수 있는 방법을 기술
