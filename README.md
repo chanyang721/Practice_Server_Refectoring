@@ -1,16 +1,28 @@
 ## 구현시 선택한 설계 방향
 * 기술 스택 선정 그동안 미뤄왔던 TS를 시작해야겠다고 생각하여 TS + Express로 기본적인 서버를 구축할 예정이다. 
 * 필수 스택 중 Jest, TypeDI, Joi는 처음 시도하는 스택들이기 때문에 공부가 필요해 보인다. 아직 해당 스택들의 역할을 알지 못하기 때문에 해당 스택들에 대해 블로깅을 한 뒤 전체적인 서버의 구조를 잡고 서버를 만들기 시작해야될것같다.
-* [서버 설계](https://chanyang721.notion.site/8121daf0cc674c28b945aabb650773bc)
+* 우선 구조화된 서버를 SQL문을 사용하며 만들기 때문에 파일의 구성을 어떻게 해야할지 고민했고 최종적으로 나온 파일 구조는 아래와 같다. 
+```
+src
+ |_  __test__: 테스트 파일
+ |_  config: 데이터베이스 정보 저장
+ |_  controllers: req, res를 받아 models와 데이터를 주고 받고 최종 res를 클라이언트에 넘겨주는 역할을 하는 파일 
+ |_  database: database 연결
+ |_  interface: interface 설정
+ |_  middlewares: express 미들웨어와, vaildation를 위한 미들웨어가 있는 파일
+ |_  models: controllers에서 받은 데이터를 기반으로 데이터베이스에 쿼리문을 작성하여 데이터를 받아 controllers에 리턴하는 파일
+ |_  routes: API 라우팅
+ |_  utils: 반복되는 유틸 함수를 작성하는 파일
+ |_  index.ts
+```
+* 서버를 처음 만들면서 최대한 각 기능별로 나눠서 구조를 잡아야 겠다고 생각했다. 우선 서버를 실행하는 index.ts에서 express의 미들웨어와 router를 다른 파일로 분리하여 import해오는 방식으로 구현하였습니다. 
+* 그 후 각종 route를 요청에 맞게 분기하여 vaildation과 controllers를 순서대로 작동하게 연결했습니다. 
+* vaildation의 각 파일에서는 우선 Joi를 이용하여 입력값의 형식이 맞는지 검사를 하고, 필요하다고 생각되는 유효성 검사를 위해 데이터베이스에 쿼리문을 날려 정보의 유효성을 검사했습니다. 
+* constrollers에서는 유효성 검사가 끝난 데이터들이 들어오며 models에 작성된 클래스의 인스턴스로 TypeDI를 사용하여 의존성을 주입하여 models에 있는 비즈니스 로직의 결과를 가져와 response객체를 리턴하는 역할을 하도록 만들었습니다. 
+* modols는 클래스로 작성하고 @Service()를 붙여서 Container에 넣어주었고, controllers에서 전달받은 데이터를 기반으로 데이터베이스와 데이터 교환하여 결과값을 controllers로 리턴하는 파일로 만들었습니다.  
 
-# 구현 방법 혹은 과정
-* 14일의 시간이 있지만, 스택을 익힐 시간을 9일로 측정했다.
-* TS로 서버를 구축하기로 하여 TS 공식문서 블로깅 및 서버 구축을 시작하였다.
-* TS 공식문서를 08.16일까지 블로깅 하면서 협업하기 좋고, 구조화된, 확장성이 열린 서버를 구축할 예정이다.
-* 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것은 어떤 구조인가를 익혀서 블로깅 할 예정이다.
-* 
 
-# 구현하면서 했던 고민
+# 구현하며 했던 고민과 구현 과정
 ### 21.08.13
 * gitHub 패스워드가 PAT로 변경되어 push가 되지 않았다. 첨부된 링크를 살펴보니 push할 때 사용되는 password가 github password였는데 PAT로 발급받은 토큰을 입력해야 한다고 했다. 나는 Mac을 사용하고 있기 떄문에 keychain Access로 들어가 비밀번호를 업데이트 해줬다.
 
@@ -273,28 +285,42 @@ WHERE (lectures.open = 1 AND lectures.category = ?)
 AND (instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%")`;
 ```
 
-### 21.08.27 [서버 설계](https://chanyang721.notion.site/8121daf0cc674c28b945aabb650773bc)
-* 
-
+### 21.08.27 
+* [서버 설계](https://chanyang721.notion.site/8121daf0cc674c28b945aabb650773bc)
 
 # Entity Relationship Diagram (ERD)
 * [dbdiagram.io Link](https://dbdiagram.io/d/60f253a14ed9be1c05d06d58)
 ![ERD](https://github.com/chanyang721/Inflearn/blob/main/ERD_image.png?raw=true)
 ### 칼럼 설명
 #### instructors 
-* PrimaryKey : id
+* PrimaryKey: id
 * UniqueKey: name
+* ForeignKey: -
 * Index: name
 #### students 
-* PrimaryKey : id
+* PrimaryKey: id
 * UniqueKey: email
+* ForeignKey: -
 * Index: nickname, email
 #### lectures 
-* PrimaryKey : id
+* PrimaryKey: id
 * UniqueKey: title
 * ForeignKey: instructor
 * Index: category, title, open, students
 #### stlectures_studentsudents 
+* PrimaryKey: - 
+* UniqueKey: -
 * ForeignKey: student_id, lecture_id
-* Index: student_id, lecture_id
-# 프로젝트를 실행할 수 있는 방법을 기술
+* Index: -
+
+
+# 프로젝트 실행 방법
+1. `npm install`로 모든 dependencies를 설치합니다.
+2. `mysql -u root -p`를 터미널에 입력하여 MySQL로 접속합니다.
+3. `CREATE DATABASE Inflearn;`을 MySQL서버에 접속한 후 입력하여 데이터베이스를 만듭니다.
+4. `quit`명령어로 MySQL에서 나와 터미널로 돌아옵니다.
+* mac => `schema.sql`파일을 우클릭 시 나오는 매뉴탭에서 파일 경로 복사를 선택하여 복사할 수 있습니다.
+* window => `schema.sql`파일을 우클릭 시 나오는 매뉴탭에서 속성에 들어가면 General탭의 Location부분이 파일 경로로 복사할 수 있습니다.
+5. 터미널에서 `mysql -u root -p --database=Inflearn < [schema.sql 파일 경로]`를 입력하여 테이블을 생성합니다.
+6. 터미널에서 `mysql -u root -p --database=Inflearn < [seed.sql 파일 경로]`를 입력하여 테이블을 생성합니다.
+7. `npm start`로 프로젝트의 서버를 실행할 수 있습니다.
