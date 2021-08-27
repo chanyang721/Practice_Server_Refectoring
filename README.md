@@ -27,9 +27,9 @@ src
 * gitHub 패스워드가 PAT로 변경되어 push가 되지 않았다. 첨부된 링크를 살펴보니 push할 때 사용되는 password가 github password였는데 PAT로 발급받은 토큰을 입력해야 한다고 했다. 나는 Mac을 사용하고 있기 떄문에 keychain Access로 들어가 비밀번호를 업데이트 해줬다.
 * ORM을 사용하지 않고 어떻게 서버를 만들어야 할지 그리고 어떻게 스키마를 구성해야할까? 그리고 과제에서 요구하는 기능들을 구현하기 위해 어떤, 그리고 얼마나 많은 API가 필요한지 정리해보면서 각 테이블에 어떤 칼럼들이 들어가야할지 그리고 어떤 내용을 각 칼럼에 넣어야 편한 쿼리문을 만들 수 있을지 정리하며 API와 스키마의 초안을 작성했다.
 #### Reference
-[참고한 서버 설계](https://github.com/santiq/bulletproof-nodejs)
-[견고한 node.js 프로젝트 설계하기](https://velog.io/@hopsprings2/%EA%B2%AC%EA%B3%A0%ED%95%9C-node.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-%EC%84%A4%EA%B3%84%ED%95%98%EA%B8%B0)
-[RESTful API 설계 가이드](https://sanghaklee.tistory.com/57)
+[참고한 서버 설계](https://github.com/santiq/bulletproof-nodejs) <br>
+[견고한 node.js 프로젝트 설계하기](https://velog.io/@hopsprings2/%EA%B2%AC%EA%B3%A0%ED%95%9C-node.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-%EC%84%A4%EA%B3%84%ED%95%98%EA%B8%B0) <br>
+[RESTful API 설계 가이드](https://sanghaklee.tistory.com/57) <br>
 
 ### 21.08.15
 * 내가 지금까지 만들었던 서버들은 과연 어떤 부분을 리팩토링 했어야 할까 ? 지금까지 내가 만든 서버라는 것은 요청에 의한 적절한 응답값을 주는 도구였다. 하지만, 백엔드에서 서버 설계라는 것을 생각하지 않고 구축하다보니 협업, 구조화, 확장성이라는 사고 방식을 서버 설계에 주입하지 않았다. 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것을 어떻게 설계해야 하는지에 대한 사고 방식과 구조를 공부해서 적용해보고 싶어졌다. 스택들을 익히고, 서버를 설계 단계부터 다시 익혀야한다. 남은 12일이라는 시간이 적어 보인다.
