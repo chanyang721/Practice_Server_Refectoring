@@ -144,6 +144,8 @@ export const createStudent = async (req: Request, res: Response): Promise<any> =
 ```
 * 위의 코드를 보면 `Container.get(ckeckDuplic)` 으로 인스턴스를 가져왔고, 해당 인스턴스의 `ckeckDuplicUser` 메서드에 Request값을 입력하여 실행한 결과값인 result를 가져왔다. 하지만, 데이터베이스에 있는 유저라면 result값이 존재해야하며, 없는 유저라면 undefined값이 나와야 한다고 생각했다. 하지만 이미 있는 유저를 쿼리문을 통해 요청해도 result에 undefined값이 할당되어  `if (!result)` 내부로 들어가 `if (error)` 문을 통해 이미 생성된 유저라는 에러 메시지를 받게되었다. 내 result에 값이 할당되어 `else` 문을 통해 에러가 나와야 한다. 왜!!!!!!!!!!!!!!!!!!!! 12시가 넘어서 자야한다. 내일 해결하겠다
 
+---
+
 ### 21.08.19
 * 클래스를 이용한 raw query문으로 서버의 Create기능 구현을 하던 중 async가 안먹는 상황을 발견했다. 바로 어제 undefined값으로 나를 괴롭혔던 아래의 코드 친구이다.
 ```js
@@ -291,9 +293,9 @@ public async createUser(email: string): Promise<any> {
 * LIKE "%${name}%"으로 적으니 작동한다. LIKE "%" + ? + "%"으로 params를 이용해 넣으면 쿼리문에 넣으면 "%'name'%"형식으로 sql문으로 들어가 신택스 에러를 발생시켰던거 같다.
 * 카테고리를 검색 조건으로 사용한다는것이 우선 강의명, 강사명으로 검색한뒤 그 결과리스트에서 카테고리를 추가로 입력하여 다시한번 걸러낸다는 의미라고 생각했다.
 * Reference
-1. https://www.javatpoint.com/mysql-tutorial
-2. https://github.com/sapegin/jest-cheat-sheet
-3. https://www.daleseo.com/jest-async/
+https://www.javatpoint.com/mysql-tutorial
+https://github.com/sapegin/jest-cheat-sheet
+https://www.daleseo.com/jest-async/
 
 ---
 
