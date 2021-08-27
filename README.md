@@ -230,7 +230,7 @@ public async createUser(email: string): Promise<any> {
 * [TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
 
 ### 21.08.21
-* 기존에는 vaildation과정에서 Joi를 이용한 `req.body`의 값이 유효한 값인지를 판단하고 controllers로 넘기다보니 입력값이 데이터베이스와 충돌하는 경우를 models에서 쿼리문과 같은 블럭내에 작성해야했다. 이를 보완하기 위해 vaildation에서 controller로 넘기기 전에 database와 충돌하는 부분이 있는지 확인하는 쿼리문을 날려 입력된 값이 데이터베이스의 값과 충돌하는 유효성 검사를 하고, 입력된 값의 형식을 Joi로 확인해야겠다. 
+* 기존에는 vaildation과정에서 Joi를 이용한 `req.body`의 값이 유효한 값인지를 판단하고 controllers로 넘기다보니 입력값이 데이터베이스와 충돌하는 경우를 models에서 쿼리문과 같은 블럭내에 작성해야했다. 이를 보완하기 위해 vaildation에서 controller로 넘기기 전에 입력된 값의 형식을 Joi로 확인하고, database와 충돌하는 부분이 있는지 확인하는 쿼리문을 날려 입력된 값이 데이터베이스의 값과 충돌하는 유효성 검사를 하는 구성으로 바꿔야겠다.
 
 ### 21.08.23
 * 의존성 주입이 되었는지 확인하는 방법을 찾아볼 예정이다. 의존성을 주입할 객체와 require로 불러온 객체가 다른 객체이면 의존성이 주입된것이라고 생각된다. 그 후 금일 내로 API 비즈니스 로직과 구현하며 변경되는 스키마를 완성하여 README.md의 ERD부분을 작성 완료하는 것이 목표이다.
