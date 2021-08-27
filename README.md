@@ -31,6 +31,8 @@ src
 [견고한 node.js 프로젝트 설계하기](https://velog.io/@hopsprings2/%EA%B2%AC%EA%B3%A0%ED%95%9C-node.js-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-%EC%84%A4%EA%B3%84%ED%95%98%EA%B8%B0) <br>
 [RESTful API 설계 가이드](https://sanghaklee.tistory.com/57) <br>
 
+---
+
 ### 21.08.15
 * 내가 지금까지 만들었던 서버들은 과연 어떤 부분을 리팩토링 했어야 할까 ? 지금까지 내가 만든 서버라는 것은 요청에 의한 적절한 응답값을 주는 도구였다. 하지만, 백엔드에서 서버 설계라는 것을 생각하지 않고 구축하다보니 협업, 구조화, 확장성이라는 사고 방식을 서버 설계에 주입하지 않았다. 협업하기 좋고, 구조화된, 확장성이 열린 서버라는 것을 어떻게 설계해야 하는지에 대한 사고 방식과 구조를 공부해서 적용해보고 싶어졌다. 스택들을 익히고, 서버를 설계 단계부터 다시 익혀야한다. 남은 12일이라는 시간이 적어 보인다.
 * 데이터베이스를 구축하면서 ORM을 사용하지 않고 테이블을 생성하기 위한 방법을 고민했다. schema.sql파일에 생성하고 싶은 테이블과 관계 형성, 인덱스 생성하는 방법들을 찾아봤고 이를 mysql 실행문을 통해 연결된 데이터베이스에 생성할 수 있었다. 두개의 방법을 찾았다.
@@ -42,8 +44,11 @@ src
 - [DDD 핵심만 빠르게 이해하기](https://happycloud-lee.tistory.com/94)
 - [MySQL-tutorial](https://www.javatpoint.com/mysql-tutorial)
 
+---
 ### 21.08.16
 * [Joi Blogging](https://chanyang721.notion.site/Joi-588aa44660954e918de7f29b11adbe07)
+
+---
 
 ### 21.08.17
 * sql문에서 WHERE 절에 @를 사용할 수 없다는 이상한 규칙을 발견했다. 찾아본 봐로는 @가 다른 역할을 하기 때문에 그렇다는데 그럼 이메일은 어떻게 가져오는지 모르겠다.
@@ -97,6 +102,8 @@ export const createStudent = async (req: Request, res: Response): Promise<any> =
     }
 };
 ```
+
+---
 
 ### 21.08.18 
 * 의존성 주입이라는 새로운 디자인 패턴을 익히면서 TypeDI 라이브러리가 왜 필요한지 이해하는 날이었다. 아직 명확하게 설명 할 수 없을 뿐더러 서버의 어떤 부분을 TypeDI를 이용해서 구축해야하는지 확신이 서지 않는다. 지금 이해한 바로는 모듈간 의존성을 최소화시켜서 재사용 가능한 코드, 테스트하기 좋은 코드, 수정 및 확장성에 유리하다는것까지 이해한거 같다. 특히 controllers에서 class로 모듈화하여 Request값을 인스턴스의 생성자 함수의 매계변수로 넣어 결과값을 가져오는데 사용해봤지만 아직 왜 이렇게 하는지 이해하진 못했다. 작성한 코드를 실험해보니 작동은 하지만 작동에러가 나타나고 있다. 아직 이해하지 못하고 있어서 어디가 잘못된건지 알지 못한다.
@@ -243,11 +250,17 @@ public async createUser(email: string): Promise<any> {
 * 보통 ORM을 사용하다보면 models에 모델 정보들이 자동으로 들어가있었다. 하지만 ORM을 사용하지 않다보니 models에 들어가야 하는것이 무엇일까를 생각하게 되었다. MVC 디자인 패턴에서 Controller가 Models에게 사용자에게 받은 데이터를 주고 Models는 Database와 데이터를 주고 받는 역할이다. 따라서, models에는 쿼리문이 들어가야 하며, Request와 Respone객체를 받아서는 안된다. 그렇기 때문에 Models에서 각종 로직을 모두 처리한 후 Controller로 결과값을 전달해야 한다. Model에서는 모듈간 의존성 결합이 자주 일어나게 된다고 생각하여 TypeDI의 @Service()를 Models에서 사용하는 것이 적합하다고 판단하였다.
 * 다른 사람들의 서버 설계를 보면 service라는 파일이 자주 보인다. Service에서는 ORM을 이용한 데이터 처리 로직들이 들어가있는것을 확인했는데 그럼 models는 ORM을 사용하기 떄문에 사용하지 않고 Service라는 파일을 만든 것일까?
 
+---
+
 ### 21.08.20, 
 * [TypeDI Blogging](https://chanyang721.notion.site/Dependency-Injection-DI-97303ec03e544adc9e597e558078288a)
 
+---
+
 ### 21.08.21
 * 기존에는 vaildation과정에서 Joi를 이용한 `req.body`의 값이 유효한 값인지를 판단하고 controllers로 넘기다보니 입력값이 데이터베이스와 충돌하는 경우를 models에서 쿼리문과 같은 블럭내에 작성해야했다. 이를 보완하기 위해 vaildation에서 controller로 넘기기 전에 입력된 값의 형식을 Joi로 확인하고, database와 충돌하는 부분이 있는지 확인하는 쿼리문을 날려 입력된 값이 데이터베이스의 값과 충돌하는 유효성 검사를 하는 구성으로 바꿔야겠다.
+
+---
 
 ### 21.08.23
 * 의존성 주입이 되었는지 확인하는 방법을 찾아볼 예정이다. 의존성을 주입할 객체와 require로 불러온 객체가 다른 객체이면 의존성이 주입된것이라고 생각된다. 그 후 금일 내로 API 비즈니스 로직과 구현하며 변경되는 스키마를 완성하여 README.md의 ERD부분을 작성 완료하는 것이 목표이다.
@@ -257,6 +270,8 @@ public async createUser(email: string): Promise<any> {
 * 수강생수를 구현하기 위해 원해는 students_info라는 콜론에 객체를 넣어 프로퍼티 구성을 students_id: created_at형식으로 해서 수강생수를 Object.key().length로 구하려고 했지만, 반복문을 사용해야한다는 것을 알고 attendence라는 콜론을 추가하게 되었다. 수강생register가 있을때마다 + 1을 해주는게 덜 복잡해보인다는 판단이다.  
 * Joi로 카테고리의 값을 1개로 제한하는 방법을 고민하던 중, Joi.array().items(Joi.string).max(1)로 해결한듯 하다. length(1)은 길이가 1로 정해지기 때문에 카테고리를 선택하지 않은 경우를 포함하지 않기 때문이다.
 * 아직 TypeScript를 어떻게 사용하는지 모르겠다. 각종 타입들과 튜플, 제네릭, Interface등을 어떻게 사용하는지 모르는거같다. 기회가 된다면 공식문서를 블로깅할 예정이다. 입력값 interface를 정의해서 넣으면 이상하게 로직 내부에 있는 params에 적용한 값에서 typeError가 발생하는데 아직 이유를 알지 못한다. 
+
+---
 
 ### 21.08.25
 * 강의 목록 조회를 구현하면서 강사명, 강의명, 수강생ID에 따라 검색을 하는 부분에서 반복되는 쿼리문들이 늘어난다. 이 쿼리문들이 조금씩 다른데 이것은 카테고리를 검색 조건으로 걸고 최신순, 수강생수로 정렬하는것에서 조금씩 다른 코드들이 하나씩 더 늘어나게 되었는데 어떻게 하면 다른 부분을 변수로 만들어 하나의 코드로 만들수 있을까 ? 
@@ -280,6 +295,8 @@ public async createUser(email: string): Promise<any> {
 2. https://github.com/sapegin/jest-cheat-sheet
 3. https://www.daleseo.com/jest-async/
 
+---
+
 ### 21.08.26 [Jest Blogging](https://chanyang721.notion.site/Jest-c2bc139b5c9a4ac6927ccc1cfeccefbf)
 * WHERE 절에서 and and or와 같은 조건을 연속으로 사용하고 싶은 경우 (A and B) and (C or D)형식으로 작성하면 된다.
 ```js
@@ -290,8 +307,7 @@ WHERE (lectures.open = 1 AND lectures.category = ?)
 AND (instructors.name LIKE "%${name}%" OR lectures.title LIKE "%${name}%")`;
 ```
 
-### 21.08.27 
-* [서버 설계](https://chanyang721.notion.site/8121daf0cc674c28b945aabb650773bc)
+---
 
 # Entity Relationship Diagram (ERD)
 * [dbdiagram.io Link](https://dbdiagram.io/d/60f253a14ed9be1c05d06d58)
