@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import fs from "fs"
 dotenv.config();
 
-import InstructorModel from "../Service/instructorquery"
-import StudentModel from "../Service/studentquery"
+import InstructorModel from "../service/instructorquery"
+import StudentModel from "../service/studentquery"
 import QueryFormat from "../utils/query"
 import config from "../config";
 

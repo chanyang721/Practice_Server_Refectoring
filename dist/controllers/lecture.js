@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerLecture = exports.deleteLecture = exports.openLecture = exports.updateLectureInfo = exports.createLecture = exports.sortLecturesByAttendance = exports.sortLecturesByTime = exports.getLectureByIdDetail = exports.getListAddConditionCategoryName = exports.getListBylectureTitleOrinstructorName = void 0;
 const typedi_1 = require("typedi");
-const lecturequery_1 = __importDefault(require("../Service/lecturequery"));
+const lecturequery_1 = __importDefault(require("../service/lecturequery"));
 const requestFormat_1 = __importDefault(require("../utils/requestFormat"));
 const { responseFormat } = typedi_1.Container.get(requestFormat_1.default);
 const getListBylectureTitleOrinstructorName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const instructorquery_1 = __importDefault(require("../Service/instructorquery"));
-const studentquery_1 = __importDefault(require("../Service/studentquery"));
+const instructorquery_1 = __importDefault(require("../service/instructorquery"));
+const studentquery_1 = __importDefault(require("../service/studentquery"));
 const query_1 = __importDefault(require("../utils/query"));
 const config_1 = __importDefault(require("../config"));
 describe("Jest Testing 실험실 오픈!!", () => {
