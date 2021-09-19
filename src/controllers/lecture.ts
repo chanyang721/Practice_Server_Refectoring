@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Container } from "typedi"
-import LectureModel from "../models/lecturequery"
+import LectureModel from "../Service/lecturequery"
 import MessageFormat from "../utils/requestFormat";
 const { responseFormat } = Container.get(MessageFormat)
 
