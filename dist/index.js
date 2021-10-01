@@ -14,14 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const express_1 = __importDefault(require("express"));
-const express_2 = require("./middlewares/express");
+const express_2 = __importDefault(require("./middlewares/express"));
+const routes_1 = __importDefault(require("./routes"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = express_1.default();
-        yield express_2.expressMiddlewares(app);
-        yield express_2.expressRoutes(app);
+        yield express_2.default(app);
+        yield routes_1.default(app);
         const port = process.env.PORT || 4000;
         app.listen(port, () => {
             console.log(`App is running on ${port}`);

@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import express from "express";
-import { expressMiddlewares, expressRoutes } from "./middlewares/express"
+import expressMiddlewares from "./middlewares/express"
+import expressRoutes from "./routes";
 import dotenv from "dotenv";
 dotenv.config();
 
